@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_home"
+    tools:context=".MainActivity">
+
+    <include
+        layout="@layout/toolbar"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:orientation="vertical">
+
+        <!-- Phần 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <!-- Nội dung của phần 1 -->
+            <ImageView
+                android:scaleType="centerInside"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"
+                android:layout_above="@+id/form_main"
+                />
+        </LinearLayout>
+        <!-- Phần 2 -->
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="350dp"
+            android:layout_height="0dp"
+            android:layout_weight="3"
+            android:orientation="vertical">
+            <!-- Nội dung của phần 2 -->
+            <RelativeLayout
+                android:layout_gravity="center"
+                android:id="@+id/form_main"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/backform"
+                android:padding="20dp">
+
+                <TextView
+                    android:id="@+id/title_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:text="WELCOME"
+                    android:textColor="@color/white"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/sub_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title_main"
+                    android:layout_centerInParent="true"
+                    android:textStyle="bold"
+                    android:elevation="5dp"
+                    android:text="Indoor Air Quality Application"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/gg_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/sub_title"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:backgroundTint="@color/white"
+                    android:paddingLeft="28dp"
+                    android:paddingRight="28dp"
+                    android:text="SIGN IN WITH GOOGLE"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/login_main_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gg_btn"
+                    android:layout_centerInParent="true"
+                    android:backgroundTint="@color/blue"
+                    android:paddingLeft="87dp"
+                    android:paddingRight="87dp"
+                    android:text="LOG IN"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/question_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_main_btn"
+                android:layout_alignStart="@+id/login_main_btn"
+                android:text="Don't have an account?"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/signup_main"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_main_btn"
+                android:layout_alignEnd="@+id/login_main_btn"
+                android:text="Sign Up"
+                android:textStyle="bold"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
