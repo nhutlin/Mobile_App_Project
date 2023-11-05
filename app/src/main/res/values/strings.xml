@@ -1,3 +1,35 @@
 <resources>
-    <string name="app_name">UIT_Project</string>
+    <string name="app_name" translatable="false">ClouD</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="or">Or</string>
+    <string name="reset_your_password">Reset your password?</string>
+    <string name="continue_with_google">CONTINUE WITH GOOGLE</string>
+    <string name="user_name">User Name</string>
+    <string name="mail">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="back">BACK</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="register_suggest">Are you new user?</string>
+    <string name="login">LOGIN</string>
+    <string name="language">EN</string>
+    <string name="register">Register</string>
+    <string name="press_alert">Press again to exit!</string>
+    <string name="weather_status" translatable="false">Mostly Cloudy</string>
+    <string name="data_time" translatable="false">Mon Oct 16 | 08:00 AM</string>
+    <string name="curr_temp" translatable="false">25</string>
+    <string name="degree_symbol" translatable="false">°</string>
+    <string name="greed_user">Hi, Vu</string>
+    <string name="form_warning">This field required!</string>
+    <string name="password_warning">Password do not match!</string>
+    <string name="signup_warning">Can not sign up!</string>
+    <string name="email_invalid">Enter valid email!</string>
+    <string name="password_error">Password not match!</string>
+    <string name="loading" translatable="false">Loading...</string>
+    <string name="username_or_email">Username or email</string>
+    <string name="success_warning">Success!</string>
+    <string name="new_password">New password</string>
+    <string name="change">Save</string>
+    <string name="old_password">Old password</string>
 </resources>

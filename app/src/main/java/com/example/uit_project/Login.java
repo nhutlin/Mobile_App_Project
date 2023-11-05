@@ -69,11 +69,14 @@ public class Login extends AppCompatActivity {
                 call.enqueue(new Callback<ApiRespone>() {
                     @Override
                     public void onResponse(Call<ApiRespone> call, Response<ApiRespone> response) {
-                        Toast.makeText(Login.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
-                        Intent goToDashboard = new Intent();
-                        goToDashboard.setClass(Login.this, Dashboard.class);
+                        if(response.isSuccessful()) {
+                            Toast.makeText(Login.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
+                            Intent goToDashboard = new Intent();
+                            goToDashboard.setClass(Login.this, Dashboard.class);
 
-                        startActivity(goToDashboard);
+                            startActivity(goToDashboard);
+                        }
+
 
                     }
                     @Override
