@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- main -->
+    <string name="welcome">Chào mừng bạn trở lại</string>
+    <string name="subtitle">Ứng dụng giám sát chất lượng không khí trong nhà</string>
+    <string name="signup_gg">TIẾP TỤC VỚI GOOGLE</string>
+    <string name="login_caps">ĐĂNG NHẬP</string>
+    <string name="question_signup">Không có tài khoản?</string>
+    <string name="sign_up">Đăng kí</string>
+
+    <!-- login -->
+    <string name="question_login">Đã có tài khoản?</string>
+    <string name="password">Mật khẩu</string>
+    <string name="username">Tài khoản</string>
+    <string name="email">Email</string>
+    <string name="re_pass">Nhập lại mật khẩu</string>
+
+    <!-- signup -->
+    <string name="login">Đăng nhập</string>
+    <string name="signup_caps">ĐĂNG KÍ</string>
+    <string name="register">ĐĂNG KÍ</string>
+</resources>

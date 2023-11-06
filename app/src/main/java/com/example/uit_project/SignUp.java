@@ -116,7 +116,7 @@ public class SignUp extends AppCompatActivity {
         // Validate username
         if (username.isEmpty()) {
             isValid = false;
-            et_username.setError(getString(R.string.form_warning));
+            et_username.setError("This field required!");
         }else {
             et_username.setError(null);
         }
@@ -124,7 +124,7 @@ public class SignUp extends AppCompatActivity {
         // Validate email
         if (email.isEmpty() || !isEmail(et_email)) {
             isValid = false;
-            et_email.setError(getString(R.string.email_invalid));
+            et_email.setError("Enter valid email!");
         }else {
             et_email.setError(null);
         }
@@ -132,7 +132,7 @@ public class SignUp extends AppCompatActivity {
         // Validate password
         if (password.isEmpty()) {
             isValid = false;
-            et_password.setError(getString(R.string.form_warning));
+            et_password.setError("This field required!");
         } else {
             et_password.setError(null);
         }
@@ -140,10 +140,10 @@ public class SignUp extends AppCompatActivity {
         // Validate password confirm
         if (rePassword.isEmpty() || !password.equals(rePassword)) {
             isValid = false;
-            et_rePassword.setError(getString(R.string.password_warning));
+            et_rePassword.setError("Password do not match");
         }
 
-        return isValid; // User information is valid
+        return isValid;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -151,7 +151,6 @@ public class SignUp extends AppCompatActivity {
         // Get sign up token
         CookieManager.getInstance().removeAllCookies(null);
 
-        //webView.setVisibility(View.VISIBLE);
         webView = new WebView(getBaseContext());
         webView.getSettings().setJavaScriptEnabled(true);
 
@@ -165,7 +164,7 @@ public class SignUp extends AppCompatActivity {
                     String redirect = "document.getElementsByTagName('a')[0].click();"; // Click on sign up button
                     view.evaluateJavascript(redirect, null);
                 }
-                if (url.contains("login-actions/registration")) { // Url is now in sign up page
+                if (url.contains("login-actions")) { // Url is now in sign up page
                     Log.d(GlobalVar.LOG_TAG, "Enter registration");
                     String dataError = "document.getElementsByClassName('helper-text')[0].getAttribute('data-error');"; // Appear when email is exist
 
@@ -189,10 +188,9 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
                 }
-                if (url.contains("manager")) { // Sign up success, open log in
-                    Log.d(GlobalVar.LOG_TAG, getString(R.string.success_warning));
-                    signUpLog(getString(R.string.success_warning));
-                   // openLogInActivity(); // Open login
+                if (url.contains("manager/#")) { // Sign up success, open log in
+                    Log.d(GlobalVar.LOG_TAG, "Success!");
+                    signUpLog("Sign Up Successful");
                     finish();
                 }
 

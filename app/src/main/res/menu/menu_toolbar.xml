@@ -8,4 +8,12 @@
         android:icon="@drawable/ic_vnese"
 
         />
+    <item
+        android:title="Language"
+        android:id="@+id/ic_english"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_english"
+        android:visible="false"
+        />
+
 </menu>

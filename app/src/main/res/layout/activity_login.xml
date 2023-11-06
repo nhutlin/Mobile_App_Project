@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
-                    android:text="LOG IN"
+                    android:text="@string/login_caps"
                     android:textColor="@color/white"
                     android:textSize="36sp"
                     android:textStyle="bold" />
@@ -68,7 +68,7 @@
                     android:id="@+id/username_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="@string/username"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/login_title"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -91,7 +91,7 @@
                     android:id="@+id/pass_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:layout_centerHorizontal="true"
                     app:passwordToggleEnabled="true"
                     android:layout_below="@+id/username_login"
@@ -119,14 +119,14 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/blue"
-                    android:paddingLeft="86dp"
-                    android:paddingRight="86dp"
-                    android:text="LOG IN"
+                    android:paddingLeft="90dp"
+                    android:paddingRight="90dp"
+                    android:text="@string/login_caps"
                     android:textSize="20sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Already have an accout?"
+                    android:text="@string/question_login"
                     android:layout_below="@id/btn_login"
                     android:layout_alignStart="@id/btn_login"
                     android:textSize="16sp"
@@ -140,7 +140,7 @@
                     android:textColor="@color/blue"
                     android:layout_below="@+id/btn_login"
                     android:layout_alignEnd="@+id/btn_login"
-                    android:text="Sign Up"
+                    android:text="@string/sign_up"
                     android:textSize="16sp" />
 
 

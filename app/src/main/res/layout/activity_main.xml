@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
-                    android:text="WELCOME"
+                    android:text="@string/welcome"
                     android:textColor="@color/white"
                     android:textSize="36sp"
                     android:textStyle="bold" />
@@ -65,11 +65,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_main"
                     android:layout_centerInParent="true"
-                    android:textStyle="bold"
                     android:elevation="5dp"
-                    android:text="Indoor Air Quality Application"
+                    android:text="@string/subtitle"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/gg_btn"
@@ -82,9 +82,9 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="4dp"
                     android:backgroundTint="@color/white"
-                    android:paddingLeft="28dp"
-                    android:paddingRight="28dp"
-                    android:text="SIGN IN WITH GOOGLE"
+                    android:paddingLeft="29dp"
+                    android:paddingRight="29dp"
+                    android:text="@string/signup_gg"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -95,11 +95,11 @@
                     android:layout_below="@+id/gg_btn"
                     android:layout_centerInParent="true"
                     android:backgroundTint="@color/blue"
-                    android:paddingLeft="87dp"
-                    android:paddingRight="87dp"
-                    android:text="LOG IN"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
+                    android:text="@string/login_caps"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/question_account"
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/login_main_btn"
                 android:layout_alignStart="@+id/login_main_btn"
-                android:text="Don't have an account?"
+                android:text="@string/question_signup"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:textSize="16sp" />
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/login_main_btn"
                 android:layout_alignEnd="@+id/login_main_btn"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 android:textStyle="bold"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
