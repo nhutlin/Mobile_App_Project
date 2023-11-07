@@ -7,4 +7,6 @@ public class GlobalVar {
     public static String resetUrl = baseUrl + "auth/realms/master/account/password";
     public static String LOG_TAG = "API LOG";
     public static int DELAY_TIME = 100;
+    public static LanguageManager manager;
+
 }

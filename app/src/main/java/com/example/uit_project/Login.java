@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        goToSignUp = findViewById(R.id.label_signup);
+        goToSignUp = findViewById(R.id.signup_suggest);
         goToSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ApiRespone> call, Response<ApiRespone> response) {
                         if(response.isSuccessful()) {
-                            Toast.makeText(Login.this, "Log in successfull!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             Intent goToDashboard = new Intent();
                             goToDashboard.setClass(Login.this, Dashboard.class);
 
@@ -81,7 +81,7 @@ public class Login extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<ApiRespone> call, Throwable t) {
-                        Toast.makeText(Login.this, "Log in fail!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Login.this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
 
                     }
                 });

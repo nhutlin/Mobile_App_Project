@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AQA</string>
     <!-- main -->
-    <string name="welcome">Chào mừng bạn trở lại</string>
-    <string name="subtitle">Ứng dụng giám sát chất lượng không khí trong nhà</string>
+    <string name="welcome">Chào mừng trở lại</string>
+    <string name="language">VN</string>
+    <string name="subtitle">Ứng dụng giám sát chất lượng không khí</string>
     <string name="signup_gg">TIẾP TỤC VỚI GOOGLE</string>
     <string name="login_caps">ĐĂNG NHẬP</string>
-    <string name="question_signup">Không có tài khoản?</string>
+    <string name="signup_suggest">Bạn không có tài khoản? <b>Đăng kí</b></string>
     <string name="sign_up">Đăng kí</string>
 
     <!-- login -->
-    <string name="question_login">Đã có tài khoản?</string>
+    <string name="login_suggest">Đã có tài khoản? <b>Đăng nhập</b></string>
     <string name="password">Mật khẩu</string>
     <string name="username">Tài khoản</string>
     <string name="email">Email</string>
     <string name="re_pass">Nhập lại mật khẩu</string>
+    <string name="login_success">Đăng nhập thành công!</string>
+    <string name="login_fail">Đăng nhập thất bại!</string>
+    <string name="save_account">Nhớ tài khoản</string>
+    <string name="forgot_pass">Quên mật khẩu?</string>
 
     <!-- signup -->
     <string name="login">Đăng nhập</string>
     <string name="signup_caps">ĐĂNG KÍ</string>
     <string name="register">ĐĂNG KÍ</string>
+    <string name="form_warning">Vui lòng nhập vào chỗ trống!</string>
+    <string name="email_warning">Vui lòng nhập email hợp lệ!</string>
+    <string name="password_warning">Mật khẩu không khớp!</string>
+    <string name="signup_success">Đăng kí thành công</string>
 </resources>

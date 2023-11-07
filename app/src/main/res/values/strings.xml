@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">AQA</string>
     <!-- main -->
     <string name="welcome">WELCOME</string>
+    <string name="language">EN</string>
     <string name="subtitle">Indoor Air Quality Monitor Application</string>
     <string name="signup_gg">CONTINUE WITH GOOGLE</string>
     <string name="login_caps">LOG IN</string>
-    <string name="question_signup">Don\'t have an account?</string>
+    <string name="signup_suggest">Don\'t have an account? <b>Sign Up</b></string>
     <string name="sign_up">Sign Up</string>
 
     <!-- login -->
-    <string name="question_login">Already have an account?</string>
+    <string name="login_suggest">Already have an account? <b>Login</b></string>
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="email">Email</string>
     <string name="re_pass">Retype Password</string>
+    <string name="login_success">Log in successful</string>
+    <string name="login_fail">Log in fail!</string>
+    <string name="save_account">Remember me</string>
+    <string name="forgot_pass">Forgot password?</string>
 
     <!-- signup -->
     <string name="login">Log in</string>
     <string name="signup_caps">SIGN UP</string>
     <string name="register">REGISTER</string>
+    <string name="form_warning">This field required!</string>
+    <string name="email_warning">Enter the valid email!</string>
+    <string name="password_warning">Password don\'t match</string>
+    <string name="signup_success">Sign up successful</string>
 
 </resources>

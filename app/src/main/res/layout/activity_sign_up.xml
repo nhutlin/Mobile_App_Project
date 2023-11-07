@@ -176,23 +176,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/have_account"
-                    android:text="@string/question_login"
+                    android:id="@+id/login_suggest"
+                    android:text="@string/login_suggest"
                     android:layout_below="@id/btn_signup"
-                    android:layout_alignStart="@id/btn_signup"
+                    android:layout_centerHorizontal="true"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     android:textColor="@color/white" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_login"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue"
-                    android:layout_below="@+id/btn_signup"
-                    android:layout_alignEnd="@+id/btn_signup"
-                    android:text="@string/login"
-                    android:textSize="16sp" />
+
 
 
 

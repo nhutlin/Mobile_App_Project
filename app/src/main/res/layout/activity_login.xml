@@ -26,7 +26,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.75"
+            android:layout_weight="1.5"
             android:orientation="vertical">
             <!-- Nội dung của phần 1 -->
             <ImageView
@@ -110,38 +110,53 @@
                         android:inputType="textPassword|textWebPassword"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
+                <CheckBox
+                    android:id="@+id/save_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save_account"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_alignStart="@+id/pass_login"
+                    android:layout_below="@+id/pass_login" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/forgot_pass"
+                    android:text="@string/forgot_pass"
+                    android:textSize="16sp"
+                    android:layout_below="@+id/pass_login"
+                    android:layout_alignEnd="@+id/pass_login"
+                    android:textColor="@color/blue"
+                    android:textStyle="bold"
+                    android:layout_marginTop="14dp" />
+
+
 
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/pass_login"
+                    android:layout_below="@+id/save_account"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/blue"
                     android:paddingLeft="90dp"
                     android:paddingRight="90dp"
                     android:text="@string/login_caps"
+                    android:layout_centerInParent="true"
                     android:textSize="20sp" />
+
                 <TextView
+                    android:id="@+id/signup_suggest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/question_login"
                     android:layout_below="@id/btn_login"
-                    android:layout_alignStart="@id/btn_login"
+                    android:layout_centerInParent="true"
+                    android:text="@string/signup_suggest"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/white" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/label_signup"
-                    android:textStyle="bold"
-                    android:textColor="@color/blue"
-                    android:layout_below="@+id/btn_login"
-                    android:layout_alignEnd="@+id/btn_login"
-                    android:text="@string/sign_up"
-                    android:textSize="16sp" />
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>

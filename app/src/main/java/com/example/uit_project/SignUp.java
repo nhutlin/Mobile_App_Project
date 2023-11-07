@@ -55,7 +55,7 @@ public class SignUp extends AppCompatActivity {
     private void InitView() {
         // Initial all views
         btn_back = findViewById(R.id.ic_back_signup);
-        login = findViewById(R.id.label_login);
+        login = findViewById(R.id.login_suggest);
         btn_signUp = findViewById(R.id.btn_signup);
         //btn_changeLanguage = findViewById(R.id.btn_changeLanguage);
         et_username = findViewById(R.id.input_username_signup); // Get username Edit Text
@@ -69,7 +69,6 @@ public class SignUp extends AppCompatActivity {
     private void InitEvent() {
         // Initial all event
         btn_back.setOnClickListener(view -> { // Back button
-            // Open main activity
             finish();
         });
 
@@ -77,7 +76,6 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent();
-
                 i.setClass(SignUp.this, Login.class);
                 startActivity(i);
             }
@@ -97,16 +95,6 @@ public class SignUp extends AppCompatActivity {
                 getToken(username, email, password, rePassword);
             }
         });
-
-//        btn_changeLanguage.setOnClickListener(view -> { // Change language button
-//            // Open change language method
-//            loadingAlert.startAlertDialog();
-//
-//            new Handler().postDelayed(() -> {
-//                loadingAlert.closeAlertDialog();
-//                onLanguageChange();
-//            },1000);
-//        });
     }
 
     private boolean validateForm(String username, String email, String password, String rePassword) {
@@ -116,7 +104,7 @@ public class SignUp extends AppCompatActivity {
         // Validate username
         if (username.isEmpty()) {
             isValid = false;
-            et_username.setError("This field required!");
+            et_username.setError(getString(R.string.form_warning));
         }else {
             et_username.setError(null);
         }
@@ -124,7 +112,7 @@ public class SignUp extends AppCompatActivity {
         // Validate email
         if (email.isEmpty() || !isEmail(et_email)) {
             isValid = false;
-            et_email.setError("Enter valid email!");
+            et_email.setError(getString(R.string.email_warning));
         }else {
             et_email.setError(null);
         }
@@ -132,7 +120,7 @@ public class SignUp extends AppCompatActivity {
         // Validate password
         if (password.isEmpty()) {
             isValid = false;
-            et_password.setError("This field required!");
+            et_password.setError(getString(R.string.form_warning));
         } else {
             et_password.setError(null);
         }
@@ -140,7 +128,7 @@ public class SignUp extends AppCompatActivity {
         // Validate password confirm
         if (rePassword.isEmpty() || !password.equals(rePassword)) {
             isValid = false;
-            et_rePassword.setError("Password do not match");
+            et_rePassword.setError(getString(R.string.password_warning));
         }
 
         return isValid;
@@ -161,7 +149,7 @@ public class SignUp extends AppCompatActivity {
                 if (url.contains("auth")) {
                     // Url is now in sign in page
                     Log.d(GlobalVar.LOG_TAG, "Enter login");
-                    String redirect = "document.getElementsByTagName('a')[0].click();"; // Click on sign up button
+                    String redirect = "document.getElementsByTagName('a')[0].click();";
                     view.evaluateJavascript(redirect, null);
                 }
                 if (url.contains("login-actions")) { // Url is now in sign up page
@@ -190,7 +178,7 @@ public class SignUp extends AppCompatActivity {
                 }
                 if (url.contains("manager/#")) { // Sign up success, open log in
                     Log.d(GlobalVar.LOG_TAG, "Success!");
-                    signUpLog("Sign Up Successful");
+                    signUpLog(getString(R.string.signup_success));
                     finish();
                 }
 
