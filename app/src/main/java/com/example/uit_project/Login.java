@@ -3,9 +3,12 @@ package com.example.uit_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -27,6 +30,15 @@ public class Login extends AppCompatActivity {
     private TextView goToSignUp;
     private EditText username;
     private EditText password;
+    private CheckBox isSave;
+    private static final String SHARED_PREFS = "shared_Prefs";
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+
+    private static final String ISSAVE = "checkbox1";
+    private String saveUserName;
+    private String savePass;
+    private boolean saveCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +49,8 @@ public class Login extends AppCompatActivity {
         login_btn = findViewById(R.id.btn_login);
         username = findViewById(R.id.input_username_login);
         password = findViewById(R.id.input_pass_login);
+        isSave = findViewById(R.id.save_account);
+
 
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +73,12 @@ public class Login extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isSave.isChecked()) {
+                    saveData();
+                } else {
+                    clearData();
+                }
+
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
@@ -76,8 +96,6 @@ public class Login extends AppCompatActivity {
 
                             startActivity(goToDashboard);
                         }
-
-
                     }
                     @Override
                     public void onFailure(Call<ApiRespone> call, Throwable t) {
@@ -87,5 +105,47 @@ public class Login extends AppCompatActivity {
                 });
             }
         });
+        loadData();
+        updateView();
+
+    }
+
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(USERNAME, username.getText().toString());
+        editor.putString(PASSWORD, password.getText().toString());
+        editor.putBoolean(ISSAVE, isSave.isChecked());
+
+        editor.apply();
+
+    }
+
+    private void loadData() {
+
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        saveUserName = sharedPreferences.getString(USERNAME, "");
+        savePass = sharedPreferences.getString(PASSWORD, "");
+        saveCheckBox = sharedPreferences.getBoolean(ISSAVE, false);
+
+    }
+
+    private void updateView() {
+        Log.d("UPDATE DATA", "Data updated");
+        username.setText(saveUserName);
+        password.setText(savePass);
+        isSave.setChecked(saveCheckBox);
+    }
+
+    private void clearData() {
+        SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(USERNAME, "");
+        editor.putString(PASSWORD, "");
+        editor.putBoolean(ISSAVE, false);
+
+        editor.apply();
     }
 }
