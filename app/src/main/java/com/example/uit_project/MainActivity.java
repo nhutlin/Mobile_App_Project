@@ -67,21 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-//
-//        if(LocaleHelper.getLanguage(MainActivity.this).equalsIgnoreCase("en"))
-//        {
-//            context = LocaleHelper.setLocale(MainActivity.this,"en");
-//            resources = context.getResources();
-//            dialog_lang.setText("EN");
-//            setTitle(resources.getString(R.string.app_name));
-//            lang_selected = 0;
-//        }else if(LocaleHelper.getLanguage(MainActivity.this).equalsIgnoreCase("vi")){
-//            context = LocaleHelper.setLocale(MainActivity.this,"vi");
-//            resources = context.getResources();
-//            dialog_lang.setText("VI");
-//            setTitle(resources.getString(R.string.app_name));
-//            lang_selected = 1;
-//        }
 
         show_dialog_lang.setOnClickListener(new View.OnClickListener() {
             int checklang;
@@ -122,19 +107,5 @@ public class MainActivity extends AppCompatActivity {
                 dialogBuilder.create().show();
             }
         });
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        return super.onOptionsItemSelected(item);
     }
 }
