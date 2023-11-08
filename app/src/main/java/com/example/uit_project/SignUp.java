@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -43,7 +45,13 @@ public class SignUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Lock orientation
-
+        GlobalVar.view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                hideKeyboard(v);
+                return false;
+            }
+        });
         InitView();
         InitEvent();
     }
@@ -57,7 +65,6 @@ public class SignUp extends AppCompatActivity {
         btn_back = findViewById(R.id.ic_back_signup);
         login = findViewById(R.id.login_suggest);
         btn_signUp = findViewById(R.id.btn_signup);
-        //btn_changeLanguage = findViewById(R.id.btn_changeLanguage);
         et_username = findViewById(R.id.input_username_signup); // Get username Edit Text
         et_email = findViewById(R.id.input_email_signup); // Get email Edit Text
         et_password = findViewById(R.id.input_pass_signup); // Get password Edit Text
@@ -190,7 +197,10 @@ public class SignUp extends AppCompatActivity {
         });
         webView.loadUrl(GlobalVar.baseUrl + "manager");
     }
-
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     private void signUpLog(String msg) {
         Toast.makeText(SignUp.this, msg, Toast.LENGTH_SHORT).show();
     }

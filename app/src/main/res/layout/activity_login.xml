@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/login_scr"
     android:background="@drawable/background_home"
     tools:context=".MainActivity">
     <ImageButton
@@ -108,6 +109,7 @@
                         android:layout_height="wrap_content"
                         android:ems="16"
                         android:inputType="textPassword|textWebPassword"
+                        android:imeOptions="actionDone"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <CheckBox
