@@ -29,4 +29,5 @@
     <string name="email_warning">Vui lòng nhập email hợp lệ!</string>
     <string name="password_warning">Mật khẩu không khớp!</string>
     <string name="signup_success">Đăng kí thành công</string>
+    <string name="invalidPass">Mật khẩu không hợp lệ</string>
 </resources>

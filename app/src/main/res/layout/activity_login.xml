@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1"
             android:orientation="vertical">
             <!-- Nội dung của phần 1 -->
             <ImageView
@@ -72,8 +72,11 @@
                     android:hint="@string/username"
                     android:layout_centerHorizontal="true"
                     android:layout_below="@+id/login_title"
+                    app:hintTextColor="@color/white"
+                    android:textColorHint="@color/white"
+
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="#6750A4"
+                    app:boxStrokeColor="@color/white"
                     android:layout_marginTop="16dp"
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
@@ -86,6 +89,8 @@
                         android:layout_height="wrap_content"
                         android:ems="16"
                         android:inputType="textAutoComplete|text"
+                        android:textColor="@color/white"
+                        android:textCursorDrawable="@null"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -93,11 +98,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+                    app:hintTextColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:layout_centerHorizontal="true"
                     app:passwordToggleEnabled="true"
                     android:layout_below="@+id/username_login"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    app:boxStrokeColor="#6750A4"
+                    app:boxStrokeColor="@color/white"
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxCornerRadiusBottomStart="8dp"
@@ -110,6 +117,8 @@
                         android:ems="16"
                         android:inputType="textPassword|textWebPassword"
                         android:imeOptions="actionDone"
+                        android:textColor="@color/white"
+                        android:textCursorDrawable="@null"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
                 <CheckBox
@@ -134,19 +143,18 @@
                     android:layout_marginTop="14dp" />
 
 
-
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/save_account"
-                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
                     android:layout_marginTop="8dp"
                     android:backgroundTint="@color/blue"
                     android:paddingLeft="90dp"
                     android:paddingRight="90dp"
+                    android:textColor="@color/white"
                     android:text="@string/login_caps"
-                    android:layout_centerInParent="true"
                     android:textSize="20sp" />
 
                 <TextView

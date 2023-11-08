@@ -105,6 +105,7 @@ public class Login extends AppCompatActivity {
                             Intent goToDashboard = new Intent();
                             goToDashboard.setClass(Login.this, Dashboard.class);
 
+
                             startActivity(goToDashboard);
                         }
                     }

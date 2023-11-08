@@ -29,5 +29,6 @@
     <string name="email_warning">Enter the valid email!</string>
     <string name="password_warning">Password don\'t match</string>
     <string name="signup_success">Sign up successful</string>
+    <string name="invalidPass">Invalid password</string>
 
 </resources>

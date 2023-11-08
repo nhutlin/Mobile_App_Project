@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.uit_project.LoadingAlert;
@@ -39,12 +40,14 @@ public class SignUp extends AppCompatActivity {
     private WebView webView;
     private LoadingAlert loadingAlert;
     private TextView login;
-    @SuppressLint("SourceLockedOrientationActivity")
+    private String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,32}$";
+    @SuppressLint({"SourceLockedOrientationActivity", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //Lock orientation
+        GlobalVar.view = (RelativeLayout) findViewById(R.id.signup_src);
         GlobalVar.view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -52,6 +55,7 @@ public class SignUp extends AppCompatActivity {
                 return false;
             }
         });
+
         InitView();
         InitEvent();
     }
@@ -125,9 +129,9 @@ public class SignUp extends AppCompatActivity {
         }
 
         // Validate password
-        if (password.isEmpty()) {
+        if (password.isEmpty() || !(password.matches(passwordRegex))) {
             isValid = false;
-            et_password.setError(getString(R.string.form_warning));
+            et_password.setError(getString(R.string.invalidPass));
         } else {
             et_password.setError(null);
         }
@@ -141,7 +145,7 @@ public class SignUp extends AppCompatActivity {
         return isValid;
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
+//    @SuppressLint("SetJavaScriptEnabled")
     private void getToken(String username, String email, String password, String rePassword) {
         // Get sign up token
         CookieManager.getInstance().removeAllCookies(null);
@@ -159,7 +163,7 @@ public class SignUp extends AppCompatActivity {
                     String redirect = "document.getElementsByTagName('a')[0].click();";
                     view.evaluateJavascript(redirect, null);
                 }
-                if (url.contains("login-actions")) { // Url is now in sign up page
+                if (url.contains("regi")) { // Url is now in sign up page
                     Log.d(GlobalVar.LOG_TAG, "Enter registration");
                     String dataError = "document.getElementsByClassName('helper-text')[0].getAttribute('data-error');"; // Appear when email is exist
 
@@ -186,7 +190,7 @@ public class SignUp extends AppCompatActivity {
                 if (url.contains("manager/#")) { // Sign up success, open log in
                     Log.d(GlobalVar.LOG_TAG, "Success!");
                     signUpLog(getString(R.string.signup_success));
-                    finish();
+                    openLogin();
                 }
 
                 String cookies = CookieManager.getInstance().getCookie(url);
@@ -200,6 +204,12 @@ public class SignUp extends AppCompatActivity {
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void openLogin() {
+        Intent i = new Intent();
+        i.setClass(SignUp.this, Login.class);
+        startActivity(i);
     }
     private void signUpLog(String msg) {
         Toast.makeText(SignUp.this, msg, Toast.LENGTH_SHORT).show();
