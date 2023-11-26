@@ -104,8 +104,6 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             Intent goToDashboard = new Intent();
                             goToDashboard.setClass(Login.this, Dashboard.class);
-
-
                             startActivity(goToDashboard);
                         }
                     }

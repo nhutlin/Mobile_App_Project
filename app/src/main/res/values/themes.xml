@@ -3,7 +3,7 @@
     <style name="Base.Theme.UIT_Project" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
-
     <style name="Theme.UIT_Project" parent="Base.Theme.UIT_Project" />
 </resources>

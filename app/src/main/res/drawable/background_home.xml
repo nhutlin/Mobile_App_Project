@@ -4,4 +4,5 @@
         android:startColor="@color/back_gradient_start"
         android:endColor="@color/back_gradient_end"
         android:angle="90" />
+
 </shape>

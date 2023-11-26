@@ -34,50 +34,41 @@
                 android:scaleType="centerInside"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo"
+                android:src="@drawable/logo_login"
                 android:layout_above="@+id/form_login"
                 />
         </LinearLayout>
-        <!-- Phần 2 -->
+
         <LinearLayout
             android:layout_gravity="center"
             android:layout_width="350dp"
             android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:orientation="vertical">
             <!-- Nội dung của phần 2 -->
             <RelativeLayout
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
                 android:layout_gravity="center"
                 android:id="@+id/form_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="36dp"
                 android:background="@drawable/backform"
                 android:padding="20dp">
 
-                <TextView
-                    android:id="@+id/login_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:text="@string/login_caps"
-                    android:textColor="@color/white"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_login"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/login_title"
+                    android:layout_alignParentTop="true"
                     app:hintTextColor="@color/white"
                     android:textColorHint="@color/white"
-
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxStrokeColor="@color/white"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     app:boxCornerRadiusTopEnd="8dp"
                     app:boxCornerRadiusTopStart="8dp"
                     app:boxCornerRadiusBottomStart="8dp"
@@ -90,6 +81,7 @@
                         android:ems="16"
                         android:inputType="textAutoComplete|text"
                         android:textColor="@color/white"
+
                         android:textCursorDrawable="@null"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -126,6 +118,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/save_account"
+                    android:textStyle="bold"
+                    android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:layout_alignStart="@+id/pass_login"
@@ -138,31 +132,34 @@
                     android:textSize="16sp"
                     android:layout_below="@+id/pass_login"
                     android:layout_alignEnd="@+id/pass_login"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     android:layout_marginTop="14dp" />
 
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/btn_login"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/save_account"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="8dp"
-                    android:backgroundTint="@color/blue"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/gradient"
                     android:paddingLeft="90dp"
                     android:paddingRight="90dp"
-                    android:textColor="@color/white"
                     android:text="@string/login_caps"
+
+                    android:textColor="@color/white"
                     android:textSize="20sp" />
+
 
                 <TextView
                     android:id="@+id/signup_suggest"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_login"
-                    android:layout_centerInParent="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="4dp"
                     android:text="@string/signup_suggest"
                     android:textColor="@color/white"
                     android:textSize="16sp"

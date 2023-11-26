@@ -58,29 +58,30 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <!-- Nội dung của phần 1 -->
             <ImageView
                 android:scaleType="centerInside"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo"
+                android:src="@drawable/logo_main"
                 android:layout_above="@+id/form_main"
                 />
         </LinearLayout>
-        <!-- Phần 2 -->
+
         <LinearLayout
             android:layout_gravity="center"
             android:layout_width="350dp"
             android:layout_height="0dp"
-            android:layout_weight="3"
+            android:layout_weight="1.75"
             android:orientation="vertical">
             <!-- Nội dung của phần 2 -->
             <RelativeLayout
                 android:layout_gravity="center"
                 android:id="@+id/form_main"
                 android:layout_width="match_parent"
+                android:layout_marginRight="6dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginBottom="36dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/backform"
                 android:padding="20dp">
 
                 <TextView
@@ -132,7 +133,7 @@
 
                 </RelativeLayout>
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/login_main_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -140,7 +141,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="10dp"
-                    android:backgroundTint="@color/blue"
+                    android:background="@drawable/gradient"
                     android:paddingLeft="70dp"
                     android:paddingRight="70dp"
                     android:text="@string/login_caps"

@@ -32,14 +32,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.8"
+            android:layout_weight="1.75"
             android:orientation="vertical">
             <!-- Nội dung của phần 1 -->
             <ImageView
                 android:scaleType="centerInside"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/logo"
+                android:src="@drawable/logo_sign_up"
                 android:layout_above="@+id/form_signup"
                 />
         </LinearLayout>
@@ -52,25 +52,17 @@
             android:orientation="vertical">
             <!-- Nội dung của phần 2 -->
             <RelativeLayout
-
+                android:layout_marginLeft="6dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="6dp"
                 android:layout_gravity="center"
                 android:id="@+id/form_signup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:background="@drawable/backform"
                 android:padding="20dp">
 
-                <TextView
-                    android:id="@+id/register_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:text="@string/register"
-                    android:textColor="@color/white"
-                    android:textSize="36sp"
-                    android:textStyle="bold" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/username_signup"
                     android:layout_width="match_parent"
@@ -79,7 +71,7 @@
                     app:hintTextColor="@color/white"
                     android:textColorHint="@color/white"
                     android:layout_centerHorizontal="true"
-                    android:layout_below="@+id/register_title"
+                    android:layout_alignParentTop="true"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     app:boxStrokeColor="@color/white"
                     android:layout_marginTop="16dp"
@@ -178,7 +170,7 @@
                         android:textCursorDrawable="@null"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
-                <Button
+                <android.widget.Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_signup"
@@ -186,11 +178,11 @@
                     android:text="@string/signup_caps"
                     android:textColor="@color/white"
                     android:textSize="20sp"
-                    android:paddingLeft="76dp"
-                    android:paddingRight="76dp"
-                    android:backgroundTint="@color/blue"
+                    android:paddingLeft="78dp"
+                    android:paddingRight="78dp"
+                    android:background="@drawable/gradient"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp" />
+                    android:layout_marginTop="16dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -198,12 +190,9 @@
                     android:text="@string/login_suggest"
                     android:layout_below="@id/btn_signup"
                     android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
                     android:textSize="16sp"
                     android:textColor="@color/white" />
-
-
-
-
 
             </RelativeLayout>
         </LinearLayout>

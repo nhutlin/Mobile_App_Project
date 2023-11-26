@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView dialog_lang;
     private LinearLayout show_dialog_lang;
-    public int lang_selected;
+    public int lang_selected = 0;
 
     Context context;
     Resources resources;
@@ -67,13 +67,16 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         show_dialog_lang.setOnClickListener(new View.OnClickListener() {
-            int checklang;
-
             @Override
             public void onClick(View view) {
-                lang_selected = checklang;
+
                 final String[] Language = {"English", "Vietnamese"};
                 Log.d("Clicked","Clicked");
                 final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -84,16 +87,12 @@ public class MainActivity extends AppCompatActivity {
 
                                 if(Language[i].equals("English")){
                                     lang_selected = 0;
-                                    checklang = lang_selected;
+
                                     GlobalVar.manager.updateResources("en");
-
-
                                 }
                                 if(Language[i].equals("Vietnamese")) {
                                     lang_selected = 1;
-                                    checklang = lang_selected;
                                     GlobalVar.manager.updateResources("vi");
-
                                 }
                             }
                         })
