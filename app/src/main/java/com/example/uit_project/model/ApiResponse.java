@@ -2,7 +2,7 @@ package com.example.uit_project.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ApiRespone {
+public class ApiResponse {
     private String access_token;
     private int expires_in;
 

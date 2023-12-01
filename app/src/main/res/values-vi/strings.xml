@@ -30,4 +30,7 @@
     <string name="password_warning">Mật khẩu không khớp!</string>
     <string name="signup_success">Đăng kí thành công</string>
     <string name="invalidPass">Mật khẩu không hợp lệ</string>
+
+    <string name="permission_granted">Giấy phép được cấp phát</string>
+
 </resources>

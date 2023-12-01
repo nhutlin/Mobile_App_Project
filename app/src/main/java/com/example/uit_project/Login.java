@@ -1,15 +1,13 @@
 package com.example.uit_project;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -20,12 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uit_project.api.ApiService;
-import com.example.uit_project.model.ApiRespone;
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.uit_project.model.ApiResponse;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
 
 public class Login extends AppCompatActivity {
 
@@ -93,22 +93,25 @@ public class Login extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
-                ApiService authService;
-                authService = ApiClient.getClient().create(ApiService.class);
 
-                Call<ApiRespone> call = authService.getToken("openremote", user, pass, "password");
-                call.enqueue(new Callback<ApiRespone>() {
+                ApiService authService;
+                authService = ApiClientLogin.getClient().create(ApiService.class);
+
+                Call<ApiResponse> call = authService.getToken("openremote", user, pass, "password");
+                call.enqueue(new Callback<ApiResponse>() {
                     @Override
-                    public void onResponse(Call<ApiRespone> call, Response<ApiRespone> response) {
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()) {
+                            Log.v("LOGIN", "ok");
                             Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-                            Intent goToDashboard = new Intent();
-                            goToDashboard.setClass(Login.this, Dashboard.class);
-                            startActivity(goToDashboard);
+                            ApiResponse apiResponse = response.body();
+                            Intent i = new Intent();
+                            i.setClass(Login.this, DetailAsset.class);
+                            startActivity(i);
                         }
                     }
                     @Override
-                    public void onFailure(Call<ApiRespone> call, Throwable t) {
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
                         Toast.makeText(Login.this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
 
                     }

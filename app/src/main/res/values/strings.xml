@@ -31,4 +31,6 @@
     <string name="signup_success">Sign up successful</string>
     <string name="invalidPass">Invalid password</string>
 
+    <string name="permission_granted">Permission Granted</string>
+
 </resources>

@@ -8,7 +8,7 @@ public class GlobalVar {
 //    public static String tokenUrl = baseUrl + "auth/realms/master/protocol/openid-connect/token";
 //    public static String resetUrl = baseUrl + "auth/realms/master/account/password";
     public static String LOG_TAG = "API LOG";
-
+    public static String token;
     public static LanguageManager manager;
     public static RelativeLayout view;
 
