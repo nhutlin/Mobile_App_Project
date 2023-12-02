@@ -4,19 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailAsset">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:id="@+id/test" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/test"
-        android:id="@+id/testBtn"
-        android:layout_centerInParent="true"
-        android:text="GET" />
+    android:id="@+id/main_back_weather"
+    tools:context=".DetailAsset">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical">
+
+        <!-- Phần 1 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+
+            >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+                <TextView
+                    android:id="@+id/place"
+                    android:textSize="40sp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:layout_marginTop="26dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+
+                    />
+                <ImageView
+                    android:id="@+id/icon_weather"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/place"
+                    android:layout_centerHorizontal="true"
+                    android:scaleType="centerCrop"
+                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@+id/icon_weather"
+                    android:id="@+id/temperature"
+                    android:text=""
+                    android:paddingLeft="24dp"
+                    android:textColor="@color/white"
+                    android:textSize="60sp" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <!-- Phần 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+            <!-- Nội dung của phần 2 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
 
 </RelativeLayout>

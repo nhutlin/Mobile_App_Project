@@ -102,8 +102,7 @@ public class Login extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()) {
-                            Log.v("LOGIN", "ok");
-                            Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+
                             ApiResponse apiResponse = response.body();
                             Intent i = new Intent();
                             i.setClass(Login.this, DetailAsset.class);
@@ -148,7 +147,6 @@ public class Login extends AppCompatActivity {
         saveCheckBox = sharedPreferences.getBoolean(ISSAVE, false);
 
     }
-
     private void updateView() {
         Log.d("UPDATE DATA", "Data updated");
         username.setText(saveUserName);
