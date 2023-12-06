@@ -11,5 +11,6 @@ public class GlobalVar {
     public static String token;
     public static LanguageManager manager;
     public static RelativeLayout view;
+    public static String savedToken;
 
 }

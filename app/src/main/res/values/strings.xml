@@ -33,4 +33,15 @@
 
     <string name="permission_granted">Permission Granted</string>
 
+    <string name="humidity">Humidity</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="rainfall">Rainfall</string>
+    <string name="notes">Notes</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="uv_index">UV Index</string>
+    <string name="temperature">Temperature</string>
+    <string name="tags">Tags</string>
+
+
 </resources>

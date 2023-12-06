@@ -1,5 +1,7 @@
 package com.example.uit_project.model;
 
+import java.util.List;
+
 public class Tags {
-    public String value[];
+    public List<String> value;
 }

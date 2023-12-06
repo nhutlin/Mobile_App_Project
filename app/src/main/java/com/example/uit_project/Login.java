@@ -104,6 +104,7 @@ public class Login extends AppCompatActivity {
                         if(response.isSuccessful()) {
 
                             ApiResponse apiResponse = response.body();
+                            GlobalVar.savedToken = apiResponse.getAccess_token();
                             Intent i = new Intent();
                             i.setClass(Login.this, DetailAsset.class);
                             startActivity(i);

@@ -2,14 +2,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_back_weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:id="@+id/main_back_weather"
     tools:context=".DetailAsset">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/toolbar_weather"
 
         android:orientation="vertical">
 
@@ -20,40 +21,43 @@
             android:layout_weight="1"
 
             >
+
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+                android:layout_height="match_parent">
+
                 <TextView
                     android:id="@+id/place"
-                    android:textSize="40sp"
-                    android:text=""
-                    android:textColor="@color/white"
-                    android:layout_marginTop="26dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="30dp"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="45sp"
 
                     />
+
                 <ImageView
                     android:id="@+id/icon_weather"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/place"
                     android:layout_centerHorizontal="true"
-                    android:scaleType="centerCrop"
-                     />
+                    android:scaleType="centerCrop" />
+
                 <TextView
+                    android:id="@+id/temperature_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
                     android:layout_below="@+id/icon_weather"
-                    android:id="@+id/temperature"
-                    android:text=""
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
                     android:paddingLeft="24dp"
+                    android:text=""
                     android:textColor="@color/white"
-                    android:textSize="60sp" />
+                    android:textSize="70sp" />
 
             </RelativeLayout>
 
@@ -62,24 +66,377 @@
 
         <!-- Phần 2 -->
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
+            android:layout_weight="1.75"
             android:orientation="vertical">
-            <!-- Nội dung của phần 2 -->
-            <RelativeLayout
+
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 >
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
+
+                    <!-- Phần 1 -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--Manufacturer Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="95dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/manufacturer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+
+                                android:drawableLeft="@drawable/ic_manufacturer"
+                                android:drawablePadding="8dp"
+                                android:text="@string/manufacturer"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_manufacturer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/manufacturer"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
+                        </RelativeLayout>
+
+                        <!--Humidity Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/humidity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_humidity"
+                                android:drawablePadding="8dp"
+                                android:text="@string/humidity"
+                                android:textAlignment="center"
+                                android:gravity="center"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/value_humidity"
+                                android:textSize="50sp"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+                        <!--UV index information-->
+                        <RelativeLayout
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="4dp"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="84dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/uv_index"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_uv_index"
+                                android:drawablePadding="8dp"
+                                android:text="@string/uv_index"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_uv_index"
+                                android:layout_below="@+id/uv_index"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+
+                        <!--UV index information-->
+                        <RelativeLayout
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="84dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/tags"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_tags"
+                                android:drawablePadding="8dp"
+                                android:text="@string/tags"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_tags"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:layout_below="@+id/tags"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+
+                        <!--Wind direction Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/wind_direction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_wind_direction"
+                                android:drawablePadding="8dp"
+                                android:text="@string/wind_direction"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_wind_direction"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <!-- Phần 2 -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                        <!-- Nội dung của phần 2 -->
+
+                        <!--Notes Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="95dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/notes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_notes"
+                                android:drawablePadding="8dp"
+                                android:text="@string/notes"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/value_notes"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/notes"
+                                android:layout_marginLeft="20dp"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+                        </RelativeLayout>
+
+                        <!--Rainfall Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/rainfall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_rainfall"
+                                android:drawablePadding="8dp"
+                                android:text="@string/rainfall"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_rainfall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="30sp" />
+                        </RelativeLayout>
+
+                        <!--Temperature information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/temperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_temperature"
+                                android:drawablePadding="8dp"
+                                android:text="@string/temperature"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/value_temperature"
+                                android:textSize="40sp"
+                                android:textColor="@color/white" />
+                        </RelativeLayout>
+
+                        <!--Wind speed Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/back_form_asset"
+                            >
+
+                            <TextView
+                                android:id="@+id/wind_speed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_wind_speed"
+                                android:drawablePadding="8dp"
+                                android:text="@string/wind_speed"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_wind_speed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="30sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
         </LinearLayout>
-
     </LinearLayout>
 
 
 
+        <!--Bottom Navigation-->
+        <RelativeLayout
+            android:id="@+id/toolbar_weather"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_alignParentBottom="true"
+            android:background="#50E533ED"
+            >
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_map" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_graph" />
+
+        </RelativeLayout>
 
 </RelativeLayout>

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.uit_project"
-        minSdk = 24
+        minSdk = 31
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -46,6 +46,10 @@ dependencies {
     implementation("org.osmdroid:osmdroid-android:6.1.6")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.karumi:dexter:6.2.2")
+
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    // For control over item selection of both touch and mouse driven selection
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
 
 }
