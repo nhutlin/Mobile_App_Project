@@ -43,13 +43,18 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.airbnb.android:lottie:6.1.0");
     implementation("com.squareup.okhttp3:logging-interceptor:3.4.1")
-    implementation("org.osmdroid:osmdroid-android:6.1.6")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.karumi:dexter:6.2.2")
 
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     // For control over item selection of both touch and mouse driven selection
     implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
+
+    implementation("org.osmdroid:osmdroid-android:6.1.7")
+    implementation("androidx.preference:preference:1.1.1")
+
+    implementation("org.osmdroid:osmdroid-wms:6.1.2")
+
+
+
 
 
 }

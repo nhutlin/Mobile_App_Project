@@ -104,16 +104,15 @@ public class Login extends AppCompatActivity {
                         if(response.isSuccessful()) {
 
                             ApiResponse apiResponse = response.body();
-                            GlobalVar.savedToken = apiResponse.getAccess_token();
+
                             Intent i = new Intent();
-                            i.setClass(Login.this, DetailAsset.class);
+                            i.setClass(Login.this, Map.class);
                             startActivity(i);
                         }
                     }
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         Toast.makeText(Login.this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
-
                     }
                 });
             }
