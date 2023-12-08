@@ -1,5 +1,6 @@
 package com.example.uit_project.api;
-import com.example.uit_project.model.Asset;
+import com.example.uit_project.model.light.LightAsset;
+import com.example.uit_project.model.weather.WeatherAsset;
 import com.example.uit_project.model.ApiResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,5 +31,8 @@ public interface ApiService {
                                @Field("grant_type") String grant_type);
 
     @GET("api/master/asset/{assetID}")
-    Call<Asset> getAsset(@Path("assetID") String assetID, @Header("Authorization") String auth);
+    Call<WeatherAsset> getWeatherAsset(@Path("assetID") String assetID, @Header("Authorization") String auth);
+
+    @GET("api/master/asset/{assetID}")
+    Call<LightAsset> getLightAsset(@Path("assetID") String assetID, @Header("Authorization") String auth);
 }

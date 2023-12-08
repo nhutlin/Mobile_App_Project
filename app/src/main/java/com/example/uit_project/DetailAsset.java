@@ -1,5 +1,6 @@
 package com.example.uit_project;
-import com.example.uit_project.model.Asset;
+import com.example.uit_project.model.light.LightAsset;
+import com.example.uit_project.model.weather.WeatherAsset;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,13 +13,9 @@ import android.widget.TextView;
 
 import com.example.uit_project.api.ApiService;
 
-import java.util.List;
-
-import okhttp3.Headers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Header;
 
 public class DetailAsset extends AppCompatActivity {
     private TextView temperature;
@@ -67,12 +64,12 @@ public class DetailAsset extends AppCompatActivity {
 
 
 
-        ApiService.apiService.getAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer" + GlobalVar.token)
-                .enqueue(new Callback<Asset>() {
+        ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer" + GlobalVar.token)
+                .enqueue(new Callback<WeatherAsset>() {
                     @Override
-                    public void onResponse(Call<Asset> call, Response<Asset> response) {
+                    public void onResponse(Call<WeatherAsset> call, Response<WeatherAsset> response) {
                         Log.d("API CALL", response.code()+"");
-                        Asset asset = response.body();
+                        WeatherAsset asset = response.body();
                         int valueTemperature = (int) asset.attributes.temperature.value;
                         // get header value
                         if(hour24hrs >= 6 && hour24hrs <= 18) {
@@ -112,9 +109,10 @@ public class DetailAsset extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<Asset> call, Throwable t) {
+                    public void onFailure(Call<WeatherAsset> call, Throwable t) {
 
                     }
                 });
+
     }
 }

@@ -6,13 +6,15 @@ android {
     namespace = "com.example.uit_project"
     compileSdk = 34
 
+    buildFeatures {
+        buildConfig = true
+    }
     defaultConfig {
         applicationId = "com.example.uit_project"
         minSdk = 31
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -21,6 +23,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -44,12 +47,9 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.1.0");
     implementation("com.squareup.okhttp3:logging-interceptor:3.4.1")
 
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    // For control over item selection of both touch and mouse driven selection
-    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 
     implementation("org.osmdroid:osmdroid-android:6.1.7")
-    implementation("androidx.preference:preference:1.1.1")
+    implementation("androidx.preference:preference:1.2.0")
 
     implementation("org.osmdroid:osmdroid-wms:6.1.2")
 

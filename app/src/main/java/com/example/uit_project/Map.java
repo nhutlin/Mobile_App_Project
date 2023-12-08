@@ -6,101 +6,114 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.Manifest;
-import android.util.Log;
-import android.widget.TextView;
+import android.util.DisplayMetrics;
+
+import androidx.preference.PreferenceManager;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import androidx.preference.PreferenceManager;
 
 
-import com.example.uit_project.api.ApiService;
-import com.example.uit_project.model.Asset;
 
 import org.osmdroid.config.Configuration;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Map extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private MapView map = null;
-    
-    private double longitude;
-    private double latitude;
-
+    private Marker markerLight;
+    private Marker markerWeather;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //handle permissions first, before map is created. not depicted here
-
-        //load/initialize the osmdroid configuration, this can be done
+        setContentView(R.layout.activity_map);
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        //setting this before the layout is inflated is a good idea
-        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
-        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
-        //see also StorageUtils
-        //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's
-        //tile servers will get you banned based on this string
-
-        //inflate and create the map
-        setContentView(R.layout.activity_map);
 
         map = (MapView) findViewById(R.id.map);
 
+        // Set map zoom and map's position
         map.setTileSource(TileSourceFactory.MAPNIK);
-        TextView test = findViewById(R.id.test);
+        IMapController mapController = map.getController();
+        mapController.setZoom(19.25);
+        GeoPoint startPoint = new GeoPoint(10.869778736885038, 106.80280655508835);
+        mapController.setCenter(startPoint);
 
-        requestPermissionsIfNecessary(new String[]{
-                // if you need to show the current location, uncomment the line below
-                // Manifest.permission.ACCESS_FINE_LOCATION,
-                // WRITE_EXTERNAL_STORAGE is required in order to show the map
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        });
-        ApiService.apiService.getAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer" + GlobalVar.token)
-                .enqueue(new Callback<Asset>() {
-                    @Override
-                    public void onResponse(Call<Asset> call, Response<Asset> response) {
-                        Log.d("API CALL", response.code()+"");
-                        Asset asset = response.body();
+        // Mark the weather assent to the map
+        GeoPoint point = new GeoPoint(10.869778736885038, 106.80280655508835);
+        markerWeather = new Marker(map);
+        markerWeather.setPosition(point);
 
-                        latitude = asset.attributes.location.value.coordinate.get(1);
-                        longitude = asset.attributes.location.value.coordinate.get(0);
-                        map.setMultiTouchControls(true);
-                        IMapController mapController = map.getController();
-                        mapController.setZoom(18.5);
-                        GeoPoint startPoint = new GeoPoint(latitude, longitude);
-                        mapController.setCenter(startPoint);
-                    }
+        // Set the icon for weather marker
+        Resources res = getResources();
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+        int width = (int) (44 * displayMetrics.density); // Adjust the width as needed
+        int height = (int) (44 * displayMetrics.density); // Adjust the height as needed
 
-                    @Override
-                    public void onFailure(Call<Asset> call, Throwable t) {
+        // Decode the bitmap with the desired size
+        Bitmap markerBitmapWeather = BitmapFactory.decodeResource(res, R.drawable.ic_weather_marker);
+        Bitmap resizedBitmap = Bitmap.createScaledBitmap(markerBitmapWeather, width, height, false);
 
-                    }
-                });
+        // Create a custom marker drawable
+        CustomMarkerDrawable markerDrawableWeather = new CustomMarkerDrawable(res, resizedBitmap);
+        markerWeather.setIcon(markerDrawableWeather);
+        markerWeather.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        markerWeather.setInfoWindow(null);
+        markerWeather.setTextLabelFontSize(50);
+        map.getOverlays().add(markerWeather);
 
+        Bitmap markerBitmapLight= BitmapFactory.decodeResource(res, R.drawable.ic_light_marker);
+        Bitmap resizedBitLight = Bitmap.createScaledBitmap(markerBitmapLight, width, height, false);
 
+        // Create a custom marker drawable
+        CustomMarkerDrawable markerDrawableLight = new CustomMarkerDrawable(res, resizedBitLight);
+
+        // Mark the light assent to the map
+        GeoPoint point2 = new GeoPoint(10.869905172970164, 106.80345028525176);
+        markerLight = new Marker(map);
+        markerLight.setPosition(point2);
+        markerLight.setIcon(markerDrawableLight);
+        markerLight.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+        markerLight.setInfoWindow(null);
+        map.getOverlays().add(markerLight);
+
+//        requestPermissionsIfNecessary(new String[]{
+//                // if you need to show the current location, uncomment the line below
+////                 Manifest.permission.ACCESS_FINE_LOCATION,
+//                // WRITE_EXTERNAL_STORAGE is required in order to show the map
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//
+//
+//        });
+        showInfo();
     }
 
+    public void showInfo() {
+
+    }
     @Override
     public void onResume() {
         super.onResume();
         //this will refresh the osmdroid configuration on resuming.
         //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
     }
 
@@ -109,8 +122,8 @@ public class Map extends AppCompatActivity {
         super.onPause();
         //this will refresh the osmdroid configuration on resuming.
         //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().save(this, prefs);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
 
