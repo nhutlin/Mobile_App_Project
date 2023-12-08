@@ -33,6 +33,11 @@ public class WeatherAsset extends AppCompatActivity {
     private TextView tags;
     private ImageView returnMap;
     private ImageView viewGraph;
+    private TextView sun_altitude;
+    private TextView sun_azimuth;
+    private TextView sun_irradiance;
+    private TextView sun_zenith;
+
 
     ApiService apiService;
     //private String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoREkwZ2hyVlJvaE5zVy1wSXpZeDBpT2lHMzNlWjJxV21sRk4wWGE1dWkwIn0.eyJleHAiOjE3MDE2MjU2MzYsImlhdCI6MTcwMTUzOTIzNywiYXV0aF90aW1lIjoxNzAxNTM5MjM2LCJqdGkiOiI2NTM0ZWVkYS0zNGVmLTQyZmYtYjVmNC1mMTEyODRkZGJmYWMiLCJpc3MiOiJodHRwczovL3Vpb3QuaXh4Yy5kZXYvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjRlM2E0NDk2LTJmMTktNDgxMy1iZjAwLTA5NDA3ZDFlZThjYiIsInR5cCI6IkJlYXJlciIsImF6cCI6Im9wZW5yZW1vdGUiLCJzZXNzaW9uX3N0YXRlIjoiZDRkMmIxZDEtMWEyYi00NjU2LTlmZWMtZDJmMGU1MTA1NWEzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Vpb3QuaXh4Yy5kZXYiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im9wZW5yZW1vdGUiOnsicm9sZXMiOlsicmVhZDptYXAiLCJyZWFkOnJ1bGVzIiwicmVhZDppbnNpZ2h0cyIsInJlYWQ6YXNzZXRzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkNGQyYjFkMS0xYTJiLTQ2NTYtOWZlYy1kMmYwZTUxMDU1YTMiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJGaXJzdCBOYW1lIExhc3QgbmFtZSIsInByZWZlcnJlZF91c2VybmFtZSI6InVzZXIiLCJnaXZlbl9uYW1lIjoiRmlyc3QgTmFtZSIsImZhbWlseV9uYW1lIjoiTGFzdCBuYW1lIiwiZW1haWwiOiJ1c2VyQGl4eGMuZGV2In0.RdfoGaY_Lcil1OZ9KCGteI4WDkVCVVCHRubCUpeYTvbrhmqnk8hG7jAHROkWN8WcWzEZAtETMCI7RvqttrCuHmATTra8Oz7eVOMZ5iw_uP3jlXBoOJOYKXSMPM2Al0bXVIcDjILN85y5s1DhWK4iIlQB5Cam7rE0FVtbBP4C5QpTFFgk79Vsh__GjUGuSbFXd0aGyhTa8t-dzou3jpcv7VJ_E3Aes9q3ucTYe9ue18Aw1-QOMWo2WhNqOnJ9Tt9splJ4WWI7Jfg5Sfv4-3BJiqD2jpUBt66wcjVT_fnpM5i-0kRqt5MR-fHzYU5WSoHbsExfZP7yvpePrXxYbLc10Q";
@@ -56,6 +61,11 @@ public class WeatherAsset extends AppCompatActivity {
         temperature = findViewById(R.id.value_temperature);
         uv = findViewById(R.id.value_uv_index);
         tags = findViewById(R.id.value_tags);
+        sun_altitude = findViewById(R.id.value_sunAltitude);
+        sun_azimuth = findViewById(R.id.value_sunAzimuth);
+        sun_irradiance = findViewById(R.id.value_sunIrradiance);
+        sun_zenith = findViewById(R.id.value_sunZenith);
+
 
         returnMap = findViewById(R.id.return_map);
         viewGraph = findViewById(R.id.view_graph);
@@ -83,23 +93,25 @@ public class WeatherAsset extends AppCompatActivity {
                         // get header value
                         if(hour24hrs >= 6 && hour24hrs <= 18) {
                             if(valueTemperature > 27) {
-                                main_back_weather.setBackgroundResource(R.drawable.back_sunny);
+                                //main_back_weather.setBackgroundResource(R.drawable.back_sunny);
 //                                iconWeather.setImageResource(R.drawable.sunny);
 
                             } else if(valueTemperature <= 27 && valueTemperature >= 25){
-                                main_back_weather.setBackgroundResource(R.drawable.back_cloudy_sunny);
+                                //main_back_weather.setBackgroundResource(R.drawable.back_cloudy_sunny);
 //                                iconWeather.setImageResource(R.drawable.cloudy_sunny);
                             }
                             else {
-                                main_back_weather.setBackgroundResource(R.drawable.back_cloudy);
-//                                iconWeather.setImageResource(R.drawable.cloudy);
+                                //main_back_weather.setBackgroundResource(R.drawable.back_cloudy);
+//                              iconWeather.setImageResource(R.drawable.cloudy);
                             }
 
                         } else {
                             if(valueTemperature > 25) {
-                                main_back_weather.setBackgroundResource(R.drawable.back_night);
+                                //main_back_weather.setBackgroundResource(R.drawable.back_night);
+                                iconWeather.setImageResource(R.drawable.moon);
                             } else if(valueTemperature <= 25) {
-                                main_back_weather.setBackgroundResource(R.drawable.back_night_cloud);
+                                //main_back_weather.setBackgroundResource(R.drawable.back_night_cloud);
+                                iconWeather.setImageResource(R.drawable.cloud_night);
                             }
                         }
 
@@ -114,6 +126,9 @@ public class WeatherAsset extends AppCompatActivity {
                         wind_direction.setText(String.valueOf(asset.attributes.windDirection.value));
                         wind_speed.setText(String.valueOf(asset.attributes.windSpeed.value) + " km/h");
                         tags.setText(asset.attributes.tags.value.toString());
+                        sun_altitude.setText(asset.attributes.sunAltitude.value);
+                        sun_azimuth.setText(asset.attributes.sunAzimuth.value);
+                        sun_irradiance.setText(asset.attributes.sunIrradiance.value);
 
                     }
 

@@ -42,6 +42,10 @@
     <string name="uv_index">UV Index</string>
     <string name="temperature">Temperature</string>
     <string name="tags">Tags</string>
+    <string name="sun_altitude">Sun altitude</string>
+    <string name="sun_irradiance">Sun irradiance</string>
+    <string name="sun_azimuth">Sun azimuth</string>
+    <string name="sun_zenith">Sun zenith</string>
 
     <string name="close">CLOSE</string>
     <string name="view_detail">VIEW DETAILS</string>
@@ -52,5 +56,6 @@
     <string name="brightness">Brightness</string>
     <string name="onOff">On off</string>
     <string name="colourTemperature">Colour Temperature</string>
+
 
 </resources>

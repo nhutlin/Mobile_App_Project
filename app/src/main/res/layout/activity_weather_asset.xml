@@ -5,6 +5,7 @@
     android:id="@+id/main_back_weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_home"
     tools:context=".WeatherAsset">
 
     <LinearLayout
@@ -18,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
 
             >
 
@@ -32,11 +33,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="25dp"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="45sp"
-
                     />
 
                 <ImageView
@@ -56,10 +56,9 @@
                     android:paddingLeft="24dp"
                     android:text=""
                     android:textColor="@color/white"
-                    android:textSize="70sp" />
+                    android:textSize="65sp" />
 
             </RelativeLayout>
-
 
         </LinearLayout>
 
@@ -75,6 +74,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 >
 
                 <LinearLayout
@@ -95,7 +95,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="95dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -105,7 +105,6 @@
                                 android:layout_marginStart="8dp"
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="8dp"
-
                                 android:drawableLeft="@drawable/ic_manufacturer"
                                 android:drawablePadding="8dp"
                                 android:text="@string/manufacturer"
@@ -129,7 +128,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="176dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -158,15 +157,14 @@
 
                         <!--UV index information-->
                         <RelativeLayout
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="4dp"
-
                             android:layout_width="match_parent"
-                            android:layout_height="84dp"
-                            android:background="@drawable/back_form_asset"
-                            >
+                            android:layout_height="85dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+
+                            android:layout_marginRight="8dp"
+                            android:layout_marginBottom="4dp"
+                            android:background="@drawable/backform">
 
                             <TextView
                                 android:id="@+id/uv_index"
@@ -178,17 +176,17 @@
                                 android:layout_marginBottom="8dp"
                                 android:drawableLeft="@drawable/ic_uv_index"
                                 android:drawablePadding="8dp"
+                                android:gravity="center"
                                 android:text="@string/uv_index"
                                 android:textAlignment="center"
                                 android:textColor="@color/white"
-                                android:gravity="center"
                                 android:textSize="16sp" />
 
                             <TextView
                                 android:id="@+id/value_uv_index"
-                                android:layout_below="@+id/uv_index"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/uv_index"
                                 android:layout_centerInParent="true"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
@@ -202,7 +200,7 @@
                             android:layout_marginBottom="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="84dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -236,7 +234,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="176dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -264,6 +262,71 @@
                                 android:textSize="50sp" />
                         </RelativeLayout>
 
+                        <!--Sun Altitude Information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/backform"
+                            >
+
+                            <TextView
+                                android:id="@+id/sun_altitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_sun_altitude"
+                                android:drawablePadding="8dp"
+                                android:text="@string/sun_altitude"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_sunAltitude"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/backform"
+                            >
+
+                            <TextView
+                                android:id="@+id/sun_azimuth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_sun_azimuth"
+                                android:drawablePadding="8dp"
+                                android:text="@string/sun_azimuth"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_sunAzimuth"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
+                        </RelativeLayout>
+
 
                     </LinearLayout>
 
@@ -280,7 +343,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="95dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -314,7 +377,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="176dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -347,7 +410,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="176dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -379,7 +442,7 @@
                             android:layout_margin="8dp"
                             android:layout_width="match_parent"
                             android:layout_height="176dp"
-                            android:background="@drawable/back_form_asset"
+                            android:background="@drawable/backform"
                             >
 
                             <TextView
@@ -406,6 +469,72 @@
                                 android:textColor="@color/white"
                                 android:textSize="30sp" />
                         </RelativeLayout>
+
+                        <!--Sun irradiance information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/backform"
+                            >
+
+                            <TextView
+                                android:id="@+id/sun_irradiance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_sun_irradiance"
+                                android:drawablePadding="8dp"
+                                android:text="@string/sun_irradiance"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_sunIrradiance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
+                        </RelativeLayout>
+
+                        <!--Sun zenith information-->
+                        <RelativeLayout
+                            android:layout_margin="8dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="176dp"
+                            android:background="@drawable/backform"
+                            >
+
+                            <TextView
+                                android:id="@+id/sun_zenith"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="8dp"
+                                android:drawableLeft="@drawable/ic_sun_zenith"
+                                android:drawablePadding="8dp"
+                                android:text="@string/sun_zenith"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/value_sunZenith"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
+                        </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -415,22 +544,26 @@
 
 
         <!--Bottom Navigation-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="1dp"-->
+<!--            android:background="@color/white"-->
+<!--            android:layout_above="@+id/toolbar_weather" />-->
         <RelativeLayout
             android:id="@+id/toolbar_weather"
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            android:layout_marginTop="4dp"
             android:layout_alignParentBottom="true"
-            android:background="#50E533ED"
+            android:background="@drawable/back_nav"
             >
 
             <ImageView
                 android:id="@+id/return_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/ic_map" />
 
             <ImageView
@@ -438,7 +571,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_margin="16dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/ic_graph" />
 
         </RelativeLayout>

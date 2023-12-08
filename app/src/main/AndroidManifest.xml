@@ -18,7 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UIT_Project"
         tools:targetApi="31">
-
+        <activity
+            android:name=".LightAsset"
+            android:exported="false" />
         <activity
             android:name=".WeatherAsset"
             android:exported="false" />

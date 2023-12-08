@@ -42,6 +42,11 @@
     <string name="uv_index">Chỉ số UV</string>
     <string name="temperature">Nhiệt độ</string>
     <string name="tags">Thẻ</string>
+    <string name="sun_altitude">Độ cao mặt trời</string>
+    <string name="sun_irradiance">Bức xạ mặt trời</string>
+    <string name="sun_azimuth">Phương vị mặt trời</string>
+    <string name="sun_zenith">Thiên đỉnh mặt trời</string>
+
 
     <string name="close">ĐÓNG</string>
     <string name="view_detail">XEM CHI TIẾT</string>
