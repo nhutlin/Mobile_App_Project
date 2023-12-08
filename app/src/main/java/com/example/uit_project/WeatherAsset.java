@@ -1,12 +1,11 @@
 package com.example.uit_project;
-import com.example.uit_project.model.light.LightAsset;
-import com.example.uit_project.model.weather.WeatherAsset;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,9 +16,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetailAsset extends AppCompatActivity {
+public class WeatherAsset extends AppCompatActivity {
     private TextView temperature;
-    private TextView temperature_info;
+    private TextView temperature_logo;
     private TextView place;
     private ImageView iconWeather;
 
@@ -32,6 +31,8 @@ public class DetailAsset extends AppCompatActivity {
     private TextView wind_speed;
     private TextView uv;
     private TextView tags;
+    private ImageView returnMap;
+    private ImageView viewGraph;
 
     ApiService apiService;
     //private String token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJoREkwZ2hyVlJvaE5zVy1wSXpZeDBpT2lHMzNlWjJxV21sRk4wWGE1dWkwIn0.eyJleHAiOjE3MDE2MjU2MzYsImlhdCI6MTcwMTUzOTIzNywiYXV0aF90aW1lIjoxNzAxNTM5MjM2LCJqdGkiOiI2NTM0ZWVkYS0zNGVmLTQyZmYtYjVmNC1mMTEyODRkZGJmYWMiLCJpc3MiOiJodHRwczovL3Vpb3QuaXh4Yy5kZXYvYXV0aC9yZWFsbXMvbWFzdGVyIiwiYXVkIjoiYWNjb3VudCIsInN1YiI6IjRlM2E0NDk2LTJmMTktNDgxMy1iZjAwLTA5NDA3ZDFlZThjYiIsInR5cCI6IkJlYXJlciIsImF6cCI6Im9wZW5yZW1vdGUiLCJzZXNzaW9uX3N0YXRlIjoiZDRkMmIxZDEtMWEyYi00NjU2LTlmZWMtZDJmMGU1MTA1NWEzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwczovL3Vpb3QuaXh4Yy5kZXYiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbImRlZmF1bHQtcm9sZXMtbWFzdGVyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7Im9wZW5yZW1vdGUiOnsicm9sZXMiOlsicmVhZDptYXAiLCJyZWFkOnJ1bGVzIiwicmVhZDppbnNpZ2h0cyIsInJlYWQ6YXNzZXRzIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6InByb2ZpbGUgZW1haWwiLCJzaWQiOiJkNGQyYjFkMS0xYTJiLTQ2NTYtOWZlYy1kMmYwZTUxMDU1YTMiLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsIm5hbWUiOiJGaXJzdCBOYW1lIExhc3QgbmFtZSIsInByZWZlcnJlZF91c2VybmFtZSI6InVzZXIiLCJnaXZlbl9uYW1lIjoiRmlyc3QgTmFtZSIsImZhbWlseV9uYW1lIjoiTGFzdCBuYW1lIiwiZW1haWwiOiJ1c2VyQGl4eGMuZGV2In0.RdfoGaY_Lcil1OZ9KCGteI4WDkVCVVCHRubCUpeYTvbrhmqnk8hG7jAHROkWN8WcWzEZAtETMCI7RvqttrCuHmATTra8Oz7eVOMZ5iw_uP3jlXBoOJOYKXSMPM2Al0bXVIcDjILN85y5s1DhWK4iIlQB5Cam7rE0FVtbBP4C5QpTFFgk79Vsh__GjUGuSbFXd0aGyhTa8t-dzou3jpcv7VJ_E3Aes9q3ucTYe9ue18Aw1-QOMWo2WhNqOnJ9Tt9splJ4WWI7Jfg5Sfv4-3BJiqD2jpUBt66wcjVT_fnpM5i-0kRqt5MR-fHzYU5WSoHbsExfZP7yvpePrXxYbLc10Q";
@@ -40,9 +41,9 @@ public class DetailAsset extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail_asset);
+        setContentView(R.layout.activity_weather_asset);
 
-        temperature_info = findViewById(R.id.temperature_info);
+        temperature_logo = findViewById(R.id.temperature_logo);
         place = findViewById(R.id.place);
         iconWeather = findViewById(R.id.icon_weather);
         main_back_weather = (RelativeLayout) findViewById(R.id.main_back_weather);
@@ -56,20 +57,28 @@ public class DetailAsset extends AppCompatActivity {
         uv = findViewById(R.id.value_uv_index);
         tags = findViewById(R.id.value_tags);
 
+        returnMap = findViewById(R.id.return_map);
+        viewGraph = findViewById(R.id.view_graph);
+
+        returnMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         Calendar calendar = Calendar.getInstance();
         int hour24hrs = calendar.get(Calendar.HOUR_OF_DAY);
 //        int hour12hrs = calendar.get(Calendar.HOUR);
 //        int minutes = calendar.get(Calendar.MINUTE);
 //        int seconds = calendar.get(Calendar.SECOND);
 
-
-
         ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer" + GlobalVar.token)
-                .enqueue(new Callback<WeatherAsset>() {
+                .enqueue(new Callback<com.example.uit_project.model.weather.WeatherAsset>() {
                     @Override
-                    public void onResponse(Call<WeatherAsset> call, Response<WeatherAsset> response) {
+                    public void onResponse(Call<com.example.uit_project.model.weather.WeatherAsset> call, Response<com.example.uit_project.model.weather.WeatherAsset> response) {
                         Log.d("API CALL", response.code()+"");
-                        WeatherAsset asset = response.body();
+                        com.example.uit_project.model.weather.WeatherAsset asset = response.body();
                         int valueTemperature = (int) asset.attributes.temperature.value;
                         // get header value
                         if(hour24hrs >= 6 && hour24hrs <= 18) {
@@ -94,7 +103,7 @@ public class DetailAsset extends AppCompatActivity {
                             }
                         }
 
-                        temperature_info.setText(String.valueOf(valueTemperature) + "\u00B0");
+                        temperature_logo.setText(String.valueOf(valueTemperature) + "\u00B0");
                         place.setText(asset.attributes.place.value.toString());
 
                         manufacturer.setText(asset.attributes.manufacturer.value);
@@ -109,7 +118,7 @@ public class DetailAsset extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<WeatherAsset> call, Throwable t) {
+                    public void onFailure(Call<com.example.uit_project.model.weather.WeatherAsset> call, Throwable t) {
 
                     }
                 });

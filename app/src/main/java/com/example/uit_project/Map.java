@@ -7,17 +7,25 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.preference.PreferenceManager;
+
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -28,7 +36,6 @@ import org.osmdroid.views.MapView;
 
 import org.osmdroid.config.Configuration;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.infowindow.InfoWindow;
 
 import java.util.ArrayList;
 
@@ -38,6 +45,9 @@ public class Map extends AppCompatActivity {
     private MapView map = null;
     private Marker markerLight;
     private Marker markerWeather;
+    private Dialog dialog;
+    private Button closePopup;
+    private Button viewDetails;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +88,7 @@ public class Map extends AppCompatActivity {
         markerWeather.setTextLabelFontSize(50);
         map.getOverlays().add(markerWeather);
 
-        Bitmap markerBitmapLight= BitmapFactory.decodeResource(res, R.drawable.ic_light_marker);
+        Bitmap markerBitmapLight = BitmapFactory.decodeResource(res, R.drawable.ic_light_marker);
         Bitmap resizedBitLight = Bitmap.createScaledBitmap(markerBitmapLight, width, height, false);
 
         // Create a custom marker drawable
@@ -93,6 +103,7 @@ public class Map extends AppCompatActivity {
         markerLight.setInfoWindow(null);
         map.getOverlays().add(markerLight);
 
+
 //        requestPermissionsIfNecessary(new String[]{
 //                // if you need to show the current location, uncomment the line below
 ////                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -101,11 +112,71 @@ public class Map extends AppCompatActivity {
 //
 //
 //        });
+        dialog = new Dialog(this);
+
         showInfo();
     }
-
     public void showInfo() {
+        markerWeather.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker, MapView mapView) {
+                dialog.setContentView(R.layout.weather_popup);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                Log.v("SHOW DIALOG", "SUCCESS");
 
+                closePopup = dialog.findViewById(R.id.close_popup);
+                viewDetails = dialog.findViewById(R.id.view_details);
+
+                closePopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        Log.v("HIDE DIALOG", "SUCCESS");
+                    }
+                });
+
+                viewDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent();
+                        i.setClass(Map.this, WeatherAsset.class);
+                        startActivity(i);
+                    }
+                });
+                return true;
+            }
+        });
+        markerLight.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker, MapView mapView) {
+                dialog.setContentView(R.layout.light_popup);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+                Log.v("SHOW DIALOG", "SUCCESS");
+
+                closePopup = dialog.findViewById(R.id.close_popup);
+                viewDetails = dialog.findViewById(R.id.view_details);
+
+                closePopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.cancel();
+                        Log.v("HIDE DIALOG", "SUCCESS");
+                    }
+                });
+
+                viewDetails.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent();
+                        i.setClass(Map.this, WeatherAsset.class);
+                        startActivity(i);
+                    }
+                });
+                return true;
+            }
+        });
     }
     @Override
     public void onResume() {

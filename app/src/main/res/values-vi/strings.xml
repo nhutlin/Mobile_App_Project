@@ -42,8 +42,15 @@
     <string name="uv_index">Chỉ số UV</string>
     <string name="temperature">Nhiệt độ</string>
     <string name="tags">Thẻ</string>
-    
 
+    <string name="close">ĐÓNG</string>
+    <string name="view_detail">XEM CHI TIẾT</string>
+    <string name="title_weather">THỜI TIẾT</string>
+    <string name="title_light">ÁNH SÁNG</string>
+
+    <string name="brightness">Độ sáng</string>
+    <string name="onOff">Mở tắt</string>
+    <string name="colourTemperature">Nhiệt độ màu</string>
 
 
 

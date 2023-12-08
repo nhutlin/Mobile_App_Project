@@ -43,5 +43,14 @@
     <string name="temperature">Temperature</string>
     <string name="tags">Tags</string>
 
+    <string name="close">CLOSE</string>
+    <string name="view_detail">VIEW DETAILS</string>
+    <string name="title_weather">WEATHER</string>
+    <string name="title_light">LIGHT</string>
+
+
+    <string name="brightness">Brightness</string>
+    <string name="onOff">On off</string>
+    <string name="colourTemperature">Colour Temperature</string>
 
 </resources>
