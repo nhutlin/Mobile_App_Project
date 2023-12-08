@@ -19,21 +19,50 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.5"
-
+            android:layout_weight="1.25"
             >
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="16dp">
+
+                    <TextView
+                        android:id="@+id/hi_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center"
+                        android:text="@string/hi"
+                        android:drawableLeft="@drawable/ic_user"
+                        android:textSize="20sp"
+                        android:layout_centerInParent="true"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"/>
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@+id/hi_text"
+                        android:layout_centerInParent="true"
+                        android:textSize="20sp"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="50dp"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="45sp"
@@ -54,6 +83,7 @@
                     android:layout_below="@+id/icon_weather"
                     android:layout_centerInParent="true"
                     android:paddingLeft="24dp"
+                    android:layout_alignParentBottom="true"
                     android:text=""
                     android:textColor="@color/white"
                     android:textSize="65sp" />
@@ -64,12 +94,11 @@
 
         <!-- Phần 2 -->
         <LinearLayout
-
+            android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1.75"
             android:orientation="vertical">
-
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -81,7 +110,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-
 
                     <!-- Phần 1 -->
                     <LinearLayout
@@ -146,13 +174,14 @@
                                 android:gravity="center"
                                 android:textColor="@color/white"
                                 android:textSize="16sp" />
+
                             <TextView
+                                android:id="@+id/value_humidity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:id="@+id/value_humidity"
-                                android:textSize="50sp"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
                         </RelativeLayout>
 
                         <!--UV index information-->
@@ -428,13 +457,14 @@
                                 android:textColor="@color/white"
                                 android:gravity="center"
                                 android:textSize="16sp" />
+
                             <TextView
+                                android:id="@+id/value_temperature"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
-                                android:id="@+id/value_temperature"
-                                android:textSize="40sp"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"
+                                android:textSize="50sp" />
                         </RelativeLayout>
 
                         <!--Wind speed Information-->

@@ -33,6 +33,7 @@
 
     <string name="permission_granted">Permission Granted</string>
 
+    <string name="hi">Hi, </string>
     <string name="humidity">Humidity</string>
     <string name="manufacturer">Manufacturer</string>
     <string name="rainfall">Rainfall</string>
@@ -54,8 +55,10 @@
 
 
     <string name="brightness">Brightness</string>
-    <string name="onOff">On off</string>
-    <string name="colourTemperature">Colour Temperature</string>
-
+    <string name="onOff">On/off</string>
+    <string name="colour_temperature">Colour Temperature</string>
+    <string name="colour_RGB">Colour RGB</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
 
 </resources>

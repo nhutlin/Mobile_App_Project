@@ -48,6 +48,7 @@ public class Map extends AppCompatActivity {
     private Dialog dialog;
     private Button closePopup;
     private Button viewDetails;
+    private String username;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +57,8 @@ public class Map extends AppCompatActivity {
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
 
+        Intent intent = getIntent();
+        username = intent.getStringExtra("Username");
         map = (MapView) findViewById(R.id.map);
 
         // Set map zoom and map's position
@@ -140,6 +143,7 @@ public class Map extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent();
+                        i.putExtra("Username", username);
                         i.setClass(Map.this, WeatherAsset.class);
                         startActivity(i);
                     }
@@ -170,7 +174,8 @@ public class Map extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent();
-                        i.setClass(Map.this, WeatherAsset.class);
+                        i.putExtra("Username", username);
+                        i.setClass(Map.this, LightAsset.class);
                         startActivity(i);
                     }
                 });

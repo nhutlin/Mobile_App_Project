@@ -32,6 +32,7 @@
     <string name="invalidPass">Mật khẩu không hợp lệ</string>
 
     <string name="permission_granted">Giấy phép được cấp phát</string>
+    <string name="hi">Chào, </string>
 
     <string name="humidity">Độ ẩm</string>
     <string name="manufacturer">Nhà sản xuât</string>
@@ -54,8 +55,11 @@
     <string name="title_light">ÁNH SÁNG</string>
 
     <string name="brightness">Độ sáng</string>
-    <string name="onOff">Mở tắt</string>
-    <string name="colourTemperature">Nhiệt độ màu</string>
+    <string name="onOff">Mở/tắt</string>
+    <string name="colour_RGB">Màu RGB</string>
+    <string name="colour_temperature">Nhiệt độ màu</string>
+    <string name="on">Mở</string>
+    <string name="off">Tắt</string>
 
 
 

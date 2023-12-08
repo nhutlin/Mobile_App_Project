@@ -106,9 +106,10 @@ public class Login extends AppCompatActivity {
 
                             ApiResponse apiResponse = response.body();
 
-                            Intent i = new Intent();
-                            i.setClass(Login.this, Map.class);
-                            startActivity(i);
+                            Intent intentMap = new Intent();
+                            intentMap.putExtra("Username", username.getText().toString());
+                            intentMap.setClass(Login.this, Map.class);
+                            startActivity(intentMap);
                         }
                     }
                     @Override
