@@ -121,7 +121,7 @@ public class WeatherAsset extends AppCompatActivity {
                         place.setText(asset.attributes.place.value.toString());
 
                         manufacturer.setText(asset.attributes.manufacturer.value);
-                        temperature.setText(String.valueOf(valueTemperature) + "\u00B0");
+                        temperature.setText(String.valueOf(valueTemperature) + "\u2103");
                         humidity.setText(String.valueOf(asset.attributes.humidity.value) + "%");
                         rainfall.setText(String.valueOf(asset.attributes.rainFall.value) + " mm");
                         notes.setText(asset.attributes.notes.value);

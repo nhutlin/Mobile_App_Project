@@ -85,6 +85,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/brightness"
                     android:id="@+id/brightness_value"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="right"
@@ -98,8 +99,9 @@
                     android:id="@+id/colourTemperature_value"
                     android:layout_gravity="right"
                     android:textSize="20sp"
+                    android:text="@string/temperature"
                     android:textColor="@color/white"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="28dp"
                     android:layout_marginRight="8dp" />
                 <TextView
                     android:layout_width="wrap_content"
@@ -108,6 +110,7 @@
                     android:textColor="@color/white"
                     android:layout_gravity="right"
                     android:textSize="20sp"
+                    android:text="@string/on"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp" />
             </LinearLayout>

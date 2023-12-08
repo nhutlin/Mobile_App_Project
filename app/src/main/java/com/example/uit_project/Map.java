@@ -23,9 +23,12 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.preference.PreferenceManager;
 
+
+import com.example.uit_project.api.ApiService;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -39,6 +42,10 @@ import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 public class Map extends AppCompatActivity {
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
@@ -49,6 +56,13 @@ public class Map extends AppCompatActivity {
     private Button closePopup;
     private Button viewDetails;
     private String username;
+    private TextView brightness;
+    private TextView colour_temperature;
+    private TextView on_off;
+    private TextView humidity;
+    private TextView manufacturer;
+    private TextView rainfall;
+    private TextView temperature;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,9 +142,29 @@ public class Map extends AppCompatActivity {
                 dialog.show();
                 Log.v("SHOW DIALOG", "SUCCESS");
 
+                humidity = dialog.findViewById(R.id.humidity_value);
+                manufacturer = dialog.findViewById(R.id.manufacturer_value);
+                rainfall = dialog.findViewById(R.id.rainfall_value);
+                temperature = dialog.findViewById(R.id.temperature_value);
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
+                ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer" + GlobalVar.token)
+                        .enqueue(new Callback<com.example.uit_project.model.weather.WeatherAsset>() {
+                            @Override
+                            public void onResponse(Call<com.example.uit_project.model.weather.WeatherAsset> call, Response<com.example.uit_project.model.weather.WeatherAsset> response) {
+                                Log.d("API CALL", response.code()+"");
+                                com.example.uit_project.model.weather.WeatherAsset asset = response.body();
+                                humidity.setText(asset.attributes.humidity.value + "%");
+                                manufacturer.setText(asset.attributes.manufacturer.value);
+                                rainfall.setText(String.valueOf(asset.attributes.rainFall.value));
+                                temperature.setText(asset.attributes.temperature.value + "\u2103");
+                            }
+                            @Override
+                            public void onFailure(Call<com.example.uit_project.model.weather.WeatherAsset> call, Throwable t) {
+
+                            }
+                        });
                 closePopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -148,6 +182,7 @@ public class Map extends AppCompatActivity {
                         startActivity(i);
                     }
                 });
+
                 return true;
             }
         });
@@ -159,9 +194,32 @@ public class Map extends AppCompatActivity {
                 dialog.show();
                 Log.v("SHOW DIALOG", "SUCCESS");
 
+                brightness = dialog.findViewById(R.id.brightness_value);
+                colour_temperature = dialog.findViewById(R.id.colourTemperature_value);
+                on_off = dialog.findViewById(R.id.onOff_value);
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
+                ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer" + GlobalVar.token)
+                        .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
+                            @Override
+                            public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
+                                Log.d("API CALL", response.code()+"");
+                                com.example.uit_project.model.light.LightAsset asset = response.body();
+
+                                brightness.setText(String.valueOf(asset.attributes.brightness.value));
+                                colour_temperature.setText(String.valueOf(asset.attributes.colourTemperature.value) + "K");
+                                if(asset.attributes.onOff.value) {
+                                    on_off.setText(getString(R.string.on));
+                                } else {
+                                    on_off.setText(getString(R.string.off));
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<com.example.uit_project.model.light.LightAsset> call, Throwable t) {
+
+                            }
+                        });
                 closePopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -217,7 +275,6 @@ public class Map extends AppCompatActivity {
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
     }
-
     private void requestPermissionsIfNecessary(String[] permissions) {
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
