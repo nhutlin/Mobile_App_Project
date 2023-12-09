@@ -61,7 +61,25 @@
     <string name="on">Mở</string>
     <string name="off">Tắt</string>
 
+    <string name="chart">BIỂU ĐỒ</string>
+    <string name="select_attribute">Chọn thuộc tính</string>
 
+    <string-array name="attributes">
+        <item>Độ ẩm</item>
+        <item>Nhiệt độ</item>
+        <item>Lượng mưa</item>
+        <item>Tốc độ gió</item>
+    </string-array>
+
+    <string name="timeframe">Khung thời gian</string>
+    <string name="ending">Kết thúc</string>
+    <string name="hour">Giờ</string>
+    <string name="day">Ngày</string>
+    <string name="week">Tuần</string>
+    <string name="month">Tháng</string>
+    <string name="year">Năm</string>
+    <string name="date">Ngày tháng năm</string>
+    <string name="show">XEM</string>
 
 
 

@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
                             Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
 
                             ApiResponse apiResponse = response.body();
-
+                            //GlobalVar.token = apiResponse.getAccess_token().toString();
                             Intent intentMap = new Intent();
                             intentMap.putExtra("Username", username.getText().toString());
                             intentMap.setClass(Login.this, Map.class);

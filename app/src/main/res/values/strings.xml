@@ -61,4 +61,22 @@
     <string name="on">On</string>
     <string name="off">Off</string>
 
+    <string name="chart">CHART</string>
+    <string name="select_attribute">Select attribute</string>
+    <string-array name="attributes">
+        <item>Humidity</item>
+        <item>Temperature</item>
+        <item>Rainfall</item>
+        <item>Wind speed</item>
+    </string-array>
+
+    <string name="timeframe">Timeframe</string>
+    <string name="ending">Ending</string>
+    <string name="hour">Hour</string>
+    <string name="day">Day</string>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+    <string name="date">Day month year</string>
+    <string name="show">SHOW</string>
 </resources>

@@ -52,8 +52,7 @@ dependencies {
     implementation("androidx.preference:preference:1.2.0")
 
     implementation("org.osmdroid:osmdroid-wms:6.1.2")
-
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 
 

@@ -21,6 +21,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -120,7 +121,6 @@ public class Map extends AppCompatActivity {
         markerLight.setInfoWindow(null);
         map.getOverlays().add(markerLight);
 
-
 //        requestPermissionsIfNecessary(new String[]{
 //                // if you need to show the current location, uncomment the line below
 ////                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -130,6 +130,7 @@ public class Map extends AppCompatActivity {
 //
 //        });
         dialog = new Dialog(this);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         showInfo();
     }
@@ -138,8 +139,10 @@ public class Map extends AppCompatActivity {
             @Override
             public boolean onMarkerClick(Marker marker, MapView mapView) {
                 dialog.setContentView(R.layout.weather_popup);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
                 Log.v("SHOW DIALOG", "SUCCESS");
 
                 humidity = dialog.findViewById(R.id.humidity_value);
@@ -149,7 +152,7 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer" + GlobalVar.token)
+                ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
                         .enqueue(new Callback<com.example.uit_project.model.weather.WeatherAsset>() {
                             @Override
                             public void onResponse(Call<com.example.uit_project.model.weather.WeatherAsset> call, Response<com.example.uit_project.model.weather.WeatherAsset> response) {
@@ -182,7 +185,6 @@ public class Map extends AppCompatActivity {
                         startActivity(i);
                     }
                 });
-
                 return true;
             }
         });
@@ -200,7 +202,7 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer" + GlobalVar.token)
+                ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                         .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                             @Override
                             public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
@@ -244,8 +246,6 @@ public class Map extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
@@ -254,8 +254,6 @@ public class Map extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up

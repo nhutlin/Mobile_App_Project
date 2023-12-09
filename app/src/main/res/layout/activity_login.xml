@@ -81,7 +81,6 @@
                         android:ems="16"
                         android:inputType="textAutoComplete|text"
                         android:textColor="@color/white"
-
                         android:textCursorDrawable="@null"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -147,7 +146,6 @@
                     android:paddingLeft="90dp"
                     android:paddingRight="90dp"
                     android:text="@string/login_caps"
-
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 

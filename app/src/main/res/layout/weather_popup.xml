@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="275dp"
-    android:layout_gravity="center"
     android:background="@drawable/popup_form"
     >
     <RelativeLayout
@@ -145,9 +144,9 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/close"
                 android:textColor="@color/white"
-                android:paddingLeft="16dp"
-                android:textSize="18sp"
-                android:paddingRight="16dp" />
+                android:paddingLeft="8dp"
+                android:textSize="16sp"
+                android:paddingRight="8dp" />
             <android.widget.Button
                 android:id="@+id/view_details"
                 android:layout_width="wrap_content"
@@ -158,9 +157,10 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/view_detail"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp" />
+                android:textSize="16sp"
+                android:paddingRight="4dp"
+                android:paddingLeft="4dp"
+                />
 
 
         </RelativeLayout>

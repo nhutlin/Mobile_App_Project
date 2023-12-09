@@ -62,7 +62,7 @@ public class LightAsset extends AppCompatActivity {
             }
         });
 
-        ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer" + GlobalVar.token)
+        ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                     @Override
                     public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
