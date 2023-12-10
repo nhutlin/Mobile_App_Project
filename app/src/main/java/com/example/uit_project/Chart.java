@@ -1,9 +1,5 @@
 package com.example.uit_project;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,285 +8,353 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.Spinner;
-import android.widget.TimePicker;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
-import com.example.uit_project.model.weather.Humidity;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.uit_project.api.ApiService;
+import com.example.uit_project.model.datapoint.Datapoint;
+import com.example.uit_project.model.datapoint.RequestBody;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.EntryXComparator;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
-import java.text.ParseException;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Chart extends AppCompatActivity {
 
-    private LineChart lineChart;
+    String[] attributes = {"temperature","humidity","rainfall","windSpeed"};
+    String[] times = {"Hour","Day","Week","Month","Year"};
 
-    private AutoCompleteTextView selectAttribute;
-    private AutoCompleteTextView selectTimeframe;
-    private ArrayAdapter<String> adapterAttribute;
-    private ArrayAdapter<String> adapterTimeframe;
-    private EditText selectDate;
+    String end;
+    AutoCompleteTextView selectAttribute;
+    AutoCompleteTextView selectTimeStamp;
+    AutoCompleteTextView selectDate;
+    ArrayAdapter<String> adapterAttributes;
+    ArrayAdapter<String> adapterTimes;
 
-    private long toTimestamp;
-    private long fromTimestamp;
-    private int selectedSecond = 0;
-    private int selectedDay = 0;
-    private int selectedMonth = 0;
-    private int selectedYear = 0;
-    private int selectedHour = 0;
-    private int selectedMinute = 0;
-    private Button show;
-    List<String> xValue;
+    long toTimeStamp;
+    long fromTimeStamp;
+    String attributeRequest = "temperature";
+    String timeRequest = "Day";
+    RequestBody body;
+
+    ImageButton back;
+    ArrayList<Float> dataList = new ArrayList<>();
+    ArrayList<String> xValues = new ArrayList<>();
+    ArrayList<String> ending = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
-        show = findViewById(R.id.btn_show);
 
-        showInput();
+        selectAttribute = findViewById(R.id.attribute);
+        selectTimeStamp = findViewById(R.id.time);
+        selectDate = findViewById(R.id.ending);
+        LineChart chart = findViewById(R.id.chart);
+        back = findViewById(R.id.btn_back);
+        Button show = findViewById(R.id.btn_show);
+
+
+        selectAttribute.setText("temperature");
+        adapterAttributes = new ArrayAdapter<String>(this,R.layout.list_attribute,attributes);
+        selectAttribute.setAdapter(adapterAttributes);
+
+        selectTimeStamp.setText("Day");
+        adapterTimes = new ArrayAdapter<String>(this,R.layout.list_timeframe,times);
+        selectTimeStamp.setAdapter(adapterTimes);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        selectAttribute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String attribute = parent.getItemAtPosition(position).toString();
+                attributeRequest = attribute;
+            }
+        });
+
+        selectTimeStamp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String timestamp = parent.getItemAtPosition(position).toString();
+                timeRequest = timestamp;
+            }
+        });
+
+
+
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChart();
-            }
-        });
-    }
+                if(timeRequest == "Hour") { //|| timeRequest == "Giờ"){
+                    toTimeStamp = System.currentTimeMillis();
+                    fromTimeStamp = toTimeStamp - 3600000;
+                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
 
-    public void showInput() {
-        String[] attributes = {getString(R.string.humidity) + " (%)",
-                getString(R.string.temperature) + " (\u2103)",
-                getString(R.string.rainfall) + " (mm)",
-                getString(R.string.wind_speed) + " (km/h)"};
-        String[] timeframes = {getString(R.string.hour),
-                getString(R.string.day),
-                getString(R.string.week),
-                getString(R.string.month),
-                getString(R.string.year)};
+                } else if (timeRequest == "Day") { //|| timeRequest == "Ngày") {
+                    toTimeStamp = System.currentTimeMillis();
+                    fromTimeStamp = toTimeStamp - 86400000 ;
+                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                } else if (timeRequest == "Week"){ //|| timeRequest == "Tuần") {
+                    toTimeStamp = System.currentTimeMillis();
+                    fromTimeStamp = toTimeStamp - 604800000 ;
+                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                } else if ( timeRequest =="Month"){ //|| timeRequest == "Tháng"){
+                    toTimeStamp = System.currentTimeMillis();
+                    fromTimeStamp = toTimeStamp - 2678400000L ;
+                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                } else if (timeRequest =="Year"){
+                    toTimeStamp = System.currentTimeMillis();
+                    fromTimeStamp = toTimeStamp - 31536000000L ;
+                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
 
-        selectAttribute = findViewById(R.id.select_attribute_input);
-        selectTimeframe = findViewById(R.id.select_timeframe_input);
-        selectDate = findViewById(R.id.select_date_input);
-
-        adapterAttribute = new ArrayAdapter<String>(this, R.layout.list_attribute, attributes);
-        adapterTimeframe = new ArrayAdapter<String>(this, R.layout.list_timeframe, timeframes);
+                }
 
 
-        selectAttribute.setAdapter(adapterAttribute);
-        selectTimeframe.setAdapter(adapterTimeframe);
-
-        selectAttribute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String attribute = adapterView.getItemAtPosition(position).toString();
-            }
-        });
-
-        selectTimeframe.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                String timeframe = adapterView.getItemAtPosition(position).toString();
-            }
-        });
-
-        selectDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDateTimePickerDialog();
-            }
-        });
-
-    }
-
-    public void showDateTimePickerDialog() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-
-        // DatePickerDialog
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
+                Call<JsonArray> call = ApiService.apiService.getDatapoint(GlobalVar.tokenChart, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest,body);
+                call.enqueue(new Callback<JsonArray>() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Xử lý ngày tháng năm được chọn
-//                        selectedYear = year;
-//                        selectedMonth = month;
-//                        selectedDay = dayOfMonth;
-                        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+                    public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                        Log.d("API CALL", response.code() + "");
+                        JsonArray jsonArray = response.body();
+                        if (jsonArray != null) {
+                            Gson gson = new Gson();
+                            dataList.clear();
+                            xValues.clear();
+                            Type listType = new TypeToken<List<Datapoint>>() {}.getType();
+                            List<Datapoint> dataPoints = gson.fromJson(jsonArray, listType);
 
-                        // TimePickerDialog
-                        TimePickerDialog timePickerDialog = new TimePickerDialog(Chart.this,
-                                new TimePickerDialog.OnTimeSetListener() {
-                                    @Override
-                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                        // Xử lý giờ phút được chọn
-                                        String time = hourOfDay + ":" + minute + ":" + 0;
+                            for (Datapoint dataPoint : dataPoints) {
+                                long x = dataPoint.getX();
+                                float y = (float)dataPoint.getY();
+                                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                                String end = sdf1.format(x);
+                                ending.add(end);
+                                dataList.add(0, y);
 
-                                        // Kết hợp ngày, giờ và giây để có ngày giờ đầy đủ
-                                        String selectedDateTime = date + " " +
-                                                String.format(Locale.getDefault(), "%02d:%02d:%02d", hourOfDay, minute, selectedSecond);
+                                if(timeRequest == "Hour"){
+                                    Date date = new Date(x);
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(date);
+                                    int minuteofhour = calendar.get(Calendar.MINUTE);
+                                    xValues.add(0,Integer.toString(minuteofhour));
+                                } else if (timeRequest == "Day") {
+                                    SimpleDateFormat sdf2 = new SimpleDateFormat("HH", Locale.getDefault());
+                                    String formattedHour = sdf2.format(x);
+                                    xValues.add(0,formattedHour);
+                                } else if(timeRequest == "Week"){
+                                    Date date = new Date(x);
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(date);
+                                    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+                                    String[] days = {"Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"};
+                                    String dayName = days[dayOfWeek - 1];
+                                    xValues.add(0,dayName);
+                                } else if (timeRequest == "Month") {
+                                    Date date = new Date(x);
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(date);
+                                    int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+                                    xValues.add(0,Integer.toString(dayOfMonth));
+                                } else if (timeRequest == "Year") {
+                                    Date date = new Date(x);
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(date);
+                                    int month = calendar.get(Calendar.MONTH);
+                                    xValues.add(0,Integer.toString(month));
+                                }
 
-                                        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                Log.d("DataPoint", "x: " + x + ", y: " + y);
+                            }
+                            List<Entry> entries = new ArrayList<>();
 
-                                        try {
-                                            // Define the date format
-                                            Date date = dateFormat.parse(selectedDateTime);
-
-                                            // Convert to epoch time in milliseconds
-                                            toTimestamp = date.getTime();
-                                            Toast.makeText(Chart.this, String.valueOf(toTimestamp), Toast.LENGTH_SHORT).show();
-
-
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                            Toast.makeText(Chart.this, "FAIL", Toast.LENGTH_SHORT).show();
-                                        }
-                                        // Hiển thị lên EditText
-                                        selectDate.setText(selectedDateTime);
+                            if(timeRequest == "Hour"){
+                                int minute = Integer.parseInt(xValues.get(0));
+                                xValues.clear();
+                                for (int i = 0; i < 12; i++) {
+                                    if(Math.abs(minute-i*5)<3){
+                                        entries.add(new Entry(i, dataList.get(0)));
                                     }
-                                }, hour, minute, true); // Đặt true để hiển thị đồng hồ 24 giờ
+                                    else {
+                                        entries.add(new Entry(i, -1));
+                                    }
+                                    xValues.add(Integer.toString(i*5));
+                                }
+                            }
+                            else if(timeRequest == "Day"){
+                                for (int i = 0; i < dataList.size(); i++) {
+                                    entries.add(new Entry(i,dataList.get(i)));
+                                }
+                            }
+                            else if (timeRequest == "Week") {
+                                ArrayList<String> ei = new ArrayList<>(xValues);
+                                xValues.clear();
 
-                        // Hiển thị hộp thoại chọn giờ
-                        timePickerDialog.show();
+                                ArrayList<String> week = new ArrayList<>();
+                                ArrayList<Float> average = new ArrayList<>();
+
+                                int tmp=0;
+                                float sum =0;
+                                for (int i = 0;i<ei.size();i++){
+                                    sum+=dataList.get(i);
+                                    tmp++;
+                                    if((i<ei.size()-1 && ei.get(i+1)!=ei.get(i)) || i==ei.size()-1){
+                                        week.add(ei.get(i));
+                                        if(week.size()>0){
+                                            average.add(sum/tmp);
+                                        }
+                                        tmp=0;
+                                        sum =0;
+                                    }
+
+                                }
+                                for (int i=0;i<week.size();i++){
+                                    entries.add(new Entry(i, average.get(i)));
+                                    xValues.add(week.get(i));
+                                }
+                            } else if (timeRequest =="Month") {
+                                ArrayList<String> th = new ArrayList<>(xValues);
+                                xValues.clear();
+
+                                ArrayList<String> month = new ArrayList<>();
+                                ArrayList<Float> average = new ArrayList<>();
+
+                                int tmp=0;
+                                float sum =0;
+                                for (int i = 0;i<th.size();i++){
+                                    sum+=dataList.get(i);
+                                    tmp++;
+                                    if((i<th.size()-1 && th.get(i+1)!=th.get(i)) || i==th.size()-1){
+                                        month.add(th.get(i));
+                                        if(month.size()>0){
+                                            average.add(sum/tmp);
+                                        }
+                                        tmp=0;
+                                        sum =0;
+                                    }
+
+                                }
+                                for (int i=0;i<month.size();i++){
+                                    entries.add(new Entry(i, average.get(i)));
+                                    xValues.add(month.get(i));
+                                }
+                            } else if (timeRequest == "Year") {
+                                ArrayList<String> tw = new ArrayList<>(xValues);
+                                xValues.clear();
+
+                                ArrayList<String> year = new ArrayList<>();
+                                ArrayList<Float> average = new ArrayList<>();
+
+                                int tmp=0;
+                                float sum =0;
+                                for (int i = 0;i<tw.size();i++){
+                                    sum+=dataList.get(i);
+                                    tmp++;
+                                    if((i<tw.size()-1 && tw.get(i+1)!=tw.get(i)) || i==tw.size()-1){
+                                        year.add(tw.get(i));
+                                        if(year.size()>0){
+                                            average.add(sum/tmp);
+                                        }
+                                        tmp=0;
+                                        sum =0;
+                                    }
+
+                                }
+                                for (int i=0;i<year.size();i++){
+                                    entries.add(new Entry(i, average.get(i)));
+                                    xValues.add(year.get(i));
+                                }
+                            }
+
+                            selectDate.setText(ending.get(0).toString());
+                            LineDataSet dataSet = new LineDataSet(entries, attributeRequest); // add entries to dataset
+                            if(timeRequest =="Hour"){
+                                dataSet.enableDashedLine(0, 1, 0);
+                                chart.getXAxis().setLabelCount(entries.size()/2);
+                            } else if (timeRequest == "Day") {
+//
+                                chart.getXAxis().setLabelCount(entries.size()/2);
+                                dataSet.setDrawFilled(true);
+                            } else if (timeRequest == "Week") {
+                                dataSet.setDrawFilled(true);
+                            } else if (timeRequest == "Month") {
+                                chart.getXAxis().setLabelCount(entries.size()/2);
+                                dataSet.setDrawFilled(true);
+                            } else if (timeRequest == "Year") {
+                                chart.getXAxis().setLabelCount(entries.size()/4);
+                                dataSet.setDrawFilled(true);}
+
+                            chart.setVisibility(View.VISIBLE);
+                            dataSet.setColor(getColor(R.color.gradient_start));
+                            dataSet.setValueTextColor(Color.BLACK);
+                            dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                            dataSet.setFillColor(getColor(R.color.back_gradient_start));
+                            dataSet.setDrawCircles(true);
+                            dataSet.setDrawValues(false);
+                            dataSet.setCircleColor(getColor(R.color.gradient_start));
+                            dataSet.setCircleRadius(5f);
+
+                            LineData lineData = new LineData(dataSet);
+                            chart.setData(lineData);
+
+                            chart.getDescription().setEnabled(false);
+                            chart.getAxisLeft().setDrawGridLines(true);
+                            chart.getAxisLeft().setDrawAxisLine(false);
+                            chart.getAxisLeft().setDrawLabels(true);
+                            chart.getXAxis().setDrawLabels(true);
+                            chart.getXAxis().setDrawGridLines(true);
+                            chart.getXAxis().setDrawAxisLine(true); // Only show the x-axis line
+                            chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+
+                            if(xValues.size() == 1){
+                                chart.getXAxis().setLabelCount(xValues.size());
+                            }
+                            chart.getAxisRight().setEnabled(false);
+                            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues){}); // To format the x-axis labels
+                            chart.getLegend().setEnabled(true);
+
+                            chart.invalidate();
+                        }
+                        else {
+                            Log.d("API CALL", "Fail to load chart");
+                        }
                     }
-                }, year, month, day);
+                    @Override
+                    public void onFailure(Call<JsonArray> call, Throwable t) {
+                        Log.d("API CALL", t.getMessage().toString());
+                    }
+                });
+            }
 
-        // Hiển thị hộp thoại chọn ngày
-        datePickerDialog.show();
-
-    }
-
-    public void showChart() {
-
-        String inputTimeStamp = selectTimeframe.getText().toString();
-        String inputAttribute = selectAttribute.getText().toString();
-        lineChart = findViewById(R.id.chart);
-        Description description = new Description();
-        description.setPosition(150f, 15f);
-        xValue = new ArrayList<>();
-        long step = 0;
-        int count = 0;
-        switch (inputTimeStamp) {
-            case "Hour":
-                fromTimestamp = toTimestamp - 3600;
-                step = 600;
-                break;
-
-            case "Day":
-                fromTimestamp = toTimestamp - 86400;
-                step = 3600;
-                break;
-
-            case "Week":
-                fromTimestamp = toTimestamp - 604800;
-                step = 3600;
-                break;
-
-            case "Month":
-                fromTimestamp = toTimestamp - 2629743;
-                step = 86400;
-                break;
-
-            case "Year":
-                fromTimestamp = toTimestamp - 31556926;
-                step = 2629743;
-                break;
-
-            default:
-                break;
-        }
-
-        switch (inputAttribute) {
-            case "Temperature":
-                description.setText("Temperature");
-                break;
-            case "Humidity":
-                description.setText("Humidity");
-                break;
-            case "Rainfall":
-                description.setText("Rainfall");
-                break;
-            case "Wind speed":
-                description.setText("Wind speed");
-                break;
-            default:
-                break;
-        }
-        for(long i = fromTimestamp; i <= toTimestamp; i += step) {
-            Date date = new Date(i);
-
-            // Define the date format
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-            count++;
-            // Format the date as a human-readable string
-            String humanReadableDate = dateFormat.format(date);
-            xValue.add(humanReadableDate);
-            Log.v("FOR", "OK");
-        }
+        });
 
 
-
-//        lineChart.setDescription(description);
-//        lineChart.getAxisRight().setDrawLabels(false);
-//
-//        XAxis xAxis = lineChart.getXAxis();
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setValueFormatter(new IndexAxisValueFormatter(xValue));
-//        xAxis.setLabelCount(count);
-//        xAxis.setGranularity(1f);
-//
-//        YAxis yAxis = lineChart.getAxisLeft();
-//        yAxis.setAxisMinimum(0f);
-//        yAxis.setAxisMaximum(100f);
-//        yAxis.setAxisLineWidth(2f);
-//        yAxis.setAxisLineColor(Color.BLACK);
-//
-//        List<Entry> entries1 = new ArrayList<>();
-//        entries1.add(new Entry(0, 10f));
-//        entries1.add(new Entry(1, 10f));
-//        entries1.add(new Entry(2, 20f));
-//
-//
-//
-//
-//        List<Entry> entries2 = new ArrayList<>();
-//        entries2.add(new Entry(0, 10f));
-//        entries2.add(new Entry(1, 10f));
-//        entries2.add(new Entry(2, 15f));
-//
-//
-//
-//        LineDataSet dataSet1 = new LineDataSet(entries1, "Math");
-//        dataSet1.setColor(Color.BLUE);
-//
-//        LineDataSet dataSet2 = new LineDataSet(entries2, "English");
-//        dataSet2.setColor(Color.RED);
-//
-//        LineData lineData = new LineData(dataSet1, dataSet2);
-//        lineChart.setData(lineData);
-//        lineChart.invalidate();
     }
 
 }

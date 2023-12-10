@@ -1,13 +1,18 @@
 package com.example.uit_project.api;
+import com.example.uit_project.model.User;
+import com.example.uit_project.model.datapoint.Datapoint;
+import com.example.uit_project.model.datapoint.RequestBody;
 import com.example.uit_project.model.light.LightAsset;
 import com.example.uit_project.model.weather.WeatherAsset;
 import com.example.uit_project.model.ApiResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -31,8 +36,18 @@ public interface ApiService {
                                @Field("grant_type") String grant_type);
 
     @GET("api/master/asset/{assetID}")
-    Call<WeatherAsset> getWeatherAsset(@Path("assetID") String assetID, @Header("Authorization") String auth);
+    Call<WeatherAsset> getWeatherAsset(@Path("assetID") String assetID,
+                                       @Header("Authorization") String auth);
 
     @GET("api/master/asset/{assetID}")
-    Call<LightAsset> getLightAsset(@Path("assetID") String assetID, @Header("Authorization") String auth);
+    Call<LightAsset> getLightAsset(@Path("assetID") String assetID,
+                                   @Header("Authorization") String auth);
+
+    @POST("/api/master/asset/datapoint/{assetId}/attribute/{attributeName}")
+    Call<JsonArray> getDatapoint(@Header("Authorization") String auth,
+                                               @Path("assetId") String assetId ,
+                                               @Path("attributeName") String attributeName,
+                                               @Body RequestBody Body);
+    @GET("api/master/user/user")
+    Call<User> getUser();
 }
