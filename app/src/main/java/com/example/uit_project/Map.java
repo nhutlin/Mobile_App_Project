@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.preference.PreferenceManager;
@@ -64,6 +65,7 @@ public class Map extends AppCompatActivity {
     private TextView manufacturer;
     private TextView rainfall;
     private TextView temperature;
+    private ImageButton back;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +85,13 @@ public class Map extends AppCompatActivity {
         GeoPoint startPoint = new GeoPoint(10.869778736885038, 106.80280655508835);
         mapController.setCenter(startPoint);
 
+        back = findViewById(R.id.ic_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         // Mark the weather assent to the map
         GeoPoint point = new GeoPoint(10.869778736885038, 106.80280655508835);
         markerWeather = new Marker(map);
@@ -121,14 +130,6 @@ public class Map extends AppCompatActivity {
         markerLight.setInfoWindow(null);
         map.getOverlays().add(markerLight);
 
-//        requestPermissionsIfNecessary(new String[]{
-//                // if you need to show the current location, uncomment the line below
-////                 Manifest.permission.ACCESS_FINE_LOCATION,
-//                // WRITE_EXTERNAL_STORAGE is required in order to show the map
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-//
-//
-//        });
         dialog = new Dialog(this);
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 

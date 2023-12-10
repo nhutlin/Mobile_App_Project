@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +16,7 @@ import com.example.uit_project.api.ApiService;
 import com.example.uit_project.model.datapoint.Datapoint;
 import com.example.uit_project.model.datapoint.RequestBody;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -37,13 +37,11 @@ import java.util.Locale;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Chart extends AppCompatActivity {
 
     String[] attributes = {"temperature","humidity","rainfall","windSpeed"};
-    String[] times = {"Hour","Day","Week","Month","Year"};
+
 
     String end;
     AutoCompleteTextView selectAttribute;
@@ -54,20 +52,23 @@ public class Chart extends AppCompatActivity {
 
     long toTimeStamp;
     long fromTimeStamp;
-    String attributeRequest = "temperature";
-    String timeRequest = "Day";
     RequestBody body;
 
     ImageButton back;
     ArrayList<Float> dataList = new ArrayList<>();
     ArrayList<String> xValues = new ArrayList<>();
     ArrayList<String> ending = new ArrayList<>();
+    String attributeRequest = "temperature";
+    String timeRequest = "Day";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
+
+
+        String[] times = {"Hour","Day","Week","Month","Year"};
 
         selectAttribute = findViewById(R.id.attribute);
         selectTimeStamp = findViewById(R.id.time);
@@ -76,12 +77,12 @@ public class Chart extends AppCompatActivity {
         back = findViewById(R.id.btn_back);
         Button show = findViewById(R.id.btn_show);
 
-
+        selectTimeStamp.setText("Day");
         selectAttribute.setText("temperature");
         adapterAttributes = new ArrayAdapter<String>(this,R.layout.list_attribute,attributes);
         selectAttribute.setAdapter(adapterAttributes);
 
-        selectTimeStamp.setText("Day");
+
         adapterTimes = new ArrayAdapter<String>(this,R.layout.list_timeframe,times);
         selectTimeStamp.setAdapter(adapterTimes);
 
@@ -112,12 +113,18 @@ public class Chart extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String getHour = getString(R.string.hour).toString();
+                String getDay = getString(R.string.day).toString();
+                String getWeek = getString(R.string.week).toString();
+                String getMonth = getString(R.string.month).toString();
+                String getYear = getString(R.string.year).toString();
+
                 if(timeRequest == "Hour") { //|| timeRequest == "Giờ"){
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 3600000;
                     body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
 
-                } else if (timeRequest == "Day") { //|| timeRequest == "Ngày") {
+                } else if (timeRequest.equalsIgnoreCase("Day")) { //|| timeRequest == "Ngày") {
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 86400000 ;
                     body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
@@ -125,23 +132,46 @@ public class Chart extends AppCompatActivity {
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 604800000 ;
                     body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-                } else if ( timeRequest =="Month"){ //|| timeRequest == "Tháng"){
+                } else if (timeRequest == "Month"){ //|| timeRequest == "Tháng"){
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 2678400000L ;
                     body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-                } else if (timeRequest =="Year"){
+                } else if (timeRequest == "Year"){
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 31536000000L ;
                     body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-
                 }
+//                if(timeRequest.equalsIgnoreCase(getHour)) { //|| timeRequest == "Giờ"){
+//                    toTimeStamp = System.currentTimeMillis();
+//                    fromTimeStamp = toTimeStamp - 3600000;
+//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+//
+//                } else if (timeRequest.equalsIgnoreCase(getDay)) { //|| timeRequest == "Ngày") {
+//                    toTimeStamp = System.currentTimeMillis();
+//                    fromTimeStamp = toTimeStamp - 86400000 ;
+//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+//                } else if (timeRequest.equalsIgnoreCase(getWeek)){ //|| timeRequest == "Tuần") {
+//                    toTimeStamp = System.currentTimeMillis();
+//                    fromTimeStamp = toTimeStamp - 604800000 ;
+//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+//                } else if (timeRequest.equalsIgnoreCase(getMonth)){ //|| timeRequest == "Tháng"){
+//                    toTimeStamp = System.currentTimeMillis();
+//                    fromTimeStamp = toTimeStamp - 2678400000L ;
+//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+//                } else if (timeRequest.equalsIgnoreCase(getYear)){
+//                    toTimeStamp = System.currentTimeMillis();
+//                    fromTimeStamp = toTimeStamp - 31536000000L ;
+//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+//                }
 
 
-                Call<JsonArray> call = ApiService.apiService.getDatapoint(GlobalVar.tokenChart, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest,body);
+                Call<JsonArray> call = ApiService.apiService.getDatapoint("Bearer " + GlobalVar.tokenChart, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest,body);
                 call.enqueue(new Callback<JsonArray>() {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                         Log.d("API CALL", response.code() + "");
+
+
                         JsonArray jsonArray = response.body();
                         if (jsonArray != null) {
                             Gson gson = new Gson();
@@ -173,7 +203,7 @@ public class Chart extends AppCompatActivity {
                                     Calendar calendar = Calendar.getInstance();
                                     calendar.setTime(date);
                                     int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                                    String[] days = {"Chủ Nhật", "Thứ Hai", "Thứ Ba", "Thứ Tư", "Thứ Năm", "Thứ Sáu", "Thứ Bảy"};
+                                    String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
                                     String dayName = days[dayOfWeek - 1];
                                     xValues.add(0,dayName);
                                 } else if (timeRequest == "Month") {
@@ -189,8 +219,6 @@ public class Chart extends AppCompatActivity {
                                     int month = calendar.get(Calendar.MONTH);
                                     xValues.add(0,Integer.toString(month));
                                 }
-
-                                Log.d("DataPoint", "x: " + x + ", y: " + y);
                             }
                             List<Entry> entries = new ArrayList<>();
 
@@ -213,55 +241,55 @@ public class Chart extends AppCompatActivity {
                                 }
                             }
                             else if (timeRequest == "Week") {
-                                ArrayList<String> ei = new ArrayList<>(xValues);
+                                ArrayList<String> list_ei = new ArrayList<>(xValues);
                                 xValues.clear();
 
                                 ArrayList<String> week = new ArrayList<>();
-                                ArrayList<Float> average = new ArrayList<>();
+                                ArrayList<Float> ave = new ArrayList<>();
 
-                                int tmp=0;
-                                float sum =0;
-                                for (int i = 0;i<ei.size();i++){
-                                    sum+=dataList.get(i);
-                                    tmp++;
-                                    if((i<ei.size()-1 && ei.get(i+1)!=ei.get(i)) || i==ei.size()-1){
-                                        week.add(ei.get(i));
-                                        if(week.size()>0){
-                                            average.add(sum/tmp);
+                                int temp = 0;
+                                float summary = 0;
+                                for (int i = 0;i < list_ei.size(); i++){
+                                    summary += dataList.get(i);
+                                    temp++;
+                                    if((i < list_ei.size() - 1 && list_ei.get(i + 1) != list_ei.get(i)) || i == list_ei.size() - 1){
+                                        week.add(list_ei.get(i));
+                                        if(week.size() > 0){
+                                            ave.add(summary /temp);
                                         }
-                                        tmp=0;
-                                        sum =0;
+                                        temp = 0;
+                                        summary = 0;
                                     }
 
                                 }
-                                for (int i=0;i<week.size();i++){
-                                    entries.add(new Entry(i, average.get(i)));
+                                for (int i=0; i<week.size(); i++){
+                                    entries.add(new Entry(i, ave.get(i)));
                                     xValues.add(week.get(i));
                                 }
-                            } else if (timeRequest =="Month") {
+                            } else if (timeRequest == "Month") {
                                 ArrayList<String> th = new ArrayList<>(xValues);
                                 xValues.clear();
 
                                 ArrayList<String> month = new ArrayList<>();
-                                ArrayList<Float> average = new ArrayList<>();
+                                ArrayList<Float> ave = new ArrayList<>();
 
-                                int tmp=0;
-                                float sum =0;
-                                for (int i = 0;i<th.size();i++){
-                                    sum+=dataList.get(i);
-                                    tmp++;
-                                    if((i<th.size()-1 && th.get(i+1)!=th.get(i)) || i==th.size()-1){
+                                int temp = 0;
+                                float summary =0;
+                                for (int i = 0; i<th.size(); i++){
+                                    summary += dataList.get(i);
+                                    temp++;
+                                    if((i < th.size() - 1 && th.get(i + 1) != th.get(i)) || i == th.size() - 1){
                                         month.add(th.get(i));
-                                        if(month.size()>0){
-                                            average.add(sum/tmp);
+                                        if(month.size() > 0){
+                                            ave.add(summary / temp);
                                         }
-                                        tmp=0;
-                                        sum =0;
+                                        temp = 0;
+                                        summary = 0;
                                     }
 
                                 }
                                 for (int i=0;i<month.size();i++){
-                                    entries.add(new Entry(i, average.get(i)));
+                                    entries.add(new Entry(i, ave.get(i)));
                                     xValues.add(month.get(i));
                                 }
                             } else if (timeRequest == "Year") {
@@ -271,22 +299,22 @@ public class Chart extends AppCompatActivity {
                                 ArrayList<String> year = new ArrayList<>();
                                 ArrayList<Float> average = new ArrayList<>();
 
-                                int tmp=0;
-                                float sum =0;
-                                for (int i = 0;i<tw.size();i++){
-                                    sum+=dataList.get(i);
-                                    tmp++;
-                                    if((i<tw.size()-1 && tw.get(i+1)!=tw.get(i)) || i==tw.size()-1){
+                                int temp = 0;
+                                float summary = 0;
+                                for (int i = 0; i < tw.size(); i++){
+                                    summary += dataList.get(i);
+                                    temp++;
+                                    if((i < tw.size() - 1 && tw.get(i + 1) != tw.get(i)) || i == tw.size() - 1){
                                         year.add(tw.get(i));
-                                        if(year.size()>0){
-                                            average.add(sum/tmp);
+                                        if(year.size() > 0){
+                                            average.add(summary/temp);
                                         }
-                                        tmp=0;
-                                        sum =0;
+                                        temp = 0;
+                                        summary = 0;
                                     }
 
                                 }
-                                for (int i=0;i<year.size();i++){
+                                for (int i = 0; i < year.size(); i++){
                                     entries.add(new Entry(i, average.get(i)));
                                     xValues.add(year.get(i));
                                 }
@@ -294,38 +322,41 @@ public class Chart extends AppCompatActivity {
 
                             selectDate.setText(ending.get(0).toString());
                             LineDataSet dataSet = new LineDataSet(entries, attributeRequest); // add entries to dataset
-                            if(timeRequest =="Hour"){
+                            if(timeRequest == "Hour"){
                                 dataSet.enableDashedLine(0, 1, 0);
-                                chart.getXAxis().setLabelCount(entries.size()/2);
+                                chart.getXAxis().setLabelCount(entries.size() / 2);
                             } else if (timeRequest == "Day") {
 //
-                                chart.getXAxis().setLabelCount(entries.size()/2);
+                                chart.getXAxis().setLabelCount(entries.size() / 2);
                                 dataSet.setDrawFilled(true);
                             } else if (timeRequest == "Week") {
                                 dataSet.setDrawFilled(true);
                             } else if (timeRequest == "Month") {
-                                chart.getXAxis().setLabelCount(entries.size()/2);
+                                chart.getXAxis().setLabelCount(entries.size() / 2);
                                 dataSet.setDrawFilled(true);
                             } else if (timeRequest == "Year") {
-                                chart.getXAxis().setLabelCount(entries.size()/4);
+                                chart.getXAxis().setLabelCount(entries.size() / 4);
                                 dataSet.setDrawFilled(true);}
 
                             chart.setVisibility(View.VISIBLE);
+                            dataSet.setDrawCircles(true);
+                            dataSet.setDrawValues(false);
+
                             dataSet.setColor(getColor(R.color.gradient_start));
                             dataSet.setValueTextColor(Color.BLACK);
                             dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
                             dataSet.setFillColor(getColor(R.color.back_gradient_start));
-                            dataSet.setDrawCircles(true);
-                            dataSet.setDrawValues(false);
+
+                            dataSet.setCircleRadius(3f);
                             dataSet.setCircleColor(getColor(R.color.gradient_start));
-                            dataSet.setCircleRadius(5f);
 
                             LineData lineData = new LineData(dataSet);
                             chart.setData(lineData);
 
                             chart.getDescription().setEnabled(false);
+
                             chart.getAxisLeft().setDrawGridLines(true);
-                            chart.getAxisLeft().setDrawAxisLine(false);
+                            chart.getAxisLeft().setDrawAxisLine(true);
                             chart.getAxisLeft().setDrawLabels(true);
                             chart.getXAxis().setDrawLabels(true);
                             chart.getXAxis().setDrawGridLines(true);

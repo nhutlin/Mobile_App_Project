@@ -14,7 +14,7 @@
         android:src="@drawable/ic_back"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         />
     <WebView
         android:id="@+id/wv_browser"

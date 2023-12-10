@@ -33,6 +33,7 @@
 
     <string name="permission_granted">Giấy phép được cấp phát</string>
     <string name="hi">Chào, </string>
+    <string name="map">BẢN ĐỒ</string>
 
     <string name="humidity">Độ ẩm</string>
     <string name="manufacturer">Nhà sản xuât</string>
@@ -80,7 +81,5 @@
     <string name="year">Năm</string>
     <string name="date">Ngày tháng năm</string>
     <string name="show">XEM</string>
-
-
 
 </resources>

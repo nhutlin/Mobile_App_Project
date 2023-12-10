@@ -32,6 +32,7 @@
     <string name="invalidPass">Invalid password</string>
 
     <string name="permission_granted">Permission Granted</string>
+    <string name="map">MAP</string>
 
     <string name="hi">Hi, </string>
     <string name="humidity">Humidity</string>

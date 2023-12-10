@@ -3,10 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="back_gradient_start">#D507DF</color>
-    <color name="back_gradient_end"> #9733EE</color>
+    <color name="back_gradient_end">#9733EE</color>
     <color name="gradient_start">#ff00cc</color>
     <color name="gradient_end">#333399</color>
-
     <color name="text_color">#0425D8</color>
 
 

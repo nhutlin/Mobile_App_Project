@@ -5,8 +5,8 @@
     <gradient
         android:startColor="@color/back_gradient_start"
         android:endColor="@color/back_gradient_end"
-        android:angle="0"
-    />
-    <stroke android:color="@color/back_gradient_end" android:width="1.5dp"/>
-    <corners android:radius="15dp"/>
+        android:angle="225"
+        />
+
+    <corners android:bottomLeftRadius="50dp" android:bottomRightRadius="50dp"/>
 </shape>
