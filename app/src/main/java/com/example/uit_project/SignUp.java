@@ -148,38 +148,42 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
 
-                if (url.contains("openid-connect/auth")) { // Url is now in sign in page
-                    String redirect = "document.getElementsByTagName('a')[0].click();"; // Click on sign up button
+                if (url.contains("openid-connect/auth")) {
+                    String redirect = "document.getElementsByTagName('a')[0].click();";
                     view.evaluateJavascript(redirect, null);
                 }
-                else if (url.contains("login-actions/registration")) { // Url is now in sign up page
+                else if (url.contains("login-actions/registration")) {
                     Log.d(GlobalVar.LOG_TAG, "Enter registration");
-                    String dataError = "document.getElementsByClassName('helper-text')[0].getAttribute('data-error');"; // Appear when email is exist
-                    String redText = "document.getElementsByClassName('red-text')[1].textContent;"; // Appear when username already exist.
+
+                    // Appear when email is exist
+                    String dataError = "document.getElementsByClassName('helper-text')[0].getAttribute('data-error');";
+
+                    // Appear when username already exist
+                    String errText = "document.getElementsByClassName('red-text')[1].textContent;";
 
                     view.evaluateJavascript(dataError, dErr-> {
                         if (dErr.equals("null")) { // No error in form
-                            view.evaluateJavascript(redText, red -> {
-                                if (red.equals("null")) {
-                                    String usrScript = "document.getElementById('username').value='" + username + "';";
-                                    String emailScript = "document.getElementById('email').value='" + email + "';";
-                                    String pwdScript = "document.getElementById('password').value='" + password + "';";
-                                    String rePwdScript = "document.getElementById('password-confirm').value='" + rePassword + "';";
+                            view.evaluateJavascript(errText, err -> {
+                                if (err.equals("null")) {
+                                    String usrSubmit = "document.getElementById('username').value='" + username + "';";
+                                    String emailSubmit = "document.getElementById('email').value='" + email + "';";
+                                    String passSubmit = "document.getElementById('password').value='" + password + "';";
+                                    String rePassSubmit = "document.getElementById('password-confirm').value='" + rePassword + "';";
 
-                                    view.evaluateJavascript(usrScript, null);
-                                    view.evaluateJavascript(emailScript, null);
-                                    view.evaluateJavascript(pwdScript, null);
-                                    view.evaluateJavascript(rePwdScript, null);
+                                    view.evaluateJavascript(usrSubmit, null);
+                                    view.evaluateJavascript(emailSubmit, null);
+                                    view.evaluateJavascript(passSubmit, null);
+                                    view.evaluateJavascript(rePassSubmit, null);
                                     view.evaluateJavascript("document.getElementsByTagName('form')[0].submit();", null); // Submit form
                                 }
                                 else {
-                                    signUpLog(red);
+                                    Toast.makeText(SignUp.this, err, Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                         else { //
                             Log.d(GlobalVar.LOG_TAG, "error: " + dErr);
-                            signUpLog(dErr);
+                            Toast.makeText(SignUp.this, dErr, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
