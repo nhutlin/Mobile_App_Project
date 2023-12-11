@@ -8,6 +8,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
     defaultConfig {
         applicationId = "com.example.uit_project"
@@ -53,7 +54,5 @@ dependencies {
 
     implementation("org.osmdroid:osmdroid-wms:6.1.2")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
-
 
 }

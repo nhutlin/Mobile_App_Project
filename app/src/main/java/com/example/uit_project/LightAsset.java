@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,8 +30,9 @@ public class LightAsset extends AppCompatActivity {
     private TextView tags;
 
     private TextView user;
-    private ImageView returnMap;
-    private ImageView viewGraph;
+    private ImageButton returnMap;
+    private ImageButton viewGraph;
+    private ImageButton viewProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +47,9 @@ public class LightAsset extends AppCompatActivity {
         colour_temperature = findViewById(R.id.value_colourTemperature);
         on_off = findViewById(R.id.value_onOff);
         tags = findViewById(R.id.value_tags);
-        returnMap = findViewById(R.id.return_map);
-        viewGraph = findViewById(R.id.view_graph);
+        returnMap = findViewById(R.id.return_map_light);
+        viewGraph = findViewById(R.id.view_graph_light);
+        viewProfile = findViewById(R.id.view_profile_light);
 
         Intent intent = getIntent();
         username = intent.getStringExtra("Username");
@@ -56,6 +59,23 @@ public class LightAsset extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        viewGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(LightAsset.this, Chart.class);
+                startActivity(intent);
+            }
+        });
+        viewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(LightAsset.this, UserProfile.class);
+                startActivity(intent);
             }
         });
 

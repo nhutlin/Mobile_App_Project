@@ -11,4 +11,7 @@
         <item name="android:windowIsFloating">true</item>
         <!-- Add other attributes as needed -->
     </style>
+    <style name="ImageView.Circle" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

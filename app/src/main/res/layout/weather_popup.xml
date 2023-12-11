@@ -18,11 +18,11 @@
             android:text="@string/title_weather"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout
-
         android:layout_width="match_parent"
         android:layout_below="@+id/title_popup"
         android:layout_height="match_parent" >
@@ -46,6 +46,7 @@
                         android:id="@+id/manufacturer_info"
                         android:textColor="@color/white"
                         android:text="@string/manufacturer"
+                        android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:textSize="20sp"
                         android:layout_marginLeft="8dp" />
@@ -55,6 +56,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/humidity_info"
                         android:text="@string/humidity"
+                        android:textStyle="bold"
+
                         android:textSize="20sp"
                         android:textColor="@color/white"
                         android:layout_marginTop="8dp"
@@ -64,6 +67,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/rainfall_info"
                         android:text="@string/rainfall"
+                        android:textStyle="bold"
                         android:textSize="20sp"
                         android:textColor="@color/white"
                         android:layout_marginTop="8dp"
@@ -74,6 +78,7 @@
                         android:id="@+id/temperature_info"
                         android:text="@string/temperature"
                         android:textSize="20sp"
+                        android:textStyle="bold"
                         android:layout_marginTop="8dp"
                         android:textColor="@color/white"
                         android:layout_marginLeft="8dp" />
@@ -96,6 +101,8 @@
                         android:layout_gravity="right"
                         android:textColor="@color/white"
                         android:textSize="20sp"
+                        android:textStyle="bold"
+
                         android:layout_marginRight="8dp" />
 
                     <TextView
@@ -104,6 +111,8 @@
                         android:id="@+id/humidity_value"
                         android:layout_gravity="right"
                         android:textSize="20sp"
+                        android:textStyle="bold"
+
                         android:textColor="@color/white"
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="8dp" />
@@ -114,6 +123,8 @@
                         android:textColor="@color/white"
                         android:layout_gravity="right"
                         android:textSize="20sp"
+                        android:textStyle="bold"
+
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="8dp" />
                     <TextView
@@ -121,6 +132,8 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/temperature_value"
                         android:textSize="20sp"
+                        android:textStyle="bold"
+
                         android:layout_marginTop="8dp"
                         android:textColor="@color/white"
                         android:layout_gravity="right"

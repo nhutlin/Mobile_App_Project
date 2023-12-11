@@ -141,7 +141,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="24dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/gradient"
+                    android:background="@drawable/gradient_main"
                     android:paddingLeft="70dp"
                     android:paddingRight="70dp"
                     android:text="@string/login_caps"

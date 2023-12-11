@@ -170,7 +170,6 @@ public class Chart extends AppCompatActivity {
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                         Log.d("API CALL", response.code() + "");
 
-
                         JsonArray jsonArray = response.body();
                         if (jsonArray != null) {
                             Gson gson = new Gson();
@@ -366,7 +365,7 @@ public class Chart extends AppCompatActivity {
                                 chart.getXAxis().setLabelCount(xValues.size());
                             }
                             chart.getAxisRight().setEnabled(false);
-                            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues){}); // To format the x-axis labels
+                            chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues){});
                             chart.getLegend().setEnabled(true);
 
                             chart.invalidate();

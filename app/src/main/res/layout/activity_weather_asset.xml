@@ -32,41 +32,29 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="8dp">
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/menu"
-                        android:layout_alignParentLeft="true"
-                        android:src="@drawable/ic_nav"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:layout_centerVertical="true"
-                        android:layout_marginTop="10dp" />
-
-
                     <TextView
                         android:id="@+id/hi_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
                         android:layout_centerInParent="true"
-                        android:layout_toRightOf="@+id/menu"
-                        android:drawableLeft="@drawable/ic_user"
-                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:text="@string/hi"
+                        android:drawableLeft="@drawable/ic_user"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
+
                     <TextView
                         android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/hi_text"
                         android:layout_centerInParent="true"
-                        android:textSize="20sp"
+                        android:layout_toRightOf="@+id/hi_text"
                         android:gravity="center"
-                        android:layout_marginTop="10dp"
                         android:textAlignment="center"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
                 <TextView
@@ -601,23 +589,32 @@
             android:background="@drawable/back_nav"
             >
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/return_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/ic_map" />
 
-            <ImageView
-                android:id="@+id/view_graph"
+            <ImageButton
+                android:id="@+id/view_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="8dp"
+                android:src="@drawable/ic_user" />
+            <ImageButton
+                android:id="@+id/view_graph"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_centerInParent="true"
                 android:src="@drawable/ic_graph" />
-
         </RelativeLayout>
 
 </RelativeLayout>

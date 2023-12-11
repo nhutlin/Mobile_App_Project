@@ -18,9 +18,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_marginLeft="16dp"
-
-
+            android:layout_marginLeft="22dp"
             />
 
         <TextView

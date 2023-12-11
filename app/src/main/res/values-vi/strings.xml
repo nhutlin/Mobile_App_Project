@@ -51,7 +51,7 @@
 
 
     <string name="close">ĐÓNG</string>
-    <string name="view_detail">XEM CHI TIẾT</string>
+    <string name="view_detail">CHI TIẾT</string>
     <string name="title_weather">THỜI TIẾT</string>
     <string name="title_light">ÁNH SÁNG</string>
 
@@ -59,8 +59,8 @@
     <string name="onOff">Mở/tắt</string>
     <string name="colour_RGB">Màu RGB</string>
     <string name="colour_temperature">Nhiệt độ màu</string>
-    <string name="on">Mở</string>
-    <string name="off">Tắt</string>
+    <string name="on">Kích hoạt</string>
+    <string name="off">Đóng</string>
 
     <string name="chart">BIỂU ĐỒ</string>
     <string name="select_attribute">Chọn thuộc tính</string>
@@ -81,5 +81,19 @@
     <string name="year">Năm</string>
     <string name="date">Ngày tháng năm</string>
     <string name="show">XEM</string>
+
+    <string name="profile">HỒ SƠ</string>
+    <string name="logout">ĐĂNG XUẤT</string>
+    <string name="realm">Realm</string>
+    <string name="user_id">ID</string>
+    <string name="first_name">Tên</string>
+    <string name="last_name">Họ</string>
+    <string name="enabled">Cấp phép</string>
+    <string name="service_account">Tài khoản dịch vụ</string>
+    <string name="true_value">Có</string>
+    <string name="false_value">Không</string>
+    <string name="create_on">Ngày tạo</string>
+
+
 
 </resources>

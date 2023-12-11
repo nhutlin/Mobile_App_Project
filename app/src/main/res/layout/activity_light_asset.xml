@@ -38,22 +38,23 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerInParent="true"
-                        android:drawableLeft="@drawable/ic_user"
                         android:gravity="center"
                         android:text="@string/hi"
+                        android:drawableLeft="@drawable/ic_user"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
+
                     <TextView
                         android:id="@+id/username"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/hi_text"
                         android:layout_centerInParent="true"
-                        android:textSize="20sp"
+                        android:layout_toRightOf="@+id/hi_text"
                         android:gravity="center"
                         android:textAlignment="center"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="20sp" />
 
                 </RelativeLayout>
                 <ImageView
@@ -370,21 +371,31 @@
         android:background="@drawable/back_nav"
         >
 
-        <ImageView
-            android:id="@+id/return_map"
+        <ImageButton
+            android:id="@+id/return_map_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_map" />
 
-        <ImageView
-            android:id="@+id/view_graph"
+        <ImageButton
+            android:id="@+id/view_profile_light"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:layout_marginTop="8dp"
+            android:src="@drawable/ic_user" />
+        <ImageButton
+            android:id="@+id/view_graph_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_centerInParent="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_graph" />
 
     </RelativeLayout>

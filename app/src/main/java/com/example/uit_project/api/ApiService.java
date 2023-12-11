@@ -27,13 +27,6 @@ public interface ApiService {
             .build()
             .create(ApiService.class);
 
-    @FormUrlEncoded
-    @POST("auth/realms/master/protocol/openid-connect/token")
-    Call<ApiResponse> getToken(@Field("client_id") String client_id,
-                               @Field("username") String username,
-                               @Field("password") String password,
-                               @Field("grant_type") String grant_type);
-
     @GET("api/master/asset/{assetID}")
     Call<WeatherAssetResponse> getWeatherAsset(@Path("assetID") String assetID,
                                                @Header("Authorization") String auth);
@@ -48,5 +41,5 @@ public interface ApiService {
                                                @Path("attributeName") String attributeName,
                                                @Body RequestBody Body);
     @GET("api/master/user/user")
-    Call<User> getUser();
+    Call<User> getUser(@Header("Authorization") String auth);
 }

@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/title_light"
+            android:textStyle="bold"
             android:textAlignment="center"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -47,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/brightness_info"
                     android:textColor="@color/white"
+                    android:textStyle="bold"
                     android:text="@string/brightness"
                     android:layout_marginTop="8dp"
                     android:textSize="16sp"
@@ -58,6 +60,7 @@
                     android:id="@+id/colourTemperature_info"
                     android:text="@string/colour_temperature"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     android:layout_marginTop="8dp"
                     android:layout_marginLeft="8dp" />
@@ -66,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/onOff_info"
                     android:text="@string/onOff"
+                    android:textStyle="bold"
                     android:textSize="16sp"
                     android:textColor="@color/white"
                     android:layout_marginTop="8dp"
@@ -85,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/brightness"
+                    android:textStyle="bold"
                     android:id="@+id/brightness_value"
                     android:layout_marginTop="8dp"
                     android:layout_gravity="right"
@@ -99,7 +103,7 @@
                     android:id="@+id/colourTemperature_value"
                     android:layout_gravity="right"
                     android:textSize="16sp"
-                    android:text="@string/temperature"
+                    android:textStyle="bold"
                     android:layout_marginTop="8dp"
                     android:textColor="@color/white"
 
@@ -111,7 +115,7 @@
                     android:textColor="@color/white"
                     android:layout_gravity="right"
                     android:textSize="16sp"
-                    android:text="@string/on"
+                    android:textStyle="bold"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp" />
             </LinearLayout>
@@ -134,7 +138,7 @@
                 android:text="@string/close"
                 android:textColor="@color/white"
                 android:paddingLeft="8dp"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:paddingRight="8dp" />
             <android.widget.Button
                 android:id="@+id/view_details"
@@ -146,7 +150,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/view_detail"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 android:paddingLeft="4dp"
                 android:paddingRight="4dp" />
         </RelativeLayout>

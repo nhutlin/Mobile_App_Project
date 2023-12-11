@@ -50,7 +50,7 @@
     <string name="sun_zenith">Sun zenith</string>
 
     <string name="close">CLOSE</string>
-    <string name="view_detail">VIEW DETAILS</string>
+    <string name="view_detail">DETAILS</string>
     <string name="title_weather">WEATHER</string>
     <string name="title_light">LIGHT</string>
 
@@ -80,4 +80,16 @@
     <string name="year">Year</string>
     <string name="date">Day month year</string>
     <string name="show">SHOW</string>
+
+    <string name="profile">PROFILE</string>
+    <string name="logout">LOG OUT</string>
+    <string name="realm">Realm</string>
+    <string name="user_id">ID</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="enabled">Enabled</string>
+    <string name="service_account">Service account</string>
+    <string name="true_value">True</string>
+    <string name="false_value">False</string>
+    <string name="create_on">Create on</string>
 </resources>
