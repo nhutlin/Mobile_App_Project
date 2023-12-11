@@ -2,7 +2,7 @@ package com.example.uit_project.model.weather;
 
 import com.google.gson.annotations.SerializedName;
 
-public class WeatherAsset {
+public class WeatherAssetResponse {
     @SerializedName("id")
     public String id;
     @SerializedName("version")

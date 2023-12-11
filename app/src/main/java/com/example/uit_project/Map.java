@@ -31,6 +31,7 @@ import androidx.preference.PreferenceManager;
 
 
 import com.example.uit_project.api.ApiService;
+import com.example.uit_project.model.weather.WeatherAssetResponse;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
@@ -154,18 +155,18 @@ public class Map extends AppCompatActivity {
                 viewDetails = dialog.findViewById(R.id.view_details);
 
                 ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
-                        .enqueue(new Callback<com.example.uit_project.model.weather.WeatherAsset>() {
+                        .enqueue(new Callback<WeatherAssetResponse>() {
                             @Override
-                            public void onResponse(Call<com.example.uit_project.model.weather.WeatherAsset> call, Response<com.example.uit_project.model.weather.WeatherAsset> response) {
+                            public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
                                 Log.d("API CALL", response.code()+"");
-                                com.example.uit_project.model.weather.WeatherAsset asset = response.body();
+                                WeatherAssetResponse asset = response.body();
                                 humidity.setText(asset.attributes.humidity.value + "%");
                                 manufacturer.setText(asset.attributes.manufacturer.value);
                                 rainfall.setText(String.valueOf(asset.attributes.rainFall.value));
                                 temperature.setText(asset.attributes.temperature.value + "\u2103");
                             }
                             @Override
-                            public void onFailure(Call<com.example.uit_project.model.weather.WeatherAsset> call, Throwable t) {
+                            public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
 
                             }
                         });

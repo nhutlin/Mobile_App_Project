@@ -1,5 +1,5 @@
 package com.example.uit_project;
-
+import com.example.uit_project.model.weather.WeatherAssetResponse;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -42,7 +42,7 @@ public class WeatherAsset extends AppCompatActivity {
     private String username;
     private TextView user;
 
-    ApiService apiService;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,16 +90,15 @@ public class WeatherAsset extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         int hour24hrs = calendar.get(Calendar.HOUR_OF_DAY);
-//        int hour12hrs = calendar.get(Calendar.HOUR);
-//        int minutes = calendar.get(Calendar.MINUTE);
-//        int seconds = calendar.get(Calendar.SECOND);
-
+        token = GlobalVar.token + "";
+        Log.d("TEST TOKEN", ""+ token);
+        
         ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
-                .enqueue(new Callback<com.example.uit_project.model.weather.WeatherAsset>() {
-                    @Override
-                    public void onResponse(Call<com.example.uit_project.model.weather.WeatherAsset> call, Response<com.example.uit_project.model.weather.WeatherAsset> response) {
-                        Log.d("API CALL", response.code()+"");
-                        com.example.uit_project.model.weather.WeatherAsset asset = response.body();
+                .enqueue(new Callback<WeatherAssetResponse>() {
+            @Override
+            public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
+                Log.d("API CALL", response.code()+"");
+                        WeatherAssetResponse asset = response.body();
 
                         int valueTemperature = (int) asset.attributes.temperature.value;
                         // get header value
@@ -138,13 +137,64 @@ public class WeatherAsset extends AppCompatActivity {
                         sun_altitude.setText(asset.attributes.sunAltitude.value);
                         sun_azimuth.setText(asset.attributes.sunAzimuth.value);
                         sun_irradiance.setText(asset.attributes.sunIrradiance.value);
-                    }
+            }
 
-                    @Override
-                    public void onFailure(Call<com.example.uit_project.model.weather.WeatherAsset> call, Throwable t) {
+            @Override
+            public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
 
-                    }
-                });
+            }
+        });
+//        ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + token)
+//                .enqueue(new Callback<com.example.uit_project.model.weather.WeatherAsset>() {
+//                    @Override
+//                    public void onResponse(Call<com.example.uit_project.model.weather.WeatherAsset> call, Response<com.example.uit_project.model.weather.WeatherAsset> response) {
+//                        Log.d("API CALL", response.code()+"");
+//                        com.example.uit_project.model.weather.WeatherAsset asset = response.body();
+//
+//                        int valueTemperature = (int) asset.attributes.temperature.value;
+//                        // get header value
+//                        if(hour24hrs >= 6 && hour24hrs <= 18) {
+//                            if(valueTemperature > 27) {
+//                                iconWeather.setImageResource(R.drawable.sunny);
+//                            }
+//                            else if(valueTemperature <= 27 && valueTemperature >= 25){
+//                                iconWeather.setImageResource(R.drawable.cloudy_sunny);
+//                            }
+//                            else {
+//                              iconWeather.setImageResource(R.drawable.cloudy);
+//                            }
+//                        }
+//                        else {
+//                            if(valueTemperature > 25) {
+//                                iconWeather.setImageResource(R.drawable.moon);
+//                            } else if(valueTemperature <= 25) {
+//                                iconWeather.setImageResource(R.drawable.cloud_night);
+//                            }
+//                        }
+//                        if(asset.attributes.rainFall.value >= 5.0) {
+//                            iconWeather.setImageResource(R.drawable.rain);
+//                        }
+//                        temperature_logo.setText(String.valueOf(valueTemperature) + "\u00B0");
+//                        place.setText(asset.attributes.place.value.toString());
+//
+//                        manufacturer.setText(asset.attributes.manufacturer.value);
+//                        temperature.setText(String.valueOf(valueTemperature) + "\u2103");
+//                        humidity.setText(asset.attributes.humidity.value + "%");
+//                        rainfall.setText(asset.attributes.rainFall.value + " mm");
+//                        notes.setText(asset.attributes.notes.value);
+//                        wind_direction.setText(String.valueOf(asset.attributes.windDirection.value));
+//                        wind_speed.setText(asset.attributes.windSpeed.value + " km/h");
+//                        tags.setText(asset.attributes.tags.value.toString());
+//                        sun_altitude.setText(asset.attributes.sunAltitude.value);
+//                        sun_azimuth.setText(asset.attributes.sunAzimuth.value);
+//                        sun_irradiance.setText(asset.attributes.sunIrradiance.value);
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<com.example.uit_project.model.weather.WeatherAsset> call, Throwable t) {
+//
+//                    }
+//                });
 
     }
 }

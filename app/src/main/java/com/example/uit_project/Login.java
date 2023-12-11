@@ -93,9 +93,25 @@ public class Login extends AppCompatActivity {
                 String user = username.getText().toString();
                 String pass = password.getText().toString();
 
-
                 ApiService authService;
-                authService = ApiClientLogin.getClient().create(ApiService.class);
+                authService = ApiClientLogin.getClient("https://uiot.ixxc.dev/").create(ApiService.class);
+                Call<ApiResponse> callRoot = authService.getToken("openremote", "user", "123", "password");
+                callRoot.enqueue(new Callback<ApiResponse>() {
+                    @Override
+                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+                        if(response.isSuccessful()) {
+                            Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
+                            ApiResponse apiResponse = response.body();
+                            GlobalVar.token = apiResponse.getAccess_token().toString();
+                            Log.d("TEST TOKEN", ""+GlobalVar.token);
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        Log.d("TEST TOKEN", ""+GlobalVar.token);
+                    }
+                });
+
 
                 Call<ApiResponse> call = authService.getToken("openremote", user, pass, "password");
                 call.enqueue(new Callback<ApiResponse>() {
@@ -103,9 +119,6 @@ public class Login extends AppCompatActivity {
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                         if(response.isSuccessful()) {
                             Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
-
-                            ApiResponse apiResponse = response.body();
-                            //GlobalVar.token = apiResponse.getAccess_token().toString();
                             Intent intentMap = new Intent();
                             intentMap.putExtra("Username", username.getText().toString());
                             intentMap.setClass(Login.this, Map.class);
