@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -13,9 +14,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -25,19 +23,15 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.uit_project.LoadingAlert;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUp extends AppCompatActivity {
-    private EditText et_username;
-    private EditText et_email;
-    private EditText et_password;
-    private EditText et_rePassword;
+    private EditText input_username;
+    private EditText input_email;
+    private EditText input_pass;
+    private EditText input_rePass;
     private ImageButton btn_back;
     private Button btn_signUp;
 
-    private WebView webView;
     private LoadingAlert loadingAlert;
     private TextView login;
     private String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,32}$";
@@ -69,11 +63,11 @@ public class SignUp extends AppCompatActivity {
         btn_back = findViewById(R.id.ic_back_signup);
         login = findViewById(R.id.login_suggest);
         btn_signUp = findViewById(R.id.btn_signup);
-        et_username = findViewById(R.id.input_username_signup); // Get username Edit Text
-        et_email = findViewById(R.id.input_email_signup); // Get email Edit Text
-        et_password = findViewById(R.id.input_pass_signup); // Get password Edit Text
-        et_rePassword = findViewById(R.id.input_retypepass_signup); //Get rePassword Edit Text
-        webView = findViewById(R.id.wv_browser);
+        input_username = findViewById(R.id.input_username_signup);
+        input_email = findViewById(R.id.input_email_signup);
+        input_pass = findViewById(R.id.input_pass_signup);
+        input_rePass = findViewById(R.id.input_retypepass_signup);
+
         loadingAlert = new LoadingAlert(SignUp.this);
     }
 
@@ -95,15 +89,15 @@ public class SignUp extends AppCompatActivity {
 
         btn_signUp.setOnClickListener(view -> { // Sign up button
             // Validate user form, open sign up method
-            String username = et_username.getText().toString(); // Extract username
-            String email = et_email.getText().toString(); // Extract email
-            String password = et_password.getText().toString(); // Extract password
-            String rePassword = et_rePassword.getText().toString(); // Extract rePassword
+            String username = input_username.getText().toString(); // Extract username
+            String email = input_email.getText().toString(); // Extract email
+            String password = input_pass.getText().toString(); // Extract password
+            String rePassword = input_rePass.getText().toString(); // Extract rePassword
             boolean isValidInformation = validateForm(username, email, password, rePassword);
 
             if (isValidInformation) { // If information is valid
                 loadingAlert.startAlertDialog();
-                getToken(username, email, password, rePassword);
+                getSignUp(username, email, password, rePassword);
             }
         });
     }
@@ -115,71 +109,73 @@ public class SignUp extends AppCompatActivity {
         // Validate username
         if (username.isEmpty()) {
             isValid = false;
-            et_username.setError(getString(R.string.form_warning));
+            input_username.setError(getString(R.string.form_warning));
         }else {
-            et_username.setError(null);
+            input_username.setError(null);
         }
 
         // Validate email
-        if (email.isEmpty() || !isEmail(et_email)) {
+        if (email.isEmpty() || !isEmail(input_email)) {
             isValid = false;
-            et_email.setError(getString(R.string.email_warning));
+            input_email.setError(getString(R.string.email_warning));
         }else {
-            et_email.setError(null);
+            input_email.setError(null);
         }
 
         // Validate password
         if (password.isEmpty() || !(password.matches(passwordRegex))) {
             isValid = false;
-            et_password.setError(getString(R.string.invalidPass));
+            input_pass.setError(getString(R.string.invalidPass));
         } else {
-            et_password.setError(null);
+            input_pass.setError(null);
         }
 
         // Validate password confirm
         if (rePassword.isEmpty() || !password.equals(rePassword)) {
             isValid = false;
-            et_rePassword.setError(getString(R.string.password_warning));
+            input_rePass.setError(getString(R.string.password_warning));
         }
 
         return isValid;
     }
 
-//    @SuppressLint("SetJavaScriptEnabled")
-    private void getToken(String username, String email, String password, String rePassword) {
-        // Get sign up token
+    private void getSignUp(String username, String email, String password, String rePassword) {
         CookieManager.getInstance().removeAllCookies(null);
 
-        webView = new WebView(getBaseContext());
+        WebView webView = new WebView(SignUp.this);
         webView.getSettings().setJavaScriptEnabled(true);
-
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
-                Log.d(GlobalVar.LOG_TAG, "onPageFinished: ");
-                if (url.contains("auth")) {
-                    // Url is now in sign in page
-                    Log.d(GlobalVar.LOG_TAG, "Enter login");
-                    String redirect = "document.getElementsByTagName('a')[0].click();";
+
+                if (url.contains("openid-connect/auth")) { // Url is now in sign in page
+                    String redirect = "document.getElementsByTagName('a')[0].click();"; // Click on sign up button
                     view.evaluateJavascript(redirect, null);
                 }
-                if (url.contains("regi")) { // Url is now in sign up page
+                else if (url.contains("login-actions/registration")) { // Url is now in sign up page
                     Log.d(GlobalVar.LOG_TAG, "Enter registration");
                     String dataError = "document.getElementsByClassName('helper-text')[0].getAttribute('data-error');"; // Appear when email is exist
+                    String redText = "document.getElementsByClassName('red-text')[1].textContent;"; // Appear when username already exist.
 
                     view.evaluateJavascript(dataError, dErr-> {
-                        if (dErr.equals("null")) { // dErr = "Email already exist."
-                            String usrScript = "document.getElementById('username').value='" + username + "';";
-                            String emailScript = "document.getElementById('email').value='" + email + "';";
-                            String pwdScript = "document.getElementById('password').value='" + password + "';";
-                            String rePwdScript = "document.getElementById('password-confirm').value='" + rePassword + "';";
+                        if (dErr.equals("null")) { // No error in form
+                            view.evaluateJavascript(redText, red -> {
+                                if (red.equals("null")) {
+                                    String usrScript = "document.getElementById('username').value='" + username + "';";
+                                    String emailScript = "document.getElementById('email').value='" + email + "';";
+                                    String pwdScript = "document.getElementById('password').value='" + password + "';";
+                                    String rePwdScript = "document.getElementById('password-confirm').value='" + rePassword + "';";
 
-                            view.evaluateJavascript(usrScript, null);
-                            view.evaluateJavascript(emailScript, null);
-                            view.evaluateJavascript(pwdScript, null);
-                            view.evaluateJavascript(rePwdScript, null);
-                            view.evaluateJavascript("document.getElementsByTagName('form')[0].submit();", null); // Submit form
-                            loadingAlert.closeAlertDialog();
+                                    view.evaluateJavascript(usrScript, null);
+                                    view.evaluateJavascript(emailScript, null);
+                                    view.evaluateJavascript(pwdScript, null);
+                                    view.evaluateJavascript(rePwdScript, null);
+                                    view.evaluateJavascript("document.getElementsByTagName('form')[0].submit();", null); // Submit form
+                                }
+                                else {
+                                    signUpLog(red);
+                                }
+                            });
                         }
                         else { //
                             Log.d(GlobalVar.LOG_TAG, "error: " + dErr);
@@ -187,19 +183,17 @@ public class SignUp extends AppCompatActivity {
                         }
                     });
                 }
-                if (url.contains("manager/#")) { // Sign up success, open log in
-                    Log.d(GlobalVar.LOG_TAG, "Success!");
-                    signUpLog(getString(R.string.signup_success));
-                    openLogin();
+                else if (url.contains("manager/#state=")) {
+                    Toast.makeText(SignUp.this, getString(R.string.signup_success), Toast.LENGTH_SHORT).show();
+                    Log.d(GlobalVar.LOG_TAG, getString(R.string.signup_success));
+                    Intent intent = new Intent();
+                    intent.setClass(SignUp.this, Login.class);
+                    startActivity(intent);
                 }
-
-                String cookies = CookieManager.getInstance().getCookie(url);
-                Log.d(GlobalVar.LOG_TAG, "return cookie: " + cookies);
-                Log.d(GlobalVar.LOG_TAG, "url: " + url);
                 super.onPageFinished(view,url);
             }
         });
-        webView.loadUrl(GlobalVar.baseUrl + "manager");
+        webView.loadUrl("https://uiot.ixxc.dev/manager/");
     }
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
