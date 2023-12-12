@@ -3,15 +3,21 @@ package com.example.uit_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.uit_project.api.ApiService;
+import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.User;
 
 import java.text.SimpleDateFormat;
@@ -31,9 +37,18 @@ public class UserProfile extends AppCompatActivity {
     private TextView enabled;
     private TextView userName;
     private TextView serviceAccount;
+    private ImageButton edit;
 
     private Button logOut;
     private ImageButton back;
+    int background = 0;
+
+    private Dialog dialog;
+    private ImageView avatar;
+    private ImageButton ava1;
+    private ImageButton ava2;
+    private ImageButton ava3;
+    private Button ok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +63,58 @@ public class UserProfile extends AppCompatActivity {
         enabled = findViewById(R.id.enabled_value);
         userName = findViewById(R.id.username_value);
         serviceAccount = findViewById(R.id.service_value);
+        ok = findViewById(R.id.btn_ok);
         createOn = findViewById(R.id.create_on_value);
         back = findViewById(R.id.btn_back);
         logOut = findViewById(R.id.btn_logout);
+        avatar = findViewById(R.id.profile_picture);
+        dialog = new Dialog(this);
+        dialog.getWindow().setGravity(Gravity.CENTER);
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.setContentView(R.layout.choose_avatar_popup);
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ava1 = dialog.findViewById(R.id.ava_1);
+                ava2 = dialog.findViewById(R.id.ava_2);
+                ava3 = dialog.findViewById(R.id.ava_3);
+                edit = dialog.findViewById(R.id.edit_avatar);
+
+
+
+                ava1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        background = R.id.ava_1;
+                    }
+                });
+                ava2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        background = R.id.ava_2;
+                    }
+                });
+                ava3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        background = R.id.ava_3;
+                    }
+                });
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        avatar.setImageResource(background);
+                    }
+                });
+
+
+            }
+        });
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +132,7 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-        ApiService.apiService.getUser("Bearer " + GlobalVar.tokenProfile).enqueue(
+        APIService.apiService.getUser("Bearer " + GlobalVar.tokenProfile).enqueue(
                 new Callback<User>() {
                     @Override
                     public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {

@@ -18,10 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uit_project.api.APIAuth;
-import com.example.uit_project.api.ApiService;
 import com.example.uit_project.model.ApiResponse;
-
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -7,10 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.uit_project.api.ApiService;
+import com.example.uit_project.api.APIService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,7 +78,7 @@ public class LightAsset extends AppCompatActivity {
             }
         });
 
-        ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
+        APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                     @Override
                     public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {

@@ -203,13 +203,4 @@ public class SignUp extends AppCompatActivity {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
-    private void openLogin() {
-        Intent i = new Intent();
-        i.setClass(SignUp.this, Login.class);
-        startActivity(i);
-    }
-    private void signUpLog(String msg) {
-        Toast.makeText(SignUp.this, msg, Toast.LENGTH_SHORT).show();
-    }
 }

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.uit_project.api.ApiService;
+import com.example.uit_project.api.APIService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -104,7 +104,7 @@ public class WeatherAsset extends AppCompatActivity {
         token = GlobalVar.token + "";
         Log.d("TEST TOKEN", ""+ token);
         
-        ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
+        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<WeatherAssetResponse>() {
             @Override
             public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {

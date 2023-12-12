@@ -92,4 +92,5 @@
     <string name="true_value">True</string>
     <string name="false_value">False</string>
     <string name="create_on">Create on</string>
+    <string name="ok">OK</string>
 </resources>

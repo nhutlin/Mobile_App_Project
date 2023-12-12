@@ -12,11 +12,10 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.uit_project.api.ApiService;
+import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.datapoint.Datapoint;
 import com.example.uit_project.model.datapoint.RequestBody;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -164,7 +163,7 @@ public class Chart extends AppCompatActivity {
 //                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
 //                }
 
-                Call<JsonArray> call = ApiService.apiService.getDatapoint("Bearer " + GlobalVar.token, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest,body);
+                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.token, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest,body);
                 call.enqueue(new Callback<JsonArray>() {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {

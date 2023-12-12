@@ -566,6 +566,7 @@
                                 android:textColor="@color/white"
                                 android:textSize="50sp" />
                         </RelativeLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

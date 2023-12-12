@@ -30,7 +30,7 @@ import android.widget.TextView;
 import androidx.preference.PreferenceManager;
 
 
-import com.example.uit_project.api.ApiService;
+import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.weather.WeatherAssetResponse;
 
 import org.osmdroid.api.IMapController;
@@ -154,7 +154,7 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                ApiService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
+                APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
                         .enqueue(new Callback<WeatherAssetResponse>() {
                             @Override
                             public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
@@ -204,7 +204,7 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                ApiService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
+                APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                         .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                             @Override
                             public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
