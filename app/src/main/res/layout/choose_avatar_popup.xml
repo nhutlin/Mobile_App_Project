@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="275dp"
-    android:background="@drawable/popup_form"
+    android:layout_height="355dp"
+    android:background="@drawable/back_nav"
     >
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ava_1"
         android:src="@drawable/ic_avatar1" />
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check1"
+        android:layout_below="@+id/ava_1"
+        android:layout_alignStart="@+id/ava_1"
+        android:layout_alignEnd="@+id/ava_1"
+        />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -16,12 +25,46 @@
         android:id="@+id/ava_2"
         android:layout_toRightOf="@+id/ava_1"
         android:src="@drawable/ic_avatar2" />
+        <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check2"
+        android:layout_below="@+id/ava_2"
+        android:layout_alignStart="@+id/ava_2"
+        android:layout_alignEnd="@+id/ava_2"
+        />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ava_3"
-        android:layout_toRightOf="@+id/ava_2"
+        android:layout_below="@+id/check1"
         android:src="@drawable/ic_avatar3"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check3"
+        android:layout_below="@+id/ava_3"
+        android:layout_alignStart="@+id/ava_3"
+        android:layout_alignEnd="@+id/ava_3"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ava_2"
+        android:id="@+id/ava_4"
+        android:layout_below="@+id/check2"
+        android:src="@drawable/ic_avatar4"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check4"
+        android:layout_below="@+id/ava_4"
+        android:layout_alignStart="@+id/ava_4"
+        android:layout_alignEnd="@+id/ava_4"
+        />
+
     <android.widget.Button
         android:id="@+id/btn_ok"
         android:layout_width="wrap_content"

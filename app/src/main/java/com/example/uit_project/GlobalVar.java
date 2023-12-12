@@ -1,5 +1,6 @@
 package com.example.uit_project;
 
+import android.graphics.drawable.Drawable;
 import android.widget.RelativeLayout;
 
 public class GlobalVar {
@@ -10,6 +11,7 @@ public class GlobalVar {
     public static String LOG_TAG = "API LOG";
 
     public static LanguageManager manager;
+    public static int drawableProfile = 0;
     public static RelativeLayout view;
     public static String token = "";
     public static String tokenProfile = "";

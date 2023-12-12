@@ -1,8 +1,10 @@
 package com.example.uit_project;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,9 +14,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.uit_project.api.APIService;
@@ -45,10 +51,18 @@ public class UserProfile extends AppCompatActivity {
 
     private Dialog dialog;
     private ImageView avatar;
-    private ImageButton ava1;
-    private ImageButton ava2;
-    private ImageButton ava3;
+    private ImageView ava1;
+    private ImageView ava2;
+    private ImageView ava3;
+    private ImageView ava4;
     private Button ok;
+
+    private CheckBox checkBox1;
+    private CheckBox checkBox2;
+    private CheckBox checkBox3;
+    private CheckBox checkBox4;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +78,7 @@ public class UserProfile extends AppCompatActivity {
         userName = findViewById(R.id.username_value);
         serviceAccount = findViewById(R.id.service_value);
 
+
         createOn = findViewById(R.id.create_on_value);
         back = findViewById(R.id.btn_back);
         logOut = findViewById(R.id.btn_logout);
@@ -71,49 +86,138 @@ public class UserProfile extends AppCompatActivity {
         dialog = new Dialog(this);
         dialog.getWindow().setGravity(Gravity.CENTER);
 
-//        edit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                dialog.setContentView(R.layout.choose_avatar_popup);
-//                dialog.show();
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-//                ava1 = dialog.findViewById(R.id.ava_1);
-//                ava2 = dialog.findViewById(R.id.ava_2);
-//                ava3 = dialog.findViewById(R.id.ava_3);
-//                edit = dialog.findViewById(R.id.edit_avatar);
-//
-//                ok = dialog.findViewById(R.id.btn_ok);
-//
-//                ava1.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        background = R.id.ava_1;
-//                    }
-//                });
-//                ava2.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        background = R.id.ava_2;
-//                    }
-//                });
-//                ava3.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        background = R.id.ava_3;
-//                    }
-//                });
-//
-//                ok.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        avatar.setImageResource(background);
-//                    }
-//                });
-//
-//
-//            }
-//        });
+        edit = findViewById(R.id.edit_avatar);
+
+        avatar.setImageResource(GlobalVar.drawableProfile);
+        if(GlobalVar.drawableProfile == 0) {
+            avatar.setImageResource(R.drawable.profile_picture);
+        }
+
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.setContentView(R.layout.choose_avatar_popup);
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                ava1 = dialog.findViewById(R.id.ava_1);
+                ava2 = dialog.findViewById(R.id.ava_2);
+                ava3 = dialog.findViewById(R.id.ava_3);
+                ava4 = dialog.findViewById(R.id.ava_4);
+
+                checkBox1 = dialog.findViewById(R.id.check1);
+                checkBox2 = dialog.findViewById(R.id.check2);
+                checkBox3 = dialog.findViewById(R.id.check3);
+                checkBox4 = dialog.findViewById(R.id.check4);
+
+                ok = dialog.findViewById(R.id.btn_ok);
+
+                checkBox1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(true);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+
+                    }
+                });
+                checkBox2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(true);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                    }
+                });
+                checkBox3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(true);
+                        checkBox4.setChecked(false);
+                    }
+                });
+
+                checkBox4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(true);
+                    }
+                });
+
+                ava1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(true);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+
+                    }
+                });
+                ava2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(true);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                    }
+                });
+                ava3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(true);
+                        checkBox4.setChecked(false);
+                    }
+                });
+
+                ava4.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(true);
+                    }
+                });
+
+
+
+                ok.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(checkBox1.isChecked()) {
+                            avatar.setImageResource(R.drawable.ic_avatar1);
+                            GlobalVar.drawableProfile = R.drawable.ic_avatar1;
+                        }
+                        else if(checkBox2.isChecked()) {
+                            avatar.setImageResource(R.drawable.ic_avatar2);
+                            GlobalVar.drawableProfile = R.drawable.ic_avatar3;
+                        }
+                        else if(checkBox3.isChecked()) {
+                            avatar.setImageResource(R.drawable.ic_avatar3);
+                            GlobalVar.drawableProfile = R.drawable.ic_avatar3;
+                        }
+                        else if(checkBox4.isChecked()) {
+                            GlobalVar.drawableProfile = R.drawable.ic_avatar4;
+                            avatar.setImageResource(R.drawable.ic_avatar4);
+                        }
+                        dialog.cancel();
+                    }
+                });
+
+
+            }
+        });
 
 
         back.setOnClickListener(new View.OnClickListener() {
