@@ -63,7 +63,7 @@ public class UserProfile extends AppCompatActivity {
         enabled = findViewById(R.id.enabled_value);
         userName = findViewById(R.id.username_value);
         serviceAccount = findViewById(R.id.service_value);
-        ok = findViewById(R.id.btn_ok);
+
         createOn = findViewById(R.id.create_on_value);
         back = findViewById(R.id.btn_back);
         logOut = findViewById(R.id.btn_logout);
@@ -71,49 +71,49 @@ public class UserProfile extends AppCompatActivity {
         dialog = new Dialog(this);
         dialog.getWindow().setGravity(Gravity.CENTER);
 
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.setContentView(R.layout.choose_avatar_popup);
-                dialog.show();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                ava1 = dialog.findViewById(R.id.ava_1);
-                ava2 = dialog.findViewById(R.id.ava_2);
-                ava3 = dialog.findViewById(R.id.ava_3);
-                edit = dialog.findViewById(R.id.edit_avatar);
-
-
-
-                ava1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        background = R.id.ava_1;
-                    }
-                });
-                ava2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        background = R.id.ava_2;
-                    }
-                });
-                ava3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        background = R.id.ava_3;
-                    }
-                });
-
-                ok.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        avatar.setImageResource(background);
-                    }
-                });
-
-
-            }
-        });
+//        edit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dialog.setContentView(R.layout.choose_avatar_popup);
+//                dialog.show();
+//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//                ava1 = dialog.findViewById(R.id.ava_1);
+//                ava2 = dialog.findViewById(R.id.ava_2);
+//                ava3 = dialog.findViewById(R.id.ava_3);
+//                edit = dialog.findViewById(R.id.edit_avatar);
+//
+//                ok = dialog.findViewById(R.id.btn_ok);
+//
+//                ava1.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        background = R.id.ava_1;
+//                    }
+//                });
+//                ava2.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        background = R.id.ava_2;
+//                    }
+//                });
+//                ava3.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        background = R.id.ava_3;
+//                    }
+//                });
+//
+//                ok.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        avatar.setImageResource(background);
+//                    }
+//                });
+//
+//
+//            }
+//        });
 
 
         back.setOnClickListener(new View.OnClickListener() {
