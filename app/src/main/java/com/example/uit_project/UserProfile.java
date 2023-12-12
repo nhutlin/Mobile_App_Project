@@ -55,12 +55,18 @@ public class UserProfile extends AppCompatActivity {
     private ImageView ava2;
     private ImageView ava3;
     private ImageView ava4;
+    private ImageView ava5;
+    private ImageView ava6;
     private Button ok;
 
     private CheckBox checkBox1;
     private CheckBox checkBox2;
     private CheckBox checkBox3;
     private CheckBox checkBox4;
+    private CheckBox checkBox5;
+
+    private CheckBox checkBox6;
+
 
 
 
@@ -104,11 +110,16 @@ public class UserProfile extends AppCompatActivity {
                 ava2 = dialog.findViewById(R.id.ava_2);
                 ava3 = dialog.findViewById(R.id.ava_3);
                 ava4 = dialog.findViewById(R.id.ava_4);
+                ava5 = dialog.findViewById(R.id.ava_5);
+                ava6 = dialog.findViewById(R.id.ava_6);
+
 
                 checkBox1 = dialog.findViewById(R.id.check1);
                 checkBox2 = dialog.findViewById(R.id.check2);
                 checkBox3 = dialog.findViewById(R.id.check3);
                 checkBox4 = dialog.findViewById(R.id.check4);
+                checkBox5 = dialog.findViewById(R.id.check5);
+                checkBox6 = dialog.findViewById(R.id.check6);
 
                 ok = dialog.findViewById(R.id.btn_ok);
 
@@ -119,9 +130,12 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(false);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
 
                     }
                 });
+
                 checkBox2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -129,6 +143,8 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(true);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(false);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
                     }
                 });
                 checkBox3.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +154,8 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(true);
                         checkBox4.setChecked(false);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
                     }
                 });
 
@@ -148,6 +166,32 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(true);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
+                    }
+                });
+
+                checkBox5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        checkBox6.setChecked(false);
+                        checkBox5.setChecked(true);
+                    }
+                });
+
+                checkBox6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        checkBox6.setChecked(true);
+                        checkBox5.setChecked(false);
                     }
                 });
 
@@ -158,7 +202,8 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(false);
-
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
                     }
                 });
                 ava2.setOnClickListener(new View.OnClickListener() {
@@ -168,6 +213,8 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(true);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(false);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
                     }
                 });
                 ava3.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +224,8 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(true);
                         checkBox4.setChecked(false);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
                     }
                 });
 
@@ -187,6 +236,30 @@ public class UserProfile extends AppCompatActivity {
                         checkBox2.setChecked(false);
                         checkBox3.setChecked(false);
                         checkBox4.setChecked(true);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(false);
+                    }
+                });
+                ava5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        checkBox5.setChecked(true);
+                        checkBox6.setChecked(false);
+                    }
+                });
+                ava6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        checkBox1.setChecked(false);
+                        checkBox2.setChecked(false);
+                        checkBox3.setChecked(false);
+                        checkBox4.setChecked(false);
+                        checkBox5.setChecked(false);
+                        checkBox6.setChecked(true);
                     }
                 });
 
@@ -210,6 +283,13 @@ public class UserProfile extends AppCompatActivity {
                         else if(checkBox4.isChecked()) {
                             GlobalVar.drawableProfile = R.drawable.ic_avatar4;
                             avatar.setImageResource(R.drawable.ic_avatar4);
+                        }
+                        else if(checkBox5.isChecked()) {
+                            GlobalVar.drawableProfile = R.drawable.ic_avatar5;
+                            avatar.setImageResource(R.drawable.ic_avatar5);
+                        }else if(checkBox6.isChecked()) {
+                            GlobalVar.drawableProfile = R.drawable.ic_avatar6;
+                            avatar.setImageResource(R.drawable.ic_avatar6);
                         }
                         dialog.cancel();
                     }
