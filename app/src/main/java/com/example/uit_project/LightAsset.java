@@ -2,6 +2,7 @@ package com.example.uit_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -80,17 +81,19 @@ public class LightAsset extends AppCompatActivity {
 
         APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
-                        Log.d("API CALL", response.code()+"");
+                        Log.d("API CALL", String.valueOf(response.code()));
                         com.example.uit_project.model.light.LightAsset asset = response.body();
 
-                        brightness_logo.setText(String.valueOf(asset.attributes.brightness.value));
-                        brightness.setText(String.valueOf(asset.attributes.brightness.value));
+                        assert asset != null;
+                        brightness_logo.setText(asset.attributes.brightness.value + "%");
+                        brightness.setText(asset.attributes.brightness.value + "%");
                         email.setText(asset.attributes.email.value);
                         notes.setText(asset.attributes.notes.value);
                         colour_RGB.setText(asset.attributes.colourRGB.value);
-                        colour_temperature.setText(String.valueOf(asset.attributes.colourTemperature.value) + "K");
+                        colour_temperature.setText(asset.attributes.colourTemperature.value + "K");
                         tags.setText(asset.attributes.tags.value.toString());
                         if(asset.attributes.onOff.value) {
                             on_off.setText(getString(R.string.on));

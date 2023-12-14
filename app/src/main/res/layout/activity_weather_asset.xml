@@ -82,12 +82,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/icon_weather"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerInParent="true"
                     android:paddingLeft="24dp"
-                    android:layout_alignParentBottom="true"
-                    android:text=""
                     android:textColor="@color/white"
-                    android:textSize="65sp" />
+                    android:textSize="50sp" />
 
             </RelativeLayout>
 
@@ -98,7 +97,7 @@
             android:layout_marginTop="4dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.75"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <ScrollView

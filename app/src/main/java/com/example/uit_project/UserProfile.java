@@ -263,8 +263,6 @@ public class UserProfile extends AppCompatActivity {
                     }
                 });
 
-
-
                 ok.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

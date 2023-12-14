@@ -44,6 +44,7 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,6 +82,8 @@ public class Map extends AppCompatActivity {
 
         // Set map zoom and map's position
         map.setTileSource(TileSourceFactory.MAPNIK);
+
+        map.setMultiTouchControls(true);
         IMapController mapController = map.getController();
         mapController.setZoom(19.25);
         GeoPoint startPoint = new GeoPoint(10.869778736885038, 106.80280655508835);
@@ -131,8 +134,10 @@ public class Map extends AppCompatActivity {
         markerLight.setInfoWindow(null);
         map.getOverlays().add(markerLight);
 
+        
+
         dialog = new Dialog(this);
-        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
 
         showInfo();
     }
@@ -142,7 +147,7 @@ public class Map extends AppCompatActivity {
             public boolean onMarkerClick(Marker marker, MapView mapView) {
                 dialog.setContentView(R.layout.weather_popup);
                 dialog.show();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
                 Log.v("SHOW DIALOG", "SUCCESS");

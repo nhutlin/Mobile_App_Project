@@ -112,11 +112,6 @@ public class Chart extends AppCompatActivity {
         show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String getHour = getString(R.string.hour).toString();
-                String getDay = getString(R.string.day).toString();
-                String getWeek = getString(R.string.week).toString();
-                String getMonth = getString(R.string.month).toString();
-                String getYear = getString(R.string.year).toString();
 
                 if(timeRequest == "Hour") { //|| timeRequest == "Giờ"){
                     toTimeStamp = System.currentTimeMillis();
