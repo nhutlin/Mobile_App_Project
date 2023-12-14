@@ -1,7 +1,8 @@
 package com.example.uit_project.api;
 import com.example.uit_project.model.User;
-import com.example.uit_project.model.datapoint.RequestBody;
+import com.example.uit_project.model.datapoint.RequestBodyAsset;
 import com.example.uit_project.model.light.LightAsset;
+import com.example.uit_project.model.map.MapSetting;
 import com.example.uit_project.model.weather.WeatherAssetResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -36,7 +37,10 @@ public interface APIService {
     Call<JsonArray> getDatapoint(@Header("Authorization") String auth,
                                                @Path("assetId") String assetId ,
                                                @Path("attributeName") String attributeName,
-                                               @Body RequestBody Body);
+                                                @Body RequestBodyAsset Message);
     @GET("api/master/user/user")
     Call<User> getUser(@Header("Authorization") String auth);
+
+    @GET("api/master//map/js")
+    Call<MapSetting> getMapSetting(@Header("Authorization") String auth);
 }

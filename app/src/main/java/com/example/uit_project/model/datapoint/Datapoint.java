@@ -8,13 +8,13 @@ import java.util.Arrays;
 public class Datapoint {
 
     private long x;
-    private double y;
+    private float y;
 
     public long getX() {
         return x;
     }
 
-    public double getY() {
+    public float getY() {
         return y;
     }
 }

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.uit_project.api.APIAuth;
 import com.example.uit_project.model.ApiResponse;
+import com.example.uit_project.model.map.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;

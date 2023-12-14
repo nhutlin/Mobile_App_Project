@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.datapoint.Datapoint;
-import com.example.uit_project.model.datapoint.RequestBody;
+import com.example.uit_project.model.datapoint.RequestBodyAsset;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -51,7 +51,7 @@ public class Chart extends AppCompatActivity {
 
     long toTimeStamp;
     long fromTimeStamp;
-    RequestBody body;
+    RequestBodyAsset body;
 
     ImageButton back;
     ArrayList<Float> dataList = new ArrayList<>();
@@ -116,24 +116,24 @@ public class Chart extends AppCompatActivity {
                 if(timeRequest == "Hour") { //|| timeRequest == "Giờ"){
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 3600000;
-                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
 
                 } else if (timeRequest.equalsIgnoreCase("Day")) { //|| timeRequest == "Ngày") {
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 86400000 ;
-                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
                 } else if (timeRequest == "Week"){ //|| timeRequest == "Tuần") {
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 604800000 ;
-                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
                 } else if (timeRequest == "Month"){ //|| timeRequest == "Tháng"){
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 2678400000L ;
-                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
                 } else if (timeRequest == "Year"){
                     toTimeStamp = System.currentTimeMillis();
                     fromTimeStamp = toTimeStamp - 31536000000L ;
-                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
+                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
                 }
 //                if(timeRequest.equalsIgnoreCase(getHour)) { //|| timeRequest == "Giờ"){
 //                    toTimeStamp = System.currentTimeMillis();
@@ -158,7 +158,7 @@ public class Chart extends AppCompatActivity {
 //                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
 //                }
 
-                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.token, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest,body);
+                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.token, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest, body);
                 call.enqueue(new Callback<JsonArray>() {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {

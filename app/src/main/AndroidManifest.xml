@@ -19,6 +19,9 @@
         android:theme="@style/Theme.UIT_Project"
         tools:targetApi="31">
         <activity
+            android:name=".chart.Chart2"
+            android:exported="false" />
+        <activity
             android:name=".UserProfile"
             android:exported="false" />
         <activity
@@ -31,7 +34,7 @@
             android:name=".WeatherAsset"
             android:exported="false" />
         <activity
-            android:name=".Map"
+            android:name=".model.map.Map"
             android:exported="false" />
         <activity
             android:name=".SignUp"

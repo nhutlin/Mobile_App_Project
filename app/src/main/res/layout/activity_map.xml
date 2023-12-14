@@ -16,6 +16,7 @@
             android:src="@drawable/ic_back"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_centerVertical="true"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="22dp"
 
             />
