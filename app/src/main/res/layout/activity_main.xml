@@ -89,7 +89,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/welcome"
                     android:textColor="@color/white"
                     android:textSize="36sp"
@@ -100,38 +100,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/title_main"
-                    android:layout_centerInParent="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
                     android:text="@string/subtitle"
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
-
-
-
-<!--                <Button-->
-<!--                    android:id="@+id/gg_btn"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_below="@+id/sub_title"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:layout_marginStart="16dp"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:layout_marginEnd="16dp"-->
-<!--                    android:layout_marginBottom="4dp"-->
-<!--                    android:backgroundTint="@color/white"-->
-<!--                    android:paddingLeft="29dp"-->
-<!--                    android:paddingRight="29dp"-->
-<!--                    android:text="@string/signup_gg"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="16sp" />-->
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/login_main_btn"
-                    android:layout_centerInParent="true"
-                    >
-
-                </RelativeLayout>
 
                 <android.widget.Button
                     android:id="@+id/login_main_btn"
@@ -155,6 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/login_main_btn"
                     android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
                     android:text="@string/signup_suggest"
                     android:textColor="@color/white"
                     android:textSize="16sp"
