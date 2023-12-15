@@ -97,22 +97,6 @@ public class Login extends AppCompatActivity {
                 APIAuth authService;
                 authService = ApiClientLogin.getClient("https://uiot.ixxc.dev/").create(APIAuth.class);
 
-                Call<ApiResponse> callAdmin = authService.getToken("openremote", "user", "123", "password");
-                callAdmin.enqueue(new Callback<ApiResponse>() {
-                    @Override
-                    public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        if(response.isSuccessful()) {
-                            Log.d("CALL API", response.code() + "");
-                            ApiResponse apiResponse = response.body();
-                            GlobalVar.token = apiResponse.getAccess_token().toString();
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<ApiResponse> call, Throwable t) {
-                        Log.d("TEST TOKEN", ""+GlobalVar.token);
-                    }
-                });
-
 
                 Call<ApiResponse> call = authService.getToken("openremote", user, pass, "password");
                 call.enqueue(new Callback<ApiResponse>() {

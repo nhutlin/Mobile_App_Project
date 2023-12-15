@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.preference.PreferenceManager;
 
@@ -34,6 +35,7 @@ import com.example.uit_project.CustomMarkerDrawable;
 import com.example.uit_project.GlobalVar;
 import com.example.uit_project.LightAsset;
 import com.example.uit_project.R;
+import com.example.uit_project.UserProfile;
 import com.example.uit_project.WeatherAsset;
 import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.weather.WeatherAssetResponse;
@@ -73,6 +75,12 @@ public class Map extends AppCompatActivity {
     private TextView rainfall;
     private TextView temperature;
     private ImageButton back;
+    private APIService apiService;
+
+    private int zoom = 0;
+    private double latitude = 0;
+    private double longitude = 0;
+    private ImageButton profile;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,18 +95,57 @@ public class Map extends AppCompatActivity {
 
         // Set map zoom and map's position
         map.setTileSource(TileSourceFactory.MAPNIK);
-
         map.setMultiTouchControls(true);
+
+
+
+//        apiService.getMapSetting(GlobalVar.tokenProfile)
+//                .enqueue(new Callback<MapSetting>() {
+//                    @Override
+//                    public void onResponse(Call<MapSetting> call, Response<MapSetting> response) {
+//                        if(response.isSuccessful()) {
+//                            MapSetting mapSetting = response.body();
+//
+//                            zoom = mapSetting.options.aDefault.zoom;
+//                            longitude = mapSetting.options.aDefault.center.get(0);
+//                            latitude = mapSetting.options.aDefault.center.get(1);
+//
+//                            Log.d("TEST GEO", "Longitude: " + longitude);
+//                            Log.d("TEST GEO", "Latitude: " + latitude);
+//
+//                        } else {
+//                            zoom = zoom;
+//                            latitude = 10.869778736885038;
+//                            longitude = 106.80280655508835;
+//
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<MapSetting> call, Throwable t) {
+//                        Toast.makeText(Map.this, getString(R.string.load_map_error), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
         IMapController mapController = map.getController();
         mapController.setZoom(19.25);
         GeoPoint startPoint = new GeoPoint(10.869778736885038, 106.80280655508835);
         mapController.setCenter(startPoint);
 
         back = findViewById(R.id.ic_back);
+        profile = findViewById(R.id.ic_profile);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Map.this, UserProfile.class);
+                startActivity(intent);
             }
         });
         // Mark the weather assent to the map
@@ -154,7 +201,6 @@ public class Map extends AppCompatActivity {
                 dialog.show();
                 Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
                 Log.v("SHOW DIALOG", "SUCCESS");
 
                 humidity = dialog.findViewById(R.id.humidity_value);
@@ -164,16 +210,28 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
+                APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf",
+                                "Bearer " + GlobalVar.tokenProfile)
                         .enqueue(new Callback<WeatherAssetResponse>() {
                             @Override
                             public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
-                                Log.d("API CALL", response.code()+"");
-                                WeatherAssetResponse asset = response.body();
-                                humidity.setText(asset.attributes.humidity.value + "%");
-                                manufacturer.setText(asset.attributes.manufacturer.value);
-                                rainfall.setText(String.valueOf(asset.attributes.rainFall.value));
-                                temperature.setText(asset.attributes.temperature.value + "\u2103");
+                                Log.d("API CALL", String.valueOf(response.code()));
+                                if(response.isSuccessful()) {
+                                    WeatherAssetResponse asset = response.body();
+                                    humidity.setText(asset.attributes.humidity.value + "%");
+                                    manufacturer.setText(asset.attributes.manufacturer.value);
+                                    rainfall.setText(String.valueOf(asset.attributes.rainFall.value));
+                                    temperature.setText(asset.attributes.temperature.value + "\u2103");
+                                }
+                                else {
+                                    Toast.makeText(Map.this, getString(R.string.get_permission),
+                                            Toast.LENGTH_SHORT).show();
+                                    humidity.setText("--");
+                                    manufacturer.setText("--");
+                                    rainfall.setText("--");
+                                    temperature.setText("--");
+                                }
+
                             }
                             @Override
                             public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
@@ -214,24 +272,32 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
+                APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.tokenProfile)
                         .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                             @Override
                             public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
-                                Log.d("API CALL", response.code()+"");
-                                com.example.uit_project.model.light.LightAsset asset = response.body();
+                                Log.d("API CALL", String.valueOf(response.code()));
+                                if(response.isSuccessful()) {
+                                    com.example.uit_project.model.light.LightAsset asset = response.body();
 
-                                brightness.setText(String.valueOf(asset.attributes.brightness.value));
-                                colour_temperature.setText(String.valueOf(asset.attributes.colourTemperature.value) + "K");
-                                if(asset.attributes.onOff.value) {
-                                    on_off.setText(getString(R.string.on));
+                                    brightness.setText(asset.attributes.brightness.value + "%");
+                                    colour_temperature.setText(asset.attributes.colourTemperature.value + "K");
+                                    if(asset.attributes.onOff.value) {
+                                        on_off.setText(getString(R.string.on));
+                                    } else {
+                                        on_off.setText(getString(R.string.off));
+                                    }
                                 } else {
-                                    on_off.setText(getString(R.string.off));
+                                    Toast.makeText(Map.this, getString(R.string.get_permission),
+                                            Toast.LENGTH_SHORT).show();
+                                    brightness.setText("--");
+                                    colour_temperature.setText("--");
+                                    on_off.setText("--");
                                 }
+
                             }
                             @Override
                             public void onFailure(Call<com.example.uit_project.model.light.LightAsset> call, Throwable t) {
-
                             }
                         });
                 closePopup.setOnClickListener(new View.OnClickListener() {

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uit_project.api.APIService;
 
@@ -101,70 +102,89 @@ public class WeatherAsset extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         int hour24hrs = calendar.get(Calendar.HOUR_OF_DAY);
-        token = GlobalVar.token + "";
+//        token = GlobalVar.token + "";
         Log.d("TEST TOKEN", ""+ token);
         
-        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
+        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.tokenProfile)
                 .enqueue(new Callback<WeatherAssetResponse>() {
             @Override
             public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
-                Log.d("API CALL", response.code()+"");
-                        WeatherAssetResponse asset = response.body();
+                Log.d("API CALL", String.valueOf(response.code()));
 
-                        int valueTemperature = (int) asset.attributes.temperature.value;
-                        if(hour24hrs >= 6 && hour24hrs <= 18) {
-                            if(valueTemperature > 27) {
-                                iconWeather.setImageResource(R.drawable.sunny);
-                            }
-                            else if(valueTemperature <= 27 && valueTemperature >= 25){
-                                iconWeather.setImageResource(R.drawable.cloudy_sunny);
-                            }
-                            else {
-                              iconWeather.setImageResource(R.drawable.cloudy);
-                            }
+                if(response.isSuccessful()) {
+                    WeatherAssetResponse asset = response.body();
+
+                    int valueTemperature = (int) asset.attributes.temperature.value;
+                    if(hour24hrs >= 6 && hour24hrs <= 18) {
+                        if(valueTemperature > 27) {
+                            iconWeather.setImageResource(R.drawable.sunny);
+                        }
+                        else if(valueTemperature <= 27 && valueTemperature >= 25){
+                            iconWeather.setImageResource(R.drawable.cloudy_sunny);
                         }
                         else {
-                            if(valueTemperature > 25) {
-                                iconWeather.setImageResource(R.drawable.moon);
-                            } else if(valueTemperature <= 25) {
-                                iconWeather.setImageResource(R.drawable.cloud_night);
-                            }
+                            iconWeather.setImageResource(R.drawable.cloudy);
                         }
-                        if(asset.attributes.rainFall.value >= 5.0) {
-                            iconWeather.setImageResource(R.drawable.rain);
+                    }
+                    else {
+                        if(valueTemperature > 25) {
+                            iconWeather.setImageResource(R.drawable.moon);
+                        } else if(valueTemperature <= 25) {
+                            iconWeather.setImageResource(R.drawable.cloud_night);
                         }
-                        temperature_logo.setText(String.valueOf(valueTemperature) + "\u00B0");
-                        place.setText(asset.attributes.place.value.toString());
+                    }
+                    if(asset.attributes.rainFall.value >= 5.0) {
+                        iconWeather.setImageResource(R.drawable.rain);
+                    }
+                    temperature_logo.setText(String.valueOf(valueTemperature) + "\u00B0");
+                    place.setText(asset.attributes.place.value.toString());
 
-                        manufacturer.setText(asset.attributes.manufacturer.value);
-                        temperature.setText(String.valueOf(valueTemperature) + "\u2103");
-                        humidity.setText(asset.attributes.humidity.value + "%");
-                        rainfall.setText(asset.attributes.rainFall.value + " mm");
-                        notes.setText(asset.attributes.notes.value);
-                        wind_direction.setText(String.valueOf(asset.attributes.windDirection.value));
-                        wind_speed.setText(asset.attributes.windSpeed.value + " km/h");
-                        tags.setText(asset.attributes.tags.value.toString());
-                        sun_altitude.setText(asset.attributes.sunAltitude.value);
-//                        Log.d("TEST VALUE", sun_altitude.getT)
-                        if(sun_altitude.getText().toString().isEmpty()) {
-                            sun_altitude.setTextSize(35);
-                            sun_altitude.setText("--");
-                        }
-                        sun_azimuth.setText(asset.attributes.sunAzimuth.value);
-                        if(sun_azimuth.getText().toString().isEmpty()) {
-                            sun_azimuth.setTextSize(35);
-                            sun_azimuth.setText("--");
-                        }
-                        sun_irradiance.setText(asset.attributes.sunIrradiance.value);
-                        if(sun_irradiance.getText().toString().isEmpty()) {
-                            sun_irradiance.setTextSize(35);
-                            sun_irradiance.setText("--");
-                        }
-                        sun_zenith.setText(asset.attributes.sunZenith.value);
-                        if(sun_zenith.getText().toString().isEmpty()) {
-                            sun_zenith.setTextSize(35);
-                            sun_zenith.setText("--");
-                        }
+                    manufacturer.setText(asset.attributes.manufacturer.value);
+                    temperature.setText(String.valueOf(valueTemperature) + "\u2103");
+                    humidity.setText(asset.attributes.humidity.value + "%");
+                    rainfall.setText(asset.attributes.rainFall.value + " mm");
+                    notes.setText(asset.attributes.notes.value);
+                    wind_direction.setText(String.valueOf(asset.attributes.windDirection.value));
+                    wind_speed.setText(asset.attributes.windSpeed.value + " km/h");
+                    tags.setText(asset.attributes.tags.value.toString());
+                    sun_altitude.setText(asset.attributes.sunAltitude.value);
+
+                    if(sun_altitude.getText().toString().isEmpty()) {
+                        sun_altitude.setTextSize(35);
+                        sun_altitude.setText("--");
+                    }
+                    sun_azimuth.setText(asset.attributes.sunAzimuth.value);
+                    if(sun_azimuth.getText().toString().isEmpty()) {
+                        sun_azimuth.setTextSize(35);
+                        sun_azimuth.setText("--");
+                    }
+                    sun_irradiance.setText(asset.attributes.sunIrradiance.value);
+                    if(sun_irradiance.getText().toString().isEmpty()) {
+                        sun_irradiance.setTextSize(35);
+                        sun_irradiance.setText("--");
+                    }
+                    sun_zenith.setText(asset.attributes.sunZenith.value);
+                    if(sun_zenith.getText().toString().isEmpty()) {
+                        sun_zenith.setTextSize(35);
+                        sun_zenith.setText("--");
+                    }
+                }
+                else {
+                    Toast.makeText(WeatherAsset.this, getString(R.string.get_permission),
+                            Toast.LENGTH_SHORT).show();
+                    temperature_logo.setText("--");
+                    place.setText("--");
+
+                    manufacturer.setText("--");
+                    temperature.setText("--");
+                    humidity.setText("--");
+                    rainfall.setText("--");
+                    notes.setText("--");
+                    wind_direction.setText("--");
+                    wind_speed.setText("--");
+                    tags.setText("--");
+                    sun_altitude.setText("--");
+                }
             }
 
             @Override

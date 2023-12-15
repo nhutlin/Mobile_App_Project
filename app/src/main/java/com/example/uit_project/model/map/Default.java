@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Default {
     @SerializedName("center")
-    List<Float> center;
+    List<Double> center;
 
     @SerializedName("bounds")
-    List<Float> bounds;
+    List<Double> bounds;
     @SerializedName("zoom")
     int zoom;
     @SerializedName("minZoom")

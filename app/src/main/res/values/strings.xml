@@ -33,6 +33,8 @@
 
     <string name="permission_granted">Permission Granted</string>
     <string name="map">MAP</string>
+    <string name="load_map_error">Fail to load map</string>
+    <string name="get_permission">You should need the access permission</string>
 
     <string name="hi">Hi, </string>
     <string name="humidity">Humidity</string>

@@ -34,6 +34,9 @@
     <string name="permission_granted">Giấy phép được cấp phát</string>
     <string name="hi">Chào, </string>
     <string name="map">BẢN ĐỒ</string>
+    <string name="load_map_error">Lỗi tải bản đồ</string>
+    <string name="get_permission">Bạn cần phải có quyền truy cập</string>
+
 
     <string name="humidity">Độ ẩm</string>
     <string name="manufacturer">Nhà sáng tạo</string>

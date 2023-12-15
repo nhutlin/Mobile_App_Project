@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.uit_project.api.APIService;
 
@@ -79,32 +80,45 @@ public class LightAsset extends AppCompatActivity {
             }
         });
 
-        APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
+        APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.tokenProfile)
                 .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
                         Log.d("API CALL", String.valueOf(response.code()));
-                        com.example.uit_project.model.light.LightAsset asset = response.body();
+                        if(response.isSuccessful()) {
+                            com.example.uit_project.model.light.LightAsset asset = response.body();
 
-                        assert asset != null;
-                        brightness_logo.setText(asset.attributes.brightness.value + "%");
-                        brightness.setText(asset.attributes.brightness.value + "%");
-                        email.setText(asset.attributes.email.value);
-                        notes.setText(asset.attributes.notes.value);
-                        colour_RGB.setText(asset.attributes.colourRGB.value);
-                        colour_temperature.setText(asset.attributes.colourTemperature.value + "K");
-                        tags.setText(asset.attributes.tags.value.toString());
-                        if(asset.attributes.onOff.value) {
-                            on_off.setText(getString(R.string.on));
+                            assert asset != null;
+                            brightness_logo.setText(asset.attributes.brightness.value + "%");
+                            brightness.setText(asset.attributes.brightness.value + "%");
+                            email.setText(asset.attributes.email.value);
+                            notes.setText(asset.attributes.notes.value);
+                            colour_RGB.setText(asset.attributes.colourRGB.value);
+                            colour_temperature.setText(asset.attributes.colourTemperature.value + "K");
+                            tags.setText(asset.attributes.tags.value.toString());
+                            if(asset.attributes.onOff.value) {
+                                on_off.setText(getString(R.string.on));
+                            } else {
+                                on_off.setText(getString(R.string.off));
+                            }
                         } else {
-                            on_off.setText(getString(R.string.off));
+                            Toast.makeText(LightAsset.this, "Fail", Toast.LENGTH_SHORT).show();
+                            brightness_logo.setText("--");
+                            brightness.setText("--");
+                            email.setText("--");
+                            notes.setText("--");
+                            colour_RGB.setText("--");
+                            colour_temperature.setText("--");
+                            tags.setText("--");
+                            on_off.setText("--");
                         }
+
                     }
 
                     @Override
                     public void onFailure(Call<com.example.uit_project.model.light.LightAsset> call, Throwable t) {
-
+                        Toast.makeText(LightAsset.this, "Fail", Toast.LENGTH_SHORT).show();
                     }
                 });
 
