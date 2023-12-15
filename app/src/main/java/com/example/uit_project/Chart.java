@@ -159,7 +159,7 @@ public class Chart extends AppCompatActivity {
 //                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
 //                }
 
-                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.tokenProfile, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest, body);
+                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.token, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest, body);
                 call.enqueue(new Callback<JsonArray>() {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {

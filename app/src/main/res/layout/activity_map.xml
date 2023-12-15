@@ -59,6 +59,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_user"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginRight="-22dp"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent" />
 

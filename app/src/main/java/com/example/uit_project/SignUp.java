@@ -95,8 +95,7 @@ public class SignUp extends AppCompatActivity {
             String rePassword = input_rePass.getText().toString(); // Extract rePassword
             boolean isValidInformation = validateForm(username, email, password, rePassword);
 
-            if (isValidInformation) { // If information is valid
-                loadingAlert.startAlertDialog();
+            if (isValidInformation) {
                 getSignUp(username, email, password, rePassword);
             }
         });
@@ -153,9 +152,8 @@ public class SignUp extends AppCompatActivity {
                     view.evaluateJavascript(redirect, null);
                 }
                 else if (url.contains("login-actions/registration")) {
-                    Log.d(GlobalVar.LOG_TAG, "Enter registration");
+                    Log.d("API CALL", "Enter registration");
 
-                    // Appear when email is exist
                     String dataError = "document.getElementsByClassName('helper-text')[0].getAttribute('data-error');";
 
                     // Appear when username already exist
@@ -182,14 +180,14 @@ public class SignUp extends AppCompatActivity {
                             });
                         }
                         else { //
-                            Log.d(GlobalVar.LOG_TAG, "error: " + dErr);
+                            Log.d("API CALL", "error: " + dErr);
                             Toast.makeText(SignUp.this, dErr, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
                 else if (url.contains("manager/#state=")) {
                     Toast.makeText(SignUp.this, getString(R.string.signup_success), Toast.LENGTH_SHORT).show();
-                    Log.d(GlobalVar.LOG_TAG, getString(R.string.signup_success));
+                    Log.d("API CALL", getString(R.string.signup_success));
                     Intent intent = new Intent();
                     intent.setClass(SignUp.this, Login.class);
                     startActivity(intent);

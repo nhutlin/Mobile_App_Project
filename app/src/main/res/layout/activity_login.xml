@@ -143,8 +143,8 @@
                     android:layout_below="@+id/save_account"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/gradient"
-                    android:paddingLeft="90dp"
-                    android:paddingRight="90dp"
+                    android:paddingLeft="60dp"
+                    android:paddingRight="60dp"
                     android:text="@string/login_caps"
                     android:textColor="@color/white"
                     android:textSize="20sp" />

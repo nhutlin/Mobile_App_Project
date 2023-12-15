@@ -1,26 +1,20 @@
 package com.example.uit_project;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.uit_project.api.APIService;
@@ -314,7 +308,7 @@ public class UserProfile extends AppCompatActivity {
             }
         });
 
-        APIService.apiService.getUser("Bearer " + GlobalVar.tokenProfile).enqueue(
+        APIService.apiService.getUser("Bearer " + GlobalVar.token).enqueue(
                 new Callback<User>() {
                     @Override
                     public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {

@@ -80,7 +80,7 @@ public class LightAsset extends AppCompatActivity {
             }
         });
 
-        APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.tokenProfile)
+        APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -103,7 +103,8 @@ public class LightAsset extends AppCompatActivity {
                                 on_off.setText(getString(R.string.off));
                             }
                         } else {
-                            Toast.makeText(LightAsset.this, "Fail", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LightAsset.this, getString(R.string.get_permission),
+                                    Toast.LENGTH_SHORT).show();
                             brightness_logo.setText("--");
                             brightness.setText("--");
                             email.setText("--");
@@ -118,8 +119,7 @@ public class LightAsset extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<com.example.uit_project.model.light.LightAsset> call, Throwable t) {
-                        Toast.makeText(LightAsset.this, "Fail", Toast.LENGTH_SHORT).show();
-                    }
+                        Log.d("API CALL", t.getMessage().toString());                 }
                 });
 
     }

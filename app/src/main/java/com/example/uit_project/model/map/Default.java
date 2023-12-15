@@ -6,18 +6,13 @@ import java.util.List;
 
 public class Default {
     @SerializedName("center")
-    List<Double> center;
-
-    @SerializedName("bounds")
-    List<Double> bounds;
+    public List<Double> center;
     @SerializedName("zoom")
-    int zoom;
+    public double zoom;
     @SerializedName("minZoom")
-    int minZoom;
+    public double minZoom;
     @SerializedName("maxZoom")
-    int maxZoom;
-    @SerializedName("boxZoom")
-    boolean boxZoom;
+    public double maxZoom;
 
     @SerializedName("geocodeUrl")
     String geocodeUrl;

@@ -2,6 +2,7 @@ package com.example.uit_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class Login extends AppCompatActivity {
     private String savePass;
     private boolean saveCheckBox;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +107,8 @@ public class Login extends AppCompatActivity {
                         if(response.isSuccessful()) {
                             Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             ApiResponse assetLogin = response.body();
-                            GlobalVar.tokenProfile = assetLogin.getAccess_token();
+                            GlobalVar.token = assetLogin.getAccess_token();
+                            Log.d("TEST TOKEN", GlobalVar.token);
                             Intent intentMap = new Intent();
                             intentMap.putExtra("Username", username.getText().toString());
                             intentMap.setClass(Login.this, Map.class);
@@ -114,6 +117,7 @@ public class Login extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
+                        Log.d("API CALL", t.getMessage().toString());
                         Toast.makeText(Login.this, getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
                     }
                 });

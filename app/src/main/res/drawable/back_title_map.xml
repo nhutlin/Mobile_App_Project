@@ -6,5 +6,5 @@
         android:endColor="@color/back_gradient_end"
         android:angle="225"
         />
-    <corners android:bottomLeftRadius="60dp" android:bottomRightRadius="60dp"/>
+    <corners android:bottomLeftRadius="70dp" android:bottomRightRadius="70dp"/>
 </shape>

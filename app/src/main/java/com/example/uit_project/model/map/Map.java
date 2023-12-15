@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -63,6 +64,7 @@ public class Map extends AppCompatActivity {
     private MapView map = null;
     private Marker markerLight;
     private Marker markerWeather;
+    private GeoPoint point;
     private Dialog dialog;
     private Button closePopup;
     private Button viewDetails;
@@ -72,15 +74,20 @@ public class Map extends AppCompatActivity {
     private TextView on_off;
     private TextView humidity;
     private TextView manufacturer;
+    private IMapController mapController;
     private TextView rainfall;
     private TextView temperature;
     private ImageButton back;
     private APIService apiService;
+    private GeoPoint startPoint;
 
-    private int zoom = 0;
-    private double latitude = 0;
-    private double longitude = 0;
+    private double zoom = 0;
+    private double latitudeMap = 0;
+    private double longitudeMap = 0;
     private ImageButton profile;
+    private double latitudeWeather = 0;
+    private double longitudeWeather = 0;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,40 +103,77 @@ public class Map extends AppCompatActivity {
         // Set map zoom and map's position
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
+        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf",
+                        "Bearer " + GlobalVar.token)
+                .enqueue(new Callback<WeatherAssetResponse>() {
+                    @Override
+                    public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
+                        Log.d("API CALL", String.valueOf(response.code()));
+                        if(response.isSuccessful()) {
+                            WeatherAssetResponse weatherAssetResponse = response.body();
+
+                            assert weatherAssetResponse != null;
+                            longitudeWeather = weatherAssetResponse.attributes.location.value.coordinates.get(0);
+                            latitudeWeather = weatherAssetResponse.attributes.location.value.coordinates.get(1);
+                            Log.d("TEST GEO", "Longitude: " + longitudeWeather);
+                            Log.d("TEST GEO", "Latitude: " + latitudeWeather);
 
 
+                        }
+                        else {
+                            Log.d("API CALL", String.valueOf(response.code()));
+                        }
 
-//        apiService.getMapSetting(GlobalVar.tokenProfile)
-//                .enqueue(new Callback<MapSetting>() {
-//                    @Override
-//                    public void onResponse(Call<MapSetting> call, Response<MapSetting> response) {
-//                        if(response.isSuccessful()) {
-//                            MapSetting mapSetting = response.body();
-//
-//                            zoom = mapSetting.options.aDefault.zoom;
-//                            longitude = mapSetting.options.aDefault.center.get(0);
-//                            latitude = mapSetting.options.aDefault.center.get(1);
-//
-//                            Log.d("TEST GEO", "Longitude: " + longitude);
-//                            Log.d("TEST GEO", "Latitude: " + latitude);
-//
-//                        } else {
-//                            zoom = zoom;
-//                            latitude = 10.869778736885038;
-//                            longitude = 106.80280655508835;
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<MapSetting> call, Throwable t) {
-//                        Toast.makeText(Map.this, getString(R.string.load_map_error), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-        IMapController mapController = map.getController();
-        mapController.setZoom(19.25);
-        GeoPoint startPoint = new GeoPoint(10.869778736885038, 106.80280655508835);
-        mapController.setCenter(startPoint);
+                    }
+
+                    @Override
+                    public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
+                        Log.d("API CALL", t.getMessage().toString());
+                    }
+                });
+
+        APIService.apiService.getMapSetting("Bearer " + GlobalVar.token)
+                .enqueue(new Callback<MapSetting>() {
+                    @Override
+                    public void onResponse(Call<MapSetting> call, Response<MapSetting> response) {
+                        Log.d("API CALL", String.valueOf(response.code()));
+                        if(response.isSuccessful()) {
+                            MapSetting mapSetting = response.body();
+
+                            assert mapSetting != null;
+                            longitudeMap = mapSetting.options.aDefault.center.get(0);
+                            latitudeMap = mapSetting.options.aDefault.center.get(1);
+                            mapController = map.getController();
+                            mapController.setZoom(mapSetting.options.aDefault.zoom);
+                            startPoint = new GeoPoint(latitudeMap, longitudeMap);
+                            mapController.setCenter(startPoint);
+                            map.setMaxZoomLevel(mapSetting.options.aDefault.maxZoom);
+                            map.setMinZoomLevel(mapSetting.options.aDefault.minZoom);
+
+                            Log.d("TEST GEO", "Longitude: " + longitudeMap);
+                            Log.d("TEST GEO", "Latitude: " + latitudeMap);
+
+                        } else {
+                            Log.d("API CALL", String.valueOf(response.code()));
+                            zoom = 19.25;
+                            latitudeMap = 10.869778736885038;
+                            longitudeMap = 106.80280655508835;
+                            IMapController mapController = map.getController();
+                            mapController.setZoom(zoom);
+                            GeoPoint startPoint = new GeoPoint(latitudeMap, longitudeMap);
+                            mapController.setCenter(startPoint);
+                            map.setMaxZoomLevel(16.0);
+                            map.setMinZoomLevel(0.0);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MapSetting> call, Throwable t) {
+                        Log.d("API CALL", t.getMessage().toString());
+                        Toast.makeText(Map.this, getString(R.string.load_map_error), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
         back = findViewById(R.id.ic_back);
         profile = findViewById(R.id.ic_profile);
@@ -148,8 +192,9 @@ public class Map extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         // Mark the weather assent to the map
-        GeoPoint point = new GeoPoint(10.869778736885038, 106.80280655508835);
+        point = new GeoPoint(10.869778736885038, 106.80280655508835);
         markerWeather = new Marker(map);
         markerWeather.setPosition(point);
 
@@ -160,7 +205,7 @@ public class Map extends AppCompatActivity {
         int height = (int) (44 * displayMetrics.density); // Adjust the height as needed
 
         // Decode the bitmap with the desired size
-        Bitmap markerBitmapWeather = BitmapFactory.decodeResource(res, R.drawable.ic_weather_marker);
+        Bitmap markerBitmapWeather = BitmapFactory.decodeResource(res, R.drawable.ic_weather_marker2);
         Bitmap resizedBitmap = Bitmap.createScaledBitmap(markerBitmapWeather, width, height, false);
 
         // Create a custom marker drawable
@@ -211,8 +256,9 @@ public class Map extends AppCompatActivity {
                 viewDetails = dialog.findViewById(R.id.view_details);
 
                 APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf",
-                                "Bearer " + GlobalVar.tokenProfile)
+                                "Bearer " + GlobalVar.token)
                         .enqueue(new Callback<WeatherAssetResponse>() {
+                            @SuppressLint("SetTextI18n")
                             @Override
                             public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
                                 Log.d("API CALL", String.valueOf(response.code()));
@@ -235,7 +281,7 @@ public class Map extends AppCompatActivity {
                             }
                             @Override
                             public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
-
+                                Log.d("API CALL", t.getMessage().toString());
                             }
                         });
                 closePopup.setOnClickListener(new View.OnClickListener() {
@@ -272,8 +318,9 @@ public class Map extends AppCompatActivity {
                 closePopup = dialog.findViewById(R.id.close_popup);
                 viewDetails = dialog.findViewById(R.id.view_details);
 
-                APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.tokenProfile)
+                APIService.apiService.getLightAsset("6iWtSbgqMQsVq8RPkJJ9vo", "Bearer " + GlobalVar.token)
                         .enqueue(new Callback<com.example.uit_project.model.light.LightAsset>() {
+                            @SuppressLint("SetTextI18n")
                             @Override
                             public void onResponse(Call<com.example.uit_project.model.light.LightAsset> call, Response<com.example.uit_project.model.light.LightAsset> response) {
                                 Log.d("API CALL", String.valueOf(response.code()));
@@ -326,7 +373,7 @@ public class Map extends AppCompatActivity {
         super.onResume();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
-        map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
+        map.onResume();
     }
 
     @Override
@@ -356,7 +403,6 @@ public class Map extends AppCompatActivity {
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission)
                     != PackageManager.PERMISSION_GRANTED) {
-                // Permission is not granted
                 permissionsToRequest.add(permission);
             }
         }

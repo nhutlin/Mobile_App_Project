@@ -105,7 +105,7 @@ public class WeatherAsset extends AppCompatActivity {
 //        token = GlobalVar.token + "";
         Log.d("TEST TOKEN", ""+ token);
         
-        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.tokenProfile)
+        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<WeatherAssetResponse>() {
             @Override
             public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
@@ -183,7 +183,15 @@ public class WeatherAsset extends AppCompatActivity {
                     wind_direction.setText("--");
                     wind_speed.setText("--");
                     tags.setText("--");
+                    sun_altitude.setTextSize(35);
                     sun_altitude.setText("--");
+                    sun_zenith.setTextSize(35);
+                    sun_zenith.setText("--");
+                    sun_irradiance.setTextSize(35);
+                    sun_irradiance.setText("--");
+                    sun_azimuth.setTextSize(35);
+                    sun_azimuth.setText("--");
+
                 }
             }
 
