@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChartTest">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/toolbar_chart"
+        android:background="@drawable/back_title_map"
+        android:layout_marginBottom="10dp"
+
+        android:layout_height="wrap_content" >
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginLeft="22dp"
+            />
+
+        <TextView
+            android:id="@+id/title_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/ic_graph"
+            android:drawablePadding="4dp"
+            android:text="@string/chart"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+    </RelativeLayout>
+
+
+
+
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbar_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <Spinner
+            android:id="@+id/select_attributes"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="36dp" />
+        <Spinner
+            android:id="@+id/select_timeframes"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_alignStart="@+id/select_attributes"
+            android:layout_below="@+id/select_attributes"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="36dp" />
+        <EditText
+            android:id="@+id/select_dates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginStart="36dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/select_timeframes"
+            android:onClick="showDateTimePickerDialog"
+            android:focusable="false"
+            android:hint="@string/date"/>
+
+        <android.widget.Button
+            android:id="@+id/btn_show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/gradient"
+            android:paddingLeft="50dp"
+            android:layout_below="@+id/select_dates"
+            android:paddingRight="50dp"
+            android:text="@string/show"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:layout_marginTop="8dp"
+            android:layout_below="@+id/btn_show"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp" />
+
+
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

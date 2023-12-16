@@ -129,7 +129,7 @@ public class Chart extends AppCompatActivity {
                     body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
                 } else if (timeRequest == "Month"){ //|| timeRequest == "Tháng"){
                     toTimeStamp = System.currentTimeMillis();
-                    fromTimeStamp = toTimeStamp - 2678400000L ;
+                    fromTimeStamp = toTimeStamp - 2678400000L;
                     body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
                 } else if (timeRequest == "Year"){
                     toTimeStamp = System.currentTimeMillis();
@@ -164,7 +164,6 @@ public class Chart extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                         Log.d("API CALL", response.code() + "");
-
                         if(response.isSuccessful()) {
                             JsonArray jsonArray = response.body();
                             if (jsonArray != null) {
@@ -177,6 +176,7 @@ public class Chart extends AppCompatActivity {
                                 for (Datapoint dataPoint : dataPoints) {
                                     long x = dataPoint.getX();
                                     float y = (float)dataPoint.getY();
+
                                     SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
                                     String end = sdf1.format(x);
                                     ending.add(end);

@@ -73,6 +73,13 @@
         <item>Wind speed</item>
     </string-array>
 
+    <string-array name="timeframes">
+        <item>Hour</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
     <string name="timeframe">Timeframe</string>
     <string name="ending">Ending</string>
     <string name="hour">Hour</string>
