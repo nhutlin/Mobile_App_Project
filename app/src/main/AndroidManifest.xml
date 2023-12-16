@@ -21,9 +21,7 @@
         <activity
             android:name=".ChartTest"
             android:exported="false" />
-        <activity
-            android:name=".chart.Chart2"
-            android:exported="false" />
+
         <activity
             android:name=".UserProfile"
             android:exported="false" />
