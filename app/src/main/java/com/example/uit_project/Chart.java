@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -54,7 +55,6 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
     private EditText editTextDateTime;
     private String selectedDateTime;
     private Button show;
-
     private long toTimestamp;
     private long fromTimestamp;
     private String getDates;
@@ -62,8 +62,8 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
     private ArrayList<Float> dataList = new ArrayList<>();
     private ArrayList<String> xValues = new ArrayList<>();
     private ArrayList<String> ending = new ArrayList<>();
+    private ImageButton back;
 
-    private long step;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
         spinnerSelectAttribute = findViewById(R.id.select_attributes);
         spinnerSelectTimeframe = findViewById(R.id.select_timeframes);
         show = findViewById(R.id.btn_show);
+        back = findViewById(R.id.btn_back);
         LineChart chart = findViewById(R.id.chart);
         spinnerSelectTimeframe.setOnItemSelectedListener(this);
         spinnerSelectAttribute.setOnItemSelectedListener(this);
@@ -95,6 +96,12 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
             }
         });
 
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         show.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SimpleDateFormat")
             @Override
@@ -108,31 +115,31 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                 }
 
                 if(txtTimeframe.contains("Hour")) {
-                    step = 3600000;
+
                     fromTimestamp = toTimestamp - 3600000;
                     body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
                 }
                 else if(txtTimeframe.contains("Day")) {
-                    step = 86400000;
+
                     fromTimestamp = toTimestamp - 86400000;
                     body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
                 }
                 else if(txtTimeframe.contains("Week")) {
-                    step = 604800000;
+
                     fromTimestamp = toTimestamp - 604800000;
                     body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
                 }
                 else if(txtTimeframe.contains("Month")) {
-                    step = 2678400000L;
+
                     fromTimestamp = toTimestamp - 2678400000L;
                     body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
                 }
                 else if(txtTimeframe.contains("Year")) {
-                    step = 31536000000L;
+
                     fromTimestamp = toTimestamp - 31536000000L;
                     body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 

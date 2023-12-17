@@ -10,6 +10,7 @@
     <string name="signup_suggest">Don\'t have an account? <b>Sign Up</b></string>
     <string name="sign_up">Sign Up</string>
 
+
     <!-- login -->
     <string name="login_suggest">Already have an account? <b>Login</b></string>
     <string name="password">Password</string>

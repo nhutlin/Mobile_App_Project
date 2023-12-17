@@ -51,6 +51,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+
         back_btn = findViewById(R.id.ic_back_login);
         login_btn = findViewById(R.id.btn_login);
         username = findViewById(R.id.input_username_login);
