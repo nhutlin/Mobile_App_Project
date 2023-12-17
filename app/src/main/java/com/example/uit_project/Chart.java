@@ -1,17 +1,22 @@
 package com.example.uit_project;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.datapoint.Datapoint;
@@ -27,6 +32,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,132 +44,110 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Chart extends AppCompatActivity {
+public class Chart extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    private Spinner spinnerSelectAttribute;
+    private Spinner spinnerSelectTimeframe;
+    private String txtAttribute;
+    private String txtTimeframe = "";
+    private String selectedAttribute = "temperature";
+    private String selectedTimeframe;
+    private EditText editTextDateTime;
+    private String selectedDateTime;
+    private Button show;
 
-    String[] attributes = {"temperature","humidity","rainfall","windSpeed"};
+    private long toTimestamp;
+    private long fromTimestamp;
+    private String getDates;
+    private RequestBodyAsset body;
+    private ArrayList<Float> dataList = new ArrayList<>();
+    private ArrayList<String> xValues = new ArrayList<>();
+    private ArrayList<String> ending = new ArrayList<>();
 
-
-    String end;
-    AutoCompleteTextView selectAttribute;
-    AutoCompleteTextView selectTimeStamp;
-    AutoCompleteTextView selectDate;
-    ArrayAdapter<String> adapterAttributes;
-    ArrayAdapter<String> adapterTimes;
-
-    long toTimeStamp;
-    long fromTimeStamp;
-    RequestBodyAsset body;
-
-    ImageButton back;
-    ArrayList<Float> dataList = new ArrayList<>();
-    ArrayList<String> xValues = new ArrayList<>();
-    ArrayList<String> ending = new ArrayList<>();
-    String attributeRequest = "temperature";
-    String timeRequest = "Day";
-
+    private long step;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
 
-
-        String[] times = {"Hour","Day","Week","Month","Year"};
-
-        selectAttribute = findViewById(R.id.attribute);
-        selectTimeStamp = findViewById(R.id.time);
-        selectDate = findViewById(R.id.ending);
+        spinnerSelectAttribute = findViewById(R.id.select_attributes);
+        spinnerSelectTimeframe = findViewById(R.id.select_timeframes);
+        show = findViewById(R.id.btn_show);
         LineChart chart = findViewById(R.id.chart);
-        back = findViewById(R.id.btn_back);
-        Button show = findViewById(R.id.btn_show);
+        spinnerSelectTimeframe.setOnItemSelectedListener(this);
+        spinnerSelectAttribute.setOnItemSelectedListener(this);
+        String[] timeframes = getResources().getStringArray(R.array.timeframes);
+        String[] attributes = getResources().getStringArray(R.array.attributes);
+        ArrayAdapter adapterAttribute = new ArrayAdapter(this, android.R.layout.simple_spinner_item, attributes);
+        ArrayAdapter adapterTimeframe = new ArrayAdapter(this, android.R.layout.simple_spinner_item, timeframes);
 
-        selectTimeStamp.setText("Day");
-        selectAttribute.setText("temperature");
-        adapterAttributes = new ArrayAdapter<String>(this,R.layout.list_attribute,attributes);
-        selectAttribute.setAdapter(adapterAttributes);
+        adapterAttribute.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapterTimeframe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerSelectAttribute.setAdapter(adapterAttribute);
+        spinnerSelectTimeframe.setAdapter(adapterTimeframe);
 
+        editTextDateTime = findViewById(R.id.select_dates);
 
-        adapterTimes = new ArrayAdapter<String>(this,R.layout.list_timeframe,times);
-        selectTimeStamp.setAdapter(adapterTimes);
-
-        back.setOnClickListener(new View.OnClickListener() {
+        editTextDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                showDateTimePickerDialog();
             }
         });
-        selectAttribute.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String attribute = parent.getItemAtPosition(position).toString();
-                attributeRequest = attribute;
-            }
-        });
-
-        selectTimeStamp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String timestamp = parent.getItemAtPosition(position).toString();
-                timeRequest = timestamp;
-            }
-        });
-
-
 
         show.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SimpleDateFormat")
             @Override
             public void onClick(View v) {
-
-                if(timeRequest == "Hour") { //|| timeRequest == "Giờ"){
-                    toTimeStamp = System.currentTimeMillis();
-                    fromTimeStamp = toTimeStamp - 3600000;
-                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
-
-                } else if (timeRequest.equalsIgnoreCase("Day")) { //|| timeRequest == "Ngày") {
-                    toTimeStamp = System.currentTimeMillis();
-                    fromTimeStamp = toTimeStamp - 86400000 ;
-                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
-                } else if (timeRequest == "Week"){ //|| timeRequest == "Tuần") {
-                    toTimeStamp = System.currentTimeMillis();
-                    fromTimeStamp = toTimeStamp - 604800000 ;
-                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
-                } else if (timeRequest == "Month"){ //|| timeRequest == "Tháng"){
-                    toTimeStamp = System.currentTimeMillis();
-                    fromTimeStamp = toTimeStamp - 2678400000L;
-                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
-                } else if (timeRequest == "Year"){
-                    toTimeStamp = System.currentTimeMillis();
-                    fromTimeStamp = toTimeStamp - 31536000000L ;
-                    body = new RequestBodyAsset((long) fromTimeStamp, (long) toTimeStamp,"string");
+                getDates = editTextDateTime.getText().toString();
+                try {
+                    toTimestamp = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm")
+                            .parse(getDates).getTime();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
                 }
-//                if(timeRequest.equalsIgnoreCase(getHour)) { //|| timeRequest == "Giờ"){
-//                    toTimeStamp = System.currentTimeMillis();
-//                    fromTimeStamp = toTimeStamp - 3600000;
-//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-//
-//                } else if (timeRequest.equalsIgnoreCase(getDay)) { //|| timeRequest == "Ngày") {
-//                    toTimeStamp = System.currentTimeMillis();
-//                    fromTimeStamp = toTimeStamp - 86400000 ;
-//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-//                } else if (timeRequest.equalsIgnoreCase(getWeek)){ //|| timeRequest == "Tuần") {
-//                    toTimeStamp = System.currentTimeMillis();
-//                    fromTimeStamp = toTimeStamp - 604800000 ;
-//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-//                } else if (timeRequest.equalsIgnoreCase(getMonth)){ //|| timeRequest == "Tháng"){
-//                    toTimeStamp = System.currentTimeMillis();
-//                    fromTimeStamp = toTimeStamp - 2678400000L ;
-//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-//                } else if (timeRequest.equalsIgnoreCase(getYear)){
-//                    toTimeStamp = System.currentTimeMillis();
-//                    fromTimeStamp = toTimeStamp - 31536000000L ;
-//                    body = new RequestBody((long) fromTimeStamp, (long) toTimeStamp,"string");
-//                }
 
-                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.token, "5zI6XqkQVSfdgOrZ1MyWEf", attributeRequest, body);
+                if(txtTimeframe.contains("Hour")) {
+                    step = 3600000;
+                    fromTimestamp = toTimestamp - 3600000;
+                    body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
+
+                }
+                else if(txtTimeframe.contains("Day")) {
+                    step = 86400000;
+                    fromTimestamp = toTimestamp - 86400000;
+                    body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
+
+                }
+                else if(txtTimeframe.contains("Week")) {
+                    step = 604800000;
+                    fromTimestamp = toTimestamp - 604800000;
+                    body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
+
+                }
+                else if(txtTimeframe.contains("Month")) {
+                    step = 2678400000L;
+                    fromTimestamp = toTimestamp - 2678400000L;
+                    body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
+
+                }
+                else if(txtTimeframe.contains("Year")) {
+                    step = 31536000000L;
+                    fromTimestamp = toTimestamp - 31536000000L;
+                    body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
+
+                }
+
+                Log.d("TEST TIME", "from: " + fromTimestamp);
+                Log.d("TEST TIME", "to: " + toTimestamp);
+
+                Call<JsonArray> call = APIService.apiService.getDatapoint("Bearer " + GlobalVar.token,
+                        "5zI6XqkQVSfdgOrZ1MyWEf", selectedAttribute, body);
                 call.enqueue(new Callback<JsonArray>() {
                     @Override
                     public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
-                        Log.d("API CALL", response.code() + "");
+                        Log.d("API CALL", String.valueOf(response.code()));
+
                         if(response.isSuccessful()) {
                             JsonArray jsonArray = response.body();
                             if (jsonArray != null) {
@@ -176,65 +160,84 @@ public class Chart extends AppCompatActivity {
                                 for (Datapoint dataPoint : dataPoints) {
                                     long x = dataPoint.getX();
                                     float y = (float)dataPoint.getY();
+                                    Log.d("CALL POINT", "x: " + x);
+                                    Log.d("CALL POINT", "y: " + y);
 
-                                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+                                    SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm",
+                                            editTextDateTime.getTextLocale());
                                     String end = sdf1.format(x);
                                     ending.add(end);
                                     dataList.add(0, y);
+                                    Log.d("CALL DATA", "Data list: " + dataList);
 
-                                    if(timeRequest == "Hour"){
+                                    if(txtTimeframe.contains("Hour")){
                                         Date date = new Date(x);
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.setTime(date);
                                         int minuteofhour = calendar.get(Calendar.MINUTE);
                                         xValues.add(0,Integer.toString(minuteofhour));
-                                    } else if (timeRequest == "Day") {
+                                        Log.d("CALL POINT", "x values: " + xValues);
+
+
+                                    } else if (txtTimeframe.contains("Day")) {
                                         SimpleDateFormat sdf2 = new SimpleDateFormat("HH", Locale.getDefault());
                                         String formattedHour = sdf2.format(x);
                                         xValues.add(0,formattedHour);
-                                    } else if(timeRequest == "Week"){
+                                        Log.d("CALL POINT", "x values: " + xValues);
+
+                                    } else if(txtTimeframe.contains("Week")){
                                         Date date = new Date(x);
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.setTime(date);
                                         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-                                        String[] days = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+                                        String[] days = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
                                         String dayName = days[dayOfWeek - 1];
                                         xValues.add(0,dayName);
-                                    } else if (timeRequest == "Month") {
+                                        Log.d("CALL POINT", "x values: " + xValues);
+
+                                    } else if (txtTimeframe.contains("Month")) {
                                         Date date = new Date(x);
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.setTime(date);
                                         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
                                         xValues.add(0,Integer.toString(dayOfMonth));
-                                    } else if (timeRequest == "Year") {
+                                        Log.d("CALL POINT", "x values: " + xValues);
+
+                                    } else if (txtTimeframe.contains("Year")) {
                                         Date date = new Date(x);
                                         Calendar calendar = Calendar.getInstance();
                                         calendar.setTime(date);
                                         int month = calendar.get(Calendar.MONTH);
                                         xValues.add(0,Integer.toString(month));
+                                        Log.d("CALL POINT", "x values: " + xValues);
+
                                     }
                                 }
+                                Log.d("TEST ENDING", ending.toString());
                                 List<Entry> entries = new ArrayList<>();
 
-                                if(timeRequest == "Hour"){
+                                if(txtTimeframe.contains("Hour")){
                                     int minute = Integer.parseInt(xValues.get(0));
                                     xValues.clear();
                                     for (int i = 0; i < 12; i++) {
-                                        if(Math.abs(minute-i*5)<3){
+                                        if(Math.abs(minute - i * 5) < 3){
                                             entries.add(new Entry(i, dataList.get(0)));
                                         }
                                         else {
-                                            entries.add(new Entry(i, -1));
+                                            entries.add(new Entry(i, - 1));
                                         }
-                                        xValues.add(Integer.toString(i*5));
+                                        xValues.add(Integer.toString(i * 5));
                                     }
+                                    Log.d("CALL ENTRY", "entries values: " + entries);
+
+
                                 }
-                                else if(timeRequest == "Day"){
+                                else if(txtTimeframe.contains("Day")){
                                     for (int i = 0; i < dataList.size(); i++) {
-                                        entries.add(new Entry(i,dataList.get(i)));
+                                        entries.add(new Entry(i, dataList.get(i)));
                                     }
                                 }
-                                else if (timeRequest == "Week") {
+                                else if (txtTimeframe.contains("Week")) {
                                     ArrayList<String> list_ei = new ArrayList<>(xValues);
                                     xValues.clear();
 
@@ -260,7 +263,7 @@ public class Chart extends AppCompatActivity {
                                         entries.add(new Entry(i, ave.get(i)));
                                         xValues.add(week.get(i));
                                     }
-                                } else if (timeRequest == "Month") {
+                                } else if (txtTimeframe.contains("Month")) {
                                     ArrayList<String> th = new ArrayList<>(xValues);
                                     xValues.clear();
 
@@ -286,7 +289,7 @@ public class Chart extends AppCompatActivity {
                                         entries.add(new Entry(i, ave.get(i)));
                                         xValues.add(month.get(i));
                                     }
-                                } else if (timeRequest == "Year") {
+                                } else if (txtTimeframe.contains("Year")) {
                                     ArrayList<String> tw = new ArrayList<>(xValues);
                                     xValues.clear();
 
@@ -313,24 +316,25 @@ public class Chart extends AppCompatActivity {
                                         xValues.add(year.get(i));
                                     }
                                 }
-
-                                selectDate.setText(ending.get(0).toString());
-                                LineDataSet dataSet = new LineDataSet(entries, attributeRequest); // add entries to dataset
-                                if(timeRequest == "Hour"){
+                                Log.d("CALL ENTRY", "entries values: " + entries);
+//                                editTextDateTime.setText(ending.get(0).toString());
+                                LineDataSet dataSet = new LineDataSet(entries, selectedAttribute); // add entries to dataset
+                                if(txtTimeframe.contains("Hour")){
                                     dataSet.enableDashedLine(0, 1, 0);
                                     chart.getXAxis().setLabelCount(entries.size() / 2);
-                                } else if (timeRequest == "Day") {
+                                } else if (txtTimeframe.contains("Day")) {
 //
                                     chart.getXAxis().setLabelCount(entries.size() / 2);
                                     dataSet.setDrawFilled(true);
-                                } else if (timeRequest == "Week") {
+                                } else if (txtTimeframe.contains("Week")) {
                                     dataSet.setDrawFilled(true);
-                                } else if (timeRequest == "Month") {
+                                } else if (txtTimeframe.contains("Month")) {
                                     chart.getXAxis().setLabelCount(entries.size() / 2);
                                     dataSet.setDrawFilled(true);
-                                } else if (timeRequest == "Year") {
+                                } else if (txtTimeframe.contains("Year")) {
                                     chart.getXAxis().setLabelCount(entries.size() / 4);
                                     dataSet.setDrawFilled(true);}
+                                Log.d("CALL DATA", "data set values: " + dataSet);
 
                                 chart.setVisibility(View.VISIBLE);
                                 dataSet.setDrawCircles(true);
@@ -368,6 +372,8 @@ public class Chart extends AppCompatActivity {
                             }
                         }
                         else {
+                            Log.d("CALL POINT", "Error");
+
                             Toast.makeText(Chart.this, getString(R.string.get_permission),
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -378,8 +384,77 @@ public class Chart extends AppCompatActivity {
                     }
                 });
             }
-
         });
     }
 
+    private void showDateTimePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        // DatePickerDialog
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Xử lý ngày tháng năm được chọn
+                        String date = dayOfMonth + "/" + (month + 1) + "/" + year;
+
+                        // TimePickerDialog
+                        TimePickerDialog timePickerDialog = new TimePickerDialog(Chart.this,
+                                new TimePickerDialog.OnTimeSetListener() {
+                                    @Override
+                                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                        // Xử lý giờ phút được chọn
+                                        String time = hourOfDay + ":" + minute;
+
+                                        // Kết hợp ngày và giờ để có ngày giờ đầy đủ
+                                        selectedDateTime = date + " " + time;
+
+                                        // Hiển thị lên EditText
+                                        editTextDateTime.setText(selectedDateTime);
+                                    }
+                                }, hour, minute, true); // Đặt true để hiển thị đồng hồ 24 giờ
+
+                        // Hiển thị hộp thoại chọn giờ
+                        timePickerDialog.show();
+                    }
+                }, year, month, day);
+
+        // Hiển thị hộp thoại chọn ngày
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if(parent.getId() == R.id.select_attributes) {
+            txtAttribute = parent.getItemAtPosition(position).toString();
+            if(txtAttribute.contains("Humidity")) {
+                selectedAttribute = "humidity";
+            }
+            else if(txtAttribute.contains("Temperature")) {
+                selectedAttribute = "temperature";
+            }
+            else if(txtAttribute.contains("Rainfall")) {
+                selectedAttribute = "rainfall";
+            }
+            else if(txtAttribute.contains("Wind speed")) {
+                selectedAttribute = "windSpeed";
+            }
+        }
+
+        if(parent.getId() == R.id.select_timeframes) {
+            txtTimeframe = parent.getItemAtPosition(position).toString();
+        }
+        Log.d("SELECT ATTRIBUTE", selectedAttribute);
+        Log.d("SELECT TIMEFRAME", txtTimeframe);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

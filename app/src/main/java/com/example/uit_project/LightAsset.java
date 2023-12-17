@@ -67,7 +67,7 @@ public class LightAsset extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(LightAsset.this, ChartTest.class);
+                intent.setClass(LightAsset.this, Chart.class);
                 startActivity(intent);
             }
         });
