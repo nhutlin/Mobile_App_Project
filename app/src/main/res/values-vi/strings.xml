@@ -75,6 +75,13 @@
         <item>Lượng mưa</item>
         <item>Tốc độ gió</item>
     </string-array>
+    <string-array name="timeframes">
+        <item>Giờ</item>
+        <item>Ngày</item>
+        <item>Tuần</item>
+        <item>Tháng</item>
+        <item>Năm</item>
+    </string-array>
 
     <string name="timeframe">Khung thời gian</string>
     <string name="ending">Kết thúc</string>

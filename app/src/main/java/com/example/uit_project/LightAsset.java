@@ -54,7 +54,7 @@ public class LightAsset extends AppCompatActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra("Username");
-        user.setText("" + username);
+        user.setText(" " + username);
 
         returnMap.setOnClickListener(new View.OnClickListener() {
             @Override

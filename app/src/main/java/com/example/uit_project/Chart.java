@@ -133,12 +133,12 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                         fromTimestamp = toTimestamp - 604800000;
                         body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
-                    } else if (txtTimeframe.contains("Month")) {
+                    } else if (txtTimeframe.contains(getString(R.string.month))) {
 
                         fromTimestamp = toTimestamp - 2678400000L;
                         body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
-                    } else if (txtTimeframe.contains("Year")) {
+                    } else if (txtTimeframe.contains(getString(R.string.year))) {
 
                         fromTimestamp = toTimestamp - 31536000000L;
                         body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
@@ -178,7 +178,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                         dataList.add(0, y);
                                         Log.d("CALL DATA", "Data list: " + dataList);
 
-                                        if (txtTimeframe.contains("Hour")) {
+                                        if (txtTimeframe.contains(getString(R.string.hour))) {
                                             Date date = new Date(x);
                                             Calendar calendar = Calendar.getInstance();
                                             calendar.setTime(date);
@@ -187,13 +187,13 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             Log.d("CALL POINT", "x values: " + xValues);
 
 
-                                        } else if (txtTimeframe.contains("Day")) {
+                                        } else if (txtTimeframe.contains(getString(R.string.day))) {
                                             SimpleDateFormat sdf2 = new SimpleDateFormat("HH", Locale.getDefault());
                                             String formattedHour = sdf2.format(x);
                                             xValues.add(0, formattedHour);
                                             Log.d("CALL POINT", "x values: " + xValues);
 
-                                        } else if (txtTimeframe.contains("Week")) {
+                                        } else if (txtTimeframe.contains(getString(R.string.week))) {
                                             Date date = new Date(x);
                                             Calendar calendar = Calendar.getInstance();
                                             calendar.setTime(date);
@@ -203,7 +203,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             xValues.add(0, dayName);
                                             Log.d("CALL POINT", "x values: " + xValues);
 
-                                        } else if (txtTimeframe.contains("Month")) {
+                                        } else if (txtTimeframe.contains(getString(R.string.month))) {
                                             Date date = new Date(x);
                                             Calendar calendar = Calendar.getInstance();
                                             calendar.setTime(date);
@@ -211,7 +211,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             xValues.add(0, Integer.toString(dayOfMonth));
                                             Log.d("CALL POINT", "x values: " + xValues);
 
-                                        } else if (txtTimeframe.contains("Year")) {
+                                        } else if (txtTimeframe.contains(getString(R.string.year))) {
                                             Date date = new Date(x);
                                             Calendar calendar = Calendar.getInstance();
                                             calendar.setTime(date);
@@ -225,7 +225,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                     Log.d("TEST ENDING", ending.toString());
                                     List<Entry> entries = new ArrayList<>();
 
-                                    if (txtTimeframe.contains("Hour")) {
+                                    if (txtTimeframe.contains(getString(R.string.hour))) {
                                         int minute = Integer.parseInt(xValues.get(0));
                                         xValues.clear();
                                         for (int i = 0; i < 12; i++) {
@@ -239,11 +239,11 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                         Log.d("CALL ENTRY", "entries values: " + entries);
 
 
-                                    } else if (txtTimeframe.contains("Day")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.day))) {
                                         for (int i = 0; i < dataList.size(); i++) {
                                             entries.add(new Entry(i, dataList.get(i)));
                                         }
-                                    } else if (txtTimeframe.contains("Week")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.week))) {
                                         ArrayList<String> list_ei = new ArrayList<>(xValues);
                                         xValues.clear();
 
@@ -268,7 +268,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             entries.add(new Entry(i, ave.get(i)));
                                             xValues.add(week.get(i));
                                         }
-                                    } else if (txtTimeframe.contains("Month")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.month))) {
                                         ArrayList<String> th = new ArrayList<>(xValues);
                                         xValues.clear();
 
@@ -293,7 +293,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             entries.add(new Entry(i, ave.get(i)));
                                             xValues.add(month.get(i));
                                         }
-                                    } else if (txtTimeframe.contains("Year")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.year))) {
                                         ArrayList<String> tw = new ArrayList<>(xValues);
                                         xValues.clear();
 
@@ -324,19 +324,18 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                     Log.d("CALL ENTRY", "entries values: " + entries);
 //                                editTextDateTime.setText(ending.get(0).toString());
                                     LineDataSet dataSet = new LineDataSet(entries, selectedAttribute); // add entries to dataset
-                                    if (txtTimeframe.contains("Hour")) {
+                                    if (txtTimeframe.contains(getString(R.string.hour))) {
                                         dataSet.enableDashedLine(0, 1, 0);
                                         chart.getXAxis().setLabelCount(entries.size() / 2);
-                                    } else if (txtTimeframe.contains("Day")) {
-//
+                                    } else if (txtTimeframe.contains(getString(R.string.day))) {
                                         chart.getXAxis().setLabelCount(entries.size() / 2);
                                         dataSet.setDrawFilled(true);
-                                    } else if (txtTimeframe.contains("Week")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.week))) {
                                         dataSet.setDrawFilled(true);
-                                    } else if (txtTimeframe.contains("Month")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.month))) {
                                         chart.getXAxis().setLabelCount(entries.size() / 2);
                                         dataSet.setDrawFilled(true);
-                                    } else if (txtTimeframe.contains("Year")) {
+                                    } else if (txtTimeframe.contains(getString(R.string.year))) {
                                         chart.getXAxis().setLabelCount(entries.size() / 4);
                                         dataSet.setDrawFilled(true);
                                     }
