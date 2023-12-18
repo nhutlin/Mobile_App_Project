@@ -99,6 +99,7 @@
     <string name="create_on">Ngày tạo</string>
 
     <string name="ok">CHỌN</string>
+    <string name="warning_api">Đã có lỗi xảy ra. Vui lòng thử lại</string>
 
 
 </resources>

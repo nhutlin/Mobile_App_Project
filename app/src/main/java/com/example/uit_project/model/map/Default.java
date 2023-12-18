@@ -14,6 +14,8 @@ public class Default {
     @SerializedName("maxZoom")
     public double maxZoom;
 
+    @SerializedName("bounds")
+    public List<Double> bounds;
     @SerializedName("geocodeUrl")
     String geocodeUrl;
 }

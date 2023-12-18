@@ -24,6 +24,7 @@ import com.example.uit_project.model.datapoint.Datapoint;
 import com.example.uit_project.model.datapoint.RequestBodyAsset;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -51,7 +52,6 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
     private String txtAttribute;
     private String txtTimeframe = "";
     private String selectedAttribute = "temperature";
-    private String selectedTimeframe;
     private EditText editTextDateTime;
     private String selectedDateTime;
     private Button show;
@@ -118,17 +118,17 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                         throw new RuntimeException(e);
                     }
 
-                    if (txtTimeframe.contains("Hour")) {
+                    if (txtTimeframe.contains(getString(R.string.hour))) {
 
                         fromTimestamp = toTimestamp - 3600000;
                         body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
-                    } else if (txtTimeframe.contains("Day")) {
+                    } else if (txtTimeframe.contains(getString(R.string.day))) {
 
                         fromTimestamp = toTimestamp - 86400000;
                         body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
 
-                    } else if (txtTimeframe.contains("Week")) {
+                    } else if (txtTimeframe.contains(getString(R.string.week))) {
 
                         fromTimestamp = toTimestamp - 604800000;
                         body = new RequestBodyAsset((long) fromTimestamp, (long) toTimestamp, "string");
@@ -220,6 +220,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             Log.d("CALL POINT", "x values: " + xValues);
 
                                         }
+
                                     }
                                     Log.d("TEST ENDING", ending.toString());
                                     List<Entry> entries = new ArrayList<>();
@@ -262,7 +263,6 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                                 temp = 0;
                                                 summary = 0;
                                             }
-
                                         }
                                         for (int i = 0; i < week.size(); i++) {
                                             entries.add(new Entry(i, ave.get(i)));
@@ -288,7 +288,6 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                                 temp = 0;
                                                 summary = 0;
                                             }
-
                                         }
                                         for (int i = 0; i < month.size(); i++) {
                                             entries.add(new Entry(i, ave.get(i)));
@@ -321,6 +320,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                             xValues.add(year.get(i));
                                         }
                                     }
+
                                     Log.d("CALL ENTRY", "entries values: " + entries);
 //                                editTextDateTime.setText(ending.get(0).toString());
                                     LineDataSet dataSet = new LineDataSet(entries, selectedAttribute); // add entries to dataset
@@ -340,6 +340,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                         chart.getXAxis().setLabelCount(entries.size() / 4);
                                         dataSet.setDrawFilled(true);
                                     }
+
                                     Log.d("CALL DATA", "data set values: " + dataSet);
 
                                     chart.setVisibility(View.VISIBLE);
@@ -355,6 +356,10 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                     dataSet.setCircleColor(getColor(R.color.gradient_start));
 
                                     LineData lineData = new LineData(dataSet);
+
+
+                                    chart.getXAxis().setTextColor(R.color.back_gradient_start);
+                                    chart.getAxisRight().setTextColor(R.color.back_gradient_start);
                                     chart.setData(lineData);
 
                                     chart.getDescription().setEnabled(false);
@@ -377,14 +382,23 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
 
                                     chart.invalidate();
                                 }
-                            } else {
-                                Log.d("CALL POINT", "Error");
+                                else {
+                                    Toast.makeText(Chart.this, getString(R.string.warning_api),
+                                            Toast.LENGTH_SHORT).show();
 
+                                }
+                            } else if(response.code() == 403){
+                                Log.d("CALL API", response.body().toString());
                                 Toast.makeText(Chart.this, getString(R.string.get_permission),
                                         Toast.LENGTH_SHORT).show();
+                                recreate();
+                            } else {
+                                Toast.makeText(Chart.this, getString(R.string.warning_api),
+                                        Toast.LENGTH_SHORT).show();
+
+
                             }
                         }
-
                         @Override
                         public void onFailure(Call<JsonArray> call, Throwable t) {
                             Log.d("API CALL", t.getMessage().toString());
@@ -408,7 +422,6 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Xử lý ngày tháng năm được chọn
                         String date = dayOfMonth + "/" + (month + 1) + "/" + year;
 
                         // TimePickerDialog
@@ -416,23 +429,24 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                 new TimePickerDialog.OnTimeSetListener() {
                                     @Override
                                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                        // Xử lý giờ phút được chọn
-                                        String time = hourOfDay + ":" + minute;
+                                        String time;
+                                        if(minute < 10) {
+                                            time = hourOfDay + ":0" + minute;
+                                        }
+                                        else {
+                                            time = hourOfDay + ":" + minute;
+                                        }
 
-                                        // Kết hợp ngày và giờ để có ngày giờ đầy đủ
                                         selectedDateTime = date + " " + time;
 
-                                        // Hiển thị lên EditText
                                         editTextDateTime.setText(selectedDateTime);
                                     }
-                                }, hour, minute, true); // Đặt true để hiển thị đồng hồ 24 giờ
+                                }, hour, minute, true); // show 24h clock
 
-                        // Hiển thị hộp thoại chọn giờ
                         timePickerDialog.show();
                     }
                 }, year, month, day);
 
-        // Hiển thị hộp thoại chọn ngày
         datePickerDialog.show();
     }
 
@@ -440,16 +454,16 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.select_attributes) {
             txtAttribute = parent.getItemAtPosition(position).toString();
-            if(txtAttribute.contains("Humidity")) {
+            if(txtAttribute.contains(getString(R.string.humidity))) {
                 selectedAttribute = "humidity";
             }
-            else if(txtAttribute.contains("Temperature")) {
+            else if(txtAttribute.contains(getString(R.string.temperature))) {
                 selectedAttribute = "temperature";
             }
-            else if(txtAttribute.contains("Rainfall")) {
+            else if(txtAttribute.contains(getString(R.string.rainfall))) {
                 selectedAttribute = "rainfall";
             }
-            else if(txtAttribute.contains("Wind speed")) {
+            else if(txtAttribute.contains(getString(R.string.wind_speed))) {
                 selectedAttribute = "windSpeed";
             }
         }

@@ -104,4 +104,5 @@
     <string name="false_value">False</string>
     <string name="create_on">Create on</string>
     <string name="ok">OK</string>
+    <string name="warning_api">Error. Please try again</string>
 </resources>

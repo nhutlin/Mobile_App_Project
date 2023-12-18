@@ -167,7 +167,7 @@ public class WeatherAsset extends AppCompatActivity {
                         sun_zenith.setText("--");
                     }
                 }
-                else {
+                else if(response.code() == 403){
                     Toast.makeText(WeatherAsset.this, getString(R.string.get_permission),
                             Toast.LENGTH_SHORT).show();
                     temperature_logo.setText("--");
@@ -191,8 +191,30 @@ public class WeatherAsset extends AppCompatActivity {
                     sun_azimuth.setText("--");
 
                 }
-            }
+                else {
+                    Toast.makeText(WeatherAsset.this, getString(R.string.warning_api),
+                            Toast.LENGTH_SHORT).show();
+                    temperature_logo.setText("--");
+                    place.setText("--");
 
+                    manufacturer.setText("--");
+                    temperature.setText("--");
+                    humidity.setText("--");
+                    rainfall.setText("--");
+                    notes.setText("--");
+                    wind_direction.setText("--");
+                    wind_speed.setText("--");
+                    tags.setText("--");
+                    sun_altitude.setTextSize(35);
+                    sun_altitude.setText("--");
+                    sun_zenith.setTextSize(35);
+                    sun_zenith.setText("--");
+                    sun_irradiance.setTextSize(35);
+                    sun_irradiance.setText("--");
+                    sun_azimuth.setTextSize(35);
+                    sun_azimuth.setText("--");
+                }
+            }
             @Override
             public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
                 Log.d("API CALL", t.getMessage().toString());

@@ -54,7 +54,7 @@ public class LightAsset extends AppCompatActivity {
 
         Intent intent = getIntent();
         username = intent.getStringExtra("Username");
-        user.setText(" " + username);
+        user.setText("" + username);
 
         returnMap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +102,7 @@ public class LightAsset extends AppCompatActivity {
                             } else {
                                 on_off.setText(getString(R.string.off));
                             }
-                        } else {
+                        } else if(response.code() == 403){
                             Toast.makeText(LightAsset.this, getString(R.string.get_permission),
                                     Toast.LENGTH_SHORT).show();
                             brightness_logo.setText("--");
@@ -114,7 +114,18 @@ public class LightAsset extends AppCompatActivity {
                             tags.setText("--");
                             on_off.setText("--");
                         }
-
+                        else {
+                            Toast.makeText(LightAsset.this, getString(R.string.warning_api),
+                                    Toast.LENGTH_SHORT).show();
+                            brightness_logo.setText("--");
+                            brightness.setText("--");
+                            email.setText("--");
+                            notes.setText("--");
+                            colour_RGB.setText("--");
+                            colour_temperature.setText("--");
+                            tags.setText("--");
+                            on_off.setText("--");
+                        }
                     }
 
                     @Override

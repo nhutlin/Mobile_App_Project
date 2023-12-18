@@ -38,9 +38,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_centerInParent="true"
+                        android:drawableLeft="@drawable/ic_user_2"
                         android:gravity="center"
                         android:text="@string/hi"
-                        android:drawableLeft="@drawable/ic_user"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="20sp" />

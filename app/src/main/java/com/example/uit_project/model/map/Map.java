@@ -45,6 +45,7 @@ import com.example.uit_project.model.weather.WeatherAssetResponse;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
@@ -90,8 +91,11 @@ public class Map extends AppCompatActivity {
     private double longitudeMap = 0;
     private ImageButton profile;
 
-    private double latitudeWeather;
-    private double longitudeWeather;
+    private double minLat;
+    private double minLon;
+    private double maxLat;
+    private double maxLon;
+    private BoundingBox boundingBox;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,17 +123,29 @@ public class Map extends AppCompatActivity {
                             MapSetting mapSetting = response.body();
 
                             assert mapSetting != null;
+
                             longitudeMap = mapSetting.options.aDefault.center.get(0);
                             latitudeMap = mapSetting.options.aDefault.center.get(1);
+                            Log.d("TEST GEO", "Longitude: " + longitudeMap);
+                            Log.d("TEST GEO", "Latitude: " + latitudeMap);
+
                             mapController = map.getController();
                             mapController.setZoom(mapSetting.options.aDefault.zoom);
                             startPoint = new GeoPoint(latitudeMap, longitudeMap);
                             mapController.setCenter(startPoint);
-                            map.setMaxZoomLevel(mapSetting.options.aDefault.maxZoom);
-                            map.setMinZoomLevel(mapSetting.options.aDefault.minZoom);
 
-                            Log.d("TEST GEO", "Longitude: " + longitudeMap);
-                            Log.d("TEST GEO", "Latitude: " + latitudeMap);
+                            boundingBox = new BoundingBox(
+                                    mapSetting.options.aDefault.bounds.get(3),
+                                    mapSetting.options.aDefault.bounds.get(2),
+                                    mapSetting.options.aDefault.bounds.get(1),
+                                    mapSetting.options.aDefault.bounds.get(0));
+                            map.setScrollableAreaLimitLatitude(boundingBox.getActualNorth(),
+                                    boundingBox.getActualSouth(), 0);
+                            map.setScrollableAreaLimitLongitude(boundingBox.getLonWest(),
+                                    boundingBox.getLonEast(), 0);
+
+                            map.setMaxZoomLevel(mapSetting.options.aDefault.maxZoom);
+                            map.setMinZoomLevel(mapSetting.options.aDefault.zoom);
 
                         } else {
                             Log.d("API CALL", String.valueOf(response.code()));
@@ -142,6 +158,7 @@ public class Map extends AppCompatActivity {
                             mapController.setCenter(startPoint);
                             map.setMaxZoomLevel(16.0);
                             map.setMinZoomLevel(0.0);
+
                         }
                     }
 
@@ -194,7 +211,7 @@ public class Map extends AppCompatActivity {
         markerWeather.setTextLabelFontSize(50);
         map.getOverlays().add(markerWeather);
 
-        Bitmap markerBitmapLight = BitmapFactory.decodeResource(res, R.drawable.ic_light_marker);
+        Bitmap markerBitmapLight = BitmapFactory.decodeResource(res, R.drawable.ic_light_marker2);
         Bitmap resizedBitLight = Bitmap.createScaledBitmap(markerBitmapLight, width, height, false);
 
         // Create a custom marker drawable
@@ -208,8 +225,6 @@ public class Map extends AppCompatActivity {
         markerLight.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         markerLight.setInfoWindow(null);
         map.getOverlays().add(markerLight);
-
-        
 
         dialog = new Dialog(this);
         Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
@@ -247,7 +262,7 @@ public class Map extends AppCompatActivity {
                                     rainfall.setText(String.valueOf(asset.attributes.rainFall.value));
                                     temperature.setText(asset.attributes.temperature.value + "\u2103");
                                 }
-                                else {
+                                else if(response.code() == 403){
                                     Toast.makeText(Map.this, getString(R.string.get_permission),
                                             Toast.LENGTH_SHORT).show();
                                     humidity.setText("--");
@@ -255,7 +270,14 @@ public class Map extends AppCompatActivity {
                                     rainfall.setText("--");
                                     temperature.setText("--");
                                 }
-
+                                else {
+                                    Toast.makeText(Map.this, getString(R.string.warning_api),
+                                            Toast.LENGTH_SHORT).show();
+                                    humidity.setText("--");
+                                    manufacturer.setText("--");
+                                    rainfall.setText("--");
+                                    temperature.setText("--");
+                                }
                             }
                             @Override
                             public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
@@ -312,8 +334,15 @@ public class Map extends AppCompatActivity {
                                     } else {
                                         on_off.setText(getString(R.string.off));
                                     }
-                                } else {
+                                } else if(response.code() == 403){
                                     Toast.makeText(Map.this, getString(R.string.get_permission),
+                                            Toast.LENGTH_SHORT).show();
+                                    brightness.setText("--");
+                                    colour_temperature.setText("--");
+                                    on_off.setText("--");
+                                }
+                                else {
+                                    Toast.makeText(Map.this, getString(R.string.warning_api),
                                             Toast.LENGTH_SHORT).show();
                                     brightness.setText("--");
                                     colour_temperature.setText("--");
