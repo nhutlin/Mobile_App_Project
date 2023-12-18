@@ -19,8 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.uit_project.api.APIAuth;
+import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.ApiResponse;
 import com.example.uit_project.model.map.Map;
+import com.example.uit_project.model.weather.WeatherAssetResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +46,8 @@ public class Login extends AppCompatActivity {
     private String saveUserName;
     private String savePass;
     private boolean saveCheckBox;
+    private double latitude;
+    private double longitude;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -57,7 +61,7 @@ public class Login extends AppCompatActivity {
         username = findViewById(R.id.input_username_login);
         password = findViewById(R.id.input_pass_login);
         isSave = findViewById(R.id.save_account);
-        GlobalVar.view = (RelativeLayout)findViewById(R.id.login_scr);
+        GlobalVar.view = (RelativeLayout) findViewById(R.id.login_scr);
         GlobalVar.view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -88,7 +92,7 @@ public class Login extends AppCompatActivity {
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isSave.isChecked()) {
+                if (isSave.isChecked()) {
                     saveData();
                 } else {
                     clearData();
@@ -105,17 +109,22 @@ public class Login extends AppCompatActivity {
                 call.enqueue(new Callback<ApiResponse>() {
                     @Override
                     public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             Toast.makeText(Login.this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                             ApiResponse assetLogin = response.body();
                             GlobalVar.token = assetLogin.getAccess_token();
                             Log.d("TEST TOKEN", GlobalVar.token);
+
+
                             Intent intentMap = new Intent();
-                            intentMap.putExtra("Username", username.getText().toString());
                             intentMap.setClass(Login.this, Map.class);
+
+                            intentMap.putExtra("Username", username.getText().toString());
+
                             startActivity(intentMap);
                         }
                     }
+
                     @Override
                     public void onFailure(Call<ApiResponse> call, Throwable t) {
                         Log.d("API CALL", t.getMessage().toString());
@@ -128,11 +137,9 @@ public class Login extends AppCompatActivity {
         updateView();
 
     }
-
     private void saveData() {
         SharedPreferences sharedPreferences = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putString(USERNAME, username.getText().toString());
         editor.putString(PASSWORD, password.getText().toString());
         editor.putBoolean(ISSAVE, isSave.isChecked());

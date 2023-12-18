@@ -102,8 +102,6 @@ public class WeatherAsset extends AppCompatActivity {
 
         Calendar calendar = Calendar.getInstance();
         int hour24hrs = calendar.get(Calendar.HOUR_OF_DAY);
-//        token = GlobalVar.token + "";
-        Log.d("TEST TOKEN", ""+ token);
         
         APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf", "Bearer " + GlobalVar.token)
                 .enqueue(new Callback<WeatherAssetResponse>() {

@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,6 +36,7 @@ import androidx.preference.PreferenceManager;
 import com.example.uit_project.CustomMarkerDrawable;
 import com.example.uit_project.GlobalVar;
 import com.example.uit_project.LightAsset;
+import com.example.uit_project.LoadingAlert;
 import com.example.uit_project.R;
 import com.example.uit_project.UserProfile;
 import com.example.uit_project.WeatherAsset;
@@ -80,14 +82,16 @@ public class Map extends AppCompatActivity {
     private ImageButton back;
     private APIService apiService;
     private GeoPoint startPoint;
+    private LoadingAlert loadingAlert;
+
 
     private double zoom = 0;
     private double latitudeMap = 0;
     private double longitudeMap = 0;
     private ImageButton profile;
-    private double latitudeWeather = 0;
-    private double longitudeWeather = 0;
 
+    private double latitudeWeather;
+    private double longitudeWeather;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,41 +100,15 @@ public class Map extends AppCompatActivity {
         Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
 
-        Intent intent = getIntent();
+        Intent intent = this.getIntent();
         username = intent.getStringExtra("Username");
+
         map = (MapView) findViewById(R.id.map);
 
         // Set map zoom and map's position
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
-        APIService.apiService.getWeatherAsset("5zI6XqkQVSfdgOrZ1MyWEf",
-                        "Bearer " + GlobalVar.token)
-                .enqueue(new Callback<WeatherAssetResponse>() {
-                    @Override
-                    public void onResponse(Call<WeatherAssetResponse> call, Response<WeatherAssetResponse> response) {
-                        Log.d("API CALL", String.valueOf(response.code()));
-                        if(response.isSuccessful()) {
-                            WeatherAssetResponse weatherAssetResponse = response.body();
 
-                            assert weatherAssetResponse != null;
-                            longitudeWeather = weatherAssetResponse.attributes.location.value.coordinates.get(0);
-                            latitudeWeather = weatherAssetResponse.attributes.location.value.coordinates.get(1);
-                            Log.d("TEST GEO", "Longitude: " + longitudeWeather);
-                            Log.d("TEST GEO", "Latitude: " + latitudeWeather);
-
-
-                        }
-                        else {
-                            Log.d("API CALL", String.valueOf(response.code()));
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<WeatherAssetResponse> call, Throwable t) {
-                        Log.d("API CALL", t.getMessage().toString());
-                    }
-                });
 
         APIService.apiService.getMapSetting("Bearer " + GlobalVar.token)
                 .enqueue(new Callback<MapSetting>() {

@@ -36,6 +36,7 @@
     <string name="map">BẢN ĐỒ</string>
     <string name="load_map_error">Lỗi tải bản đồ</string>
     <string name="get_permission">Bạn cần phải có quyền truy cập</string>
+    <string name="input_warning">Vui lòng điền vào ô thời gian</string>
 
 
     <string name="humidity">Độ ẩm</string>

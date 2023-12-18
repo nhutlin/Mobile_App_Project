@@ -3,8 +3,6 @@ package com.example.uit_project;
 import android.widget.RelativeLayout;
 
 public class GlobalVar {
-    public static String LOG_TAG = "API LOG";
-
     public static LanguageManager manager;
     public static int drawableProfile = 0;
 

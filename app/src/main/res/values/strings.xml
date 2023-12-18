@@ -90,6 +90,7 @@
     <string name="year">Year</string>
     <string name="date">Day month year</string>
     <string name="show">SHOW</string>
+    <string name="input_warning">Please fill the date input</string>
 
     <string name="profile">PROFILE</string>
     <string name="logout">LOG OUT</string>
