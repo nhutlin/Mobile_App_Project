@@ -3,111 +3,121 @@
     android:layout_width="match_parent"
     android:layout_height="355dp"
     android:background="@drawable/user_popup"
+    android:layout_gravity="center"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
     >
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ava_1"
-        android:src="@drawable/ic_avatar1" />
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check1"
-        android:layout_below="@+id/ava_1"
-        android:layout_alignStart="@+id/ava_1"
-        android:layout_alignEnd="@+id/ava_1"
-        />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ava_2"
-        android:layout_toRightOf="@+id/ava_1"
-        android:src="@drawable/ic_avatar2" />
+        android:layout_centerInParent="true"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ava_1"
+            android:src="@drawable/ic_avatar1" />
         <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check2"
-        android:layout_below="@+id/ava_2"
-        android:layout_alignStart="@+id/ava_2"
-        android:layout_alignEnd="@+id/ava_2"
-        />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check1"
+            android:layout_below="@+id/ava_1"
+            android:layout_alignStart="@+id/ava_1"
+            android:layout_alignEnd="@+id/ava_1"
+            />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ava_3"
-        android:layout_below="@+id/check1"
-        android:src="@drawable/ic_avatar3"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check3"
-        android:layout_below="@+id/ava_3"
-        android:layout_alignStart="@+id/ava_3"
-        android:layout_alignEnd="@+id/ava_3"
-        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ava_2"
+            android:layout_toRightOf="@+id/ava_1"
+            android:src="@drawable/ic_avatar2" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check2"
+            android:layout_below="@+id/ava_2"
+            android:layout_alignStart="@+id/ava_2"
+            android:layout_alignEnd="@+id/ava_2"
+            />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ava_2"
-        android:id="@+id/ava_4"
-        android:layout_below="@+id/check2"
-        android:src="@drawable/ic_avatar4"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check4"
-        android:layout_below="@+id/ava_4"
-        android:layout_alignStart="@+id/ava_4"
-        android:layout_alignEnd="@+id/ava_4"
-        />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/ava_2"
-        android:id="@+id/ava_5"
-        android:src="@drawable/ic_avatar5"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check5"
-        android:layout_below="@+id/ava_5"
-        android:layout_alignStart="@+id/ava_5"
-        android:layout_alignEnd="@+id/ava_5"
-        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ava_3"
+            android:layout_below="@+id/check1"
+            android:src="@drawable/ic_avatar3"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check3"
+            android:layout_below="@+id/ava_3"
+            android:layout_alignStart="@+id/ava_3"
+            android:layout_alignEnd="@+id/ava_3"
+            />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/ava_5"
-        android:id="@+id/ava_6"
-        android:layout_below="@+id/check5"
-        android:src="@drawable/ic_avatar6"/>
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/check6"
-        android:layout_below="@+id/ava_6"
-        android:layout_alignStart="@+id/ava_5"
-        android:layout_alignEnd="@+id/ava_5"
-        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ava_2"
+            android:id="@+id/ava_4"
+            android:layout_below="@+id/check2"
+            android:src="@drawable/ic_avatar4"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check4"
+            android:layout_below="@+id/ava_4"
+            android:layout_alignStart="@+id/ava_4"
+            android:layout_alignEnd="@+id/ava_4"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ava_2"
+            android:id="@+id/ava_5"
+            android:src="@drawable/ic_avatar5"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check5"
+            android:layout_below="@+id/ava_5"
+            android:layout_alignStart="@+id/ava_5"
+            android:layout_alignEnd="@+id/ava_5"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ava_5"
+            android:id="@+id/ava_6"
+            android:layout_below="@+id/check5"
+            android:src="@drawable/ic_avatar6"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/check6"
+            android:layout_below="@+id/ava_6"
+            android:layout_alignStart="@+id/ava_5"
+            android:layout_alignEnd="@+id/ava_5"
+            />
 
 
-    <android.widget.Button
-        android:id="@+id/btn_ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/gradient"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp"
-        android:text="@string/ok"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:textColor="@color/white"
-        android:textSize="20sp" />
+        <android.widget.Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/gradient"
+            android:paddingLeft="50dp"
+            android:paddingRight="50dp"
+            android:text="@string/ok"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

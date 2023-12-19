@@ -4,7 +4,6 @@
     android:layout_height="200dp"
     android:layout_gravity="bottom"
     android:background="@drawable/popup_form"
-
     >
     <RelativeLayout
         android:id="@+id/title_popup"

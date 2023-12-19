@@ -25,6 +25,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -227,7 +228,6 @@ public class Map extends AppCompatActivity {
         map.getOverlays().add(markerLight);
 
         dialog = new Dialog(this);
-        Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
 
         showInfo();
     }
@@ -238,6 +238,12 @@ public class Map extends AppCompatActivity {
                 dialog.setContentView(R.layout.weather_popup);
                 dialog.show();
                 Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                dialog.getWindow().setAttributes(layoutParams);
 
                 Log.v("SHOW DIALOG", "SUCCESS");
 
@@ -308,8 +314,14 @@ public class Map extends AppCompatActivity {
             @Override
             public boolean onMarkerClick(Marker marker, MapView mapView) {
                 dialog.setContentView(R.layout.light_popup);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.BOTTOM);
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                dialog.getWindow().setAttributes(layoutParams);
                 Log.v("SHOW DIALOG", "SUCCESS");
 
                 brightness = dialog.findViewById(R.id.brightness_value);

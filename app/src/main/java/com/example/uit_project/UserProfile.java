@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -22,6 +23,7 @@ import com.example.uit_project.model.User;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,7 +100,13 @@ public class UserProfile extends AppCompatActivity {
             public void onClick(View v) {
                 dialog.setContentView(R.layout.choose_avatar_popup);
                 dialog.show();
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                Objects.requireNonNull(dialog.getWindow()).setGravity(Gravity.CENTER);
+                WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+                layoutParams.copyFrom(dialog.getWindow().getAttributes());
+                layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                dialog.getWindow().setAttributes(layoutParams);
 
                 ava1 = dialog.findViewById(R.id.ava_1);
                 ava2 = dialog.findViewById(R.id.ava_2);

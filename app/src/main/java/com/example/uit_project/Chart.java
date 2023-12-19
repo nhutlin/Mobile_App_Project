@@ -23,6 +23,7 @@ import com.example.uit_project.api.APIService;
 import com.example.uit_project.model.datapoint.Datapoint;
 import com.example.uit_project.model.datapoint.RequestBodyAsset;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -64,6 +65,8 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
     private ArrayList<String> ending = new ArrayList<>();
     private ImageButton back;
 
+    private Description description;
+    private LineChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
         spinnerSelectTimeframe = findViewById(R.id.select_timeframes);
         show = findViewById(R.id.btn_show);
         back = findViewById(R.id.btn_back);
-        LineChart chart = findViewById(R.id.chart);
+        chart = findViewById(R.id.chart);
         spinnerSelectTimeframe.setOnItemSelectedListener(this);
         spinnerSelectAttribute.setOnItemSelectedListener(this);
         String[] timeframes = getResources().getStringArray(R.array.timeframes);
@@ -327,6 +330,7 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                     if (txtTimeframe.contains(getString(R.string.hour))) {
                                         dataSet.enableDashedLine(0, 1, 0);
                                         chart.getXAxis().setLabelCount(entries.size() / 2);
+
                                     } else if (txtTimeframe.contains(getString(R.string.day))) {
                                         chart.getXAxis().setLabelCount(entries.size() / 2);
                                         dataSet.setDrawFilled(true);
@@ -350,19 +354,43 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                     dataSet.setValueTextColor(Color.BLACK);
                                     dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
                                     dataSet.setFillColor(getColor(R.color.back_gradient_start));
-
                                     dataSet.setCircleRadius(3f);
                                     dataSet.setCircleColor(getColor(R.color.gradient_start));
-
                                     LineData lineData = new LineData(dataSet);
-
 
                                     chart.getXAxis().setTextColor(R.color.back_gradient_start);
                                     chart.getAxisRight().setTextColor(R.color.back_gradient_start);
                                     chart.setData(lineData);
+                                    if(txtAttribute.contains(getString(R.string.humidity))) {
+                                        description = new Description();
+                                        description.setPosition(150f, 5f);
+                                        description.setText("%");
+                                        description.setTextSize(14);
+                                        chart.setDescription(description);
+                                    }
+                                    else if(txtAttribute.contains(getString(R.string.temperature))) {
+                                        description = new Description();
+                                        description.setPosition(150f, 5f);
+                                        description.setTextSize(14);
+                                        description.setText("\u2103");
+                                        chart.setDescription(description);
+                                    }
+                                    else if(txtAttribute.contains(getString(R.string.rainfall))) {
+                                        description = new Description();
+                                        description.setPosition(150f, 5f);
+                                        description.setText("mm");
+                                        description.setTextSize(14);
+                                        chart.setDescription(description);
+                                    }
+                                    else if(txtAttribute.contains(getString(R.string.wind_speed))) {
+                                        description = new Description();
+                                        description.setPosition(150f, 5f);
+                                        description.setText("km/h");
+                                        description.setTextSize(14);
+                                        chart.setDescription(description);
+                                    }
 
-                                    chart.getDescription().setEnabled(false);
-
+                                    chart.getDescription().setEnabled(true);
                                     chart.getAxisLeft().setDrawGridLines(true);
                                     chart.getAxisLeft().setDrawAxisLine(true);
                                     chart.getAxisLeft().setDrawLabels(true);
@@ -378,13 +406,11 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                                     chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues) {
                                     });
                                     chart.getLegend().setEnabled(true);
-
                                     chart.invalidate();
                                 }
                                 else {
                                     Toast.makeText(Chart.this, getString(R.string.warning_api),
                                             Toast.LENGTH_SHORT).show();
-
                                 }
                             } else if(response.code() == 403){
                                 Log.d("CALL API", response.body().toString());
@@ -394,8 +420,6 @@ public class Chart extends AppCompatActivity implements AdapterView.OnItemSelect
                             } else {
                                 Toast.makeText(Chart.this, getString(R.string.warning_api),
                                         Toast.LENGTH_SHORT).show();
-
-
                             }
                         }
                         @Override
